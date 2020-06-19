@@ -6,6 +6,7 @@ import Temp from './pages/Temp';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro'; 
 import VisualizacaoGeral from './pages/VisualizacaoGeral'; 
+import FormularioDividas from './pages/FormularioDividas.js';
 
 const Routes = createAppContainer(
     createStackNavigator({
@@ -13,6 +14,7 @@ const Routes = createAppContainer(
         Login,
         Cadastro,
         VisualizacaoGeral,
+        FormularioDividas,
     }, {
         headerMode: 'none',
         initialRouteName: "Temp"
