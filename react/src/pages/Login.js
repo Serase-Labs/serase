@@ -1,23 +1,28 @@
-import React from 'react';
-import {Text,View, Image} from 'react-native';
-import tailwind from 'tailwind-rn';
+import React from "react";
+import { Text, View, Image, TouchableOpacity } from "react-native";
+import tailwind from "tailwind-rn";
+
+const estilos = {
+	tela: tailwind("pt-32 items-center h-full bg-white"),
+	titulo: tailwind("mt-6 mb-16 text-4xl font-bold text-blue-800"),
+
+	botaoPrimarioMedio: tailwind("bg-green-400 py-2 rounded w-40"),
+	botaoSecundarioMedio: tailwind("bg-blue-800 py-2 rounded w-40 mb-6"),
+	textoBotao: tailwind("text-white font-medium text-lg text-center"),
+};
 
 export default function Login() {
-  return (
-    <View style={tailwind('pt-8 items-center')}>
-      
-      <View style={tailwind('bg-blue-900 h-2 w-full')}></View>
-      
-        <Image style={tailwind('rounded-full h-64 w-64 my-24 justify-center')} 
-          source={require('../assets/download.jpg')}/>
-      
-      <View style={tailwind('bg-gray-100 bg-opacity-50 h-12 w-56 rounded py-2 mb-8 border border-blue-800')}>
-        <Text style={tailwind('text-center text-blue-800 text-xl')}>Fazer Login</Text>
-      </View>
+	return (
+		<View style={estilos.tela}>
+			<Image source={require("../assets/primarylogo144x144.png")} />
+			<Text style={estilos.titulo}>Serase</Text>
 
-      <View style={tailwind('bg-green-600 bg-opacity-50 h-12 w-56 rounded py-2')}>
-        <Text style={tailwind('text-center text-white text-xl')}>Cadastrar</Text>
-      </View>
-    </View>
-  );
+			<TouchableOpacity style={estilos.botaoSecundarioMedio}>
+				<Text style={estilos.textoBotao}>Fazer Login</Text>
+			</TouchableOpacity>
+			<TouchableOpacity style={estilos.botaoPrimarioMedio}>
+				<Text style={estilos.textoBotao}>Cadastrar</Text>
+			</TouchableOpacity>
+		</View>
+	);
 }
