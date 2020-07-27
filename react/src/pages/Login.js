@@ -7,6 +7,8 @@ import {
 	TextInput,
 	StatusBar,
 	StyleSheet,
+	KeyboardAvoidingView,
+	ScrollView,
 } from "react-native";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import tailwind from "tailwind-rn";
@@ -20,7 +22,8 @@ const estiloExcecao = StyleSheet.create({
 });
 
 const estilos = {
-	tela: tailwind("items-center h-full bg-white"),
+	tela: tailwind("flex-1 bg-white"),
+	telaInterior: tailwind("flex-1"),
 
 	componenteLocalizacao: tailwind(
 		"w-full flex flex-row items-center pt-5 pl-5"
@@ -53,122 +56,131 @@ const estilos = {
 
 export default function Login() {
 	return (
-		<View style={[estiloExcecao.container, estilos.tela]}>
-			<View
-				accessibilityRole="header"
-				style={[tailwind("mb-16"), estilos.componenteLocalizacao]}
-			>
-				<Image
-					style={estilos.logoLocalizacao}
-					source={require("../assets/monologo512x512.png")}
-				/>
-				<Text style={estilos.textoLocalizacao}>Fazer Login</Text>
-			</View>
-
-			<View style={estilos.containerFormulario}>
-				<Formik
-					initialValues={({ email: "" }, { senha: "" })}
-					onSubmit={(values) => console.log(values)}
-					validate={(values) => {
-						const errors = {};
-						if (!values.email) {
-							errors.email = "Ei, não esqueça esse campo!";
-						} else if (
-							!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-								values.email
-							)
-						) {
-							errors.email = "Insira um email válido.";
-						}
-
-						if (!values.senha) {
-							errors.senha =
-								"Não esqueça de preencher a sua senha!";
-						}
-
-						return errors;
-					}}
+		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
+			<ScrollView style={estilos.telaInterior}>
+				<View
+					accessibilityRole="header"
+					style={[tailwind("mb-16"), estilos.componenteLocalizacao]}
 				>
-					{({
-						handleChange,
-						handleBlur,
-						handleSubmit,
-						values,
-						errors,
-					}) => (
-						<View>
-							<View style={[estilos.containerInput]}>
-								<Text style={estilos.labelInput}>Email</Text>
-								<TextInput
-									style={estilos.input}
-									clearTextOnFocus={true}
-									onChangeText={handleChange("email")}
-									onBlur={handleBlur("email")}
-									value={values.email}
-									blurOnSubmit={true}
-									keyboard={"email-address"}
-									placeholder={"Insira o seu email"}
-									placeholderTextColor={"#A0AEC0"}
-								/>
+					<Image
+						style={estilos.logoLocalizacao}
+						source={require("../assets/monologo512x512.png")}
+					/>
+					<Text style={estilos.textoLocalizacao}>Fazer Login</Text>
+				</View>
 
-								{errors.email && (
-									<Text style={estilos.errorInput}>
-										{errors.email}
+				<View style={estilos.containerFormulario}>
+					<Formik
+						initialValues={({ email: "" }, { senha: "" })}
+						onSubmit={(values) => console.log(values)}
+						validate={(values) => {
+							const errors = {};
+							if (!values.email) {
+								errors.email = "Ei, não esqueça esse campo!";
+							} else if (
+								!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+									values.email
+								)
+							) {
+								errors.email = "Insira um email válido.";
+							}
+
+							if (!values.senha) {
+								errors.senha =
+									"Não esqueça de preencher a sua senha!";
+							}
+
+							return errors;
+						}}
+					>
+						{({
+							handleChange,
+							handleBlur,
+							handleSubmit,
+							values,
+							errors,
+						}) => (
+							<View>
+								<View style={[estilos.containerInput]}>
+									<Text style={estilos.labelInput}>
+										Email
 									</Text>
-								)}
-							</View>
-							<View
-								style={[
-									estilos.containerInput,
-									tailwind("mb-12"),
-								]}
-							>
-								<Text style={estilos.labelInput}>Senha</Text>
-								<TextInput
-									style={estilos.input}
-									onChangeText={handleChange("senha")}
-									onBlur={handleBlur("senha")}
-									value={values.senha}
-									blurOnSubmit={true}
-									textContentType={"password"}
-									secureTextEntry={true}
-									placeholder={"Insira a sua senha"}
-									placeholderTextColor={"#A0AEC0"}
-								/>
+									<TextInput
+										style={estilos.input}
+										clearTextOnFocus={true}
+										onChangeText={handleChange("email")}
+										onBlur={handleBlur("email")}
+										value={values.email}
+										blurOnSubmit={true}
+										keyboard={"email-address"}
+										placeholder={"Insira o seu email"}
+										placeholderTextColor={"#A0AEC0"}
+									/>
 
-								{errors.senha && (
-									<Text style={estilos.errorInput}>
-										{errors.senha}
+									{errors.email && (
+										<Text style={estilos.errorInput}>
+											{errors.email}
+										</Text>
+									)}
+								</View>
+								<View
+									style={[
+										estilos.containerInput,
+										tailwind("mb-12"),
+									]}
+								>
+									<Text style={estilos.labelInput}>
+										Senha
 									</Text>
-								)}
-							</View>
-							<TouchableOpacity
-								style={estilos.botaoPrimarioGrande}
-								onPress={handleSubmit}
-								title="Submit"
-							>
-								<Text style={estilos.textoBotao}>Entrar</Text>
-							</TouchableOpacity>
-							<TouchableOpacity style={estilos.botaoGoogle}>
-								<Text style={estilos.textoBotao}>
-									Entrar com o Google
-								</Text>
-							</TouchableOpacity>
+									<TextInput
+										style={estilos.input}
+										onChangeText={handleChange("senha")}
+										onBlur={handleBlur("senha")}
+										value={values.senha}
+										blurOnSubmit={true}
+										textContentType={"password"}
+										secureTextEntry={true}
+										placeholder={"Insira a sua senha"}
+										placeholderTextColor={"#A0AEC0"}
+									/>
 
-							<Text style={estilos.textoTerciario}>
-								Ainda não possui uma conta?
-							</Text>
-							<TouchableOpacity
-								style={estilos.botaoTerciarioGrande}
-							>
-								<Text style={estilos.textoBotaoTerciario}>
-									Cadastrar
+									{errors.senha && (
+										<Text style={estilos.errorInput}>
+											{errors.senha}
+										</Text>
+									)}
+								</View>
+								<TouchableOpacity
+									style={estilos.botaoPrimarioGrande}
+									onPress={handleSubmit}
+									title="Submit"
+								>
+									<Text style={estilos.textoBotao}>
+										Entrar
+									</Text>
+								</TouchableOpacity>
+								<TouchableOpacity style={estilos.botaoGoogle}>
+									<Text style={estilos.textoBotao}>
+										Entrar com o Google
+									</Text>
+								</TouchableOpacity>
+
+								<Text style={estilos.textoTerciario}>
+									Ainda não possui uma conta?
 								</Text>
-							</TouchableOpacity>
-						</View>
-					)}
-				</Formik>
-			</View>
-		</View>
+								<TouchableOpacity
+									style={estilos.botaoTerciarioGrande}
+								>
+									<Text style={estilos.textoBotaoTerciario}>
+										Cadastrar
+									</Text>
+								</TouchableOpacity>
+							</View>
+						)}
+					</Formik>
+				</View>
+				<View style={estilos.telaComplemento} />
+			</ScrollView>
+		</KeyboardAvoidingView>
 	);
 }
