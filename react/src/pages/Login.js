@@ -10,7 +10,7 @@ import {
 	KeyboardAvoidingView,
 	ScrollView,
 } from "react-native";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import tailwind from "tailwind-rn";
 
 const headerHeight = StatusBar.currentHeight;

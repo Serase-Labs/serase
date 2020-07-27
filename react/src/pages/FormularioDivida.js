@@ -20,35 +20,35 @@ const estiloExcecao = StyleSheet.create({
 	container: { paddingTop: headerHeight },
 });
 
-export default function FormularioMeta() {
+export default function FormularioDivida() {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={[estilos.telaInterior]}>
 				<View
 					accessibilityRole="header"
-					style={[tailwind("mb-10"), estilos.componenteLocalizacao]}
+					style={[tailwind("mb-6"), estilos.componenteLocalizacao]}
 				>
 					<Image
 						style={estilos.logoLocalizacao}
 						source={require("../assets/monologo512x512.png")}
 					/>
 					<Text style={estilos.textoLocalizacao}>
-						Formulário de Meta
+						Formulário de Divida
 					</Text>
 				</View>
 
-				<Text style={[estilos.textoFormulario, tailwind("mb-10")]}>
-					Nos dê informações sobre a sua meta financeira.
+				<Text style={[estilos.textoFormulario, tailwind("mb-6")]}>
+					Nos dê informações sobre a dívida que pretende quitar.
 				</Text>
 
 				<View style={estilos.containerFormulario}>
 					<Formik
 						initialValues={
-							({ quantia: "" },
-							{ prazo: "" },
-							{ disponibilidade: "" })
+							({ valorDivida: "" },
+							{ juros: "" },
+							{ periodoJuros: "" },
+							{ prazo: "" })
 						}
-						onSubmit={(values) => console.log(values)}
 					>
 						{({
 							handleChange,
@@ -60,29 +60,84 @@ export default function FormularioMeta() {
 							<View>
 								<View style={[estilos.containerInput]}>
 									<Text style={estilos.labelInput}>
-										Quantia
+										Valor
 									</Text>
 									<TextInput
 										style={estilos.input}
 										clearTextOnFocus={true}
-										onChangeText={handleChange("quantia")}
-										onBlur={handleBlur("quantia")}
-										value={values.quantia}
+										onChangeText={handleChange(
+											"valorDivida"
+										)}
+										onBlur={handleBlur("valorDivida")}
+										value={values.valorDivida}
 										blurOnSubmit={true}
 										keyboardType={"numeric"}
 										placeholder={
-											"Quanto você pretende juntar?"
+											"Qual o valor da sua dívida?"
 										}
 										placeholderTextColor={"#A0AEC0"}
 									/>
 
-									{errors.quantia && (
+									{errors.valorDivida && (
 										<Text style={estilos.errorInput}>
-											{errors.quantia}
+											{errors.valorDivida}
 										</Text>
 									)}
 								</View>
 								<View style={[estilos.containerInput]}>
+									<Text style={estilos.labelInput}>
+										Juros
+									</Text>
+									<TextInput
+										style={estilos.input}
+										clearTextOnFocus={true}
+										onChangeText={handleChange("juros")}
+										onBlur={handleBlur("juros")}
+										value={values.juros}
+										blurOnSubmit={true}
+										keyboardType={"numeric"}
+										placeholder={"Qual a taxa de juros?"}
+										placeholderTextColor={"#A0AEC0"}
+									/>
+
+									{errors.juros && (
+										<Text style={estilos.errorInput}>
+											{errors.juros}
+										</Text>
+									)}
+								</View>
+								<View style={[estilos.containerInput]}>
+									<Text style={estilos.labelInput}>
+										Período de Juros
+									</Text>
+									<TextInput
+										style={estilos.input}
+										clearTextOnFocus={true}
+										onChangeText={handleChange(
+											"periodoJuros"
+										)}
+										onBlur={handleBlur("periodoJuros")}
+										value={values.periodoJuros}
+										blurOnSubmit={true}
+										keyboardType={"numeric"}
+										placeholder={
+											"O juros é semanal ou mensal?"
+										}
+										placeholderTextColor={"#A0AEC0"}
+									/>
+
+									{errors.periodoJuros && (
+										<Text style={estilos.errorInput}>
+											{errors.periodoJuros}
+										</Text>
+									)}
+								</View>
+								<View
+									style={[
+										estilos.containerInput,
+										tailwind("mb-6"),
+									]}
+								>
 									<Text style={estilos.labelInput}>
 										Prazo
 									</Text>
@@ -95,41 +150,8 @@ export default function FormularioMeta() {
 										blurOnSubmit={true}
 										keyboardType={"numeric"}
 										placeholder={
-											"Quando deseja atingir a meta?"
+											"Qual o limite dessa dívida?"
 										}
-										placeholderTextColor={"#A0AEC0"}
-									/>
-
-									{errors.prazo && (
-										<Text style={estilos.errorInput}>
-											{errors.prazo}
-										</Text>
-									)}
-								</View>
-								<View
-									style={[
-										estilos.containerInput,
-										tailwind("mb-6"),
-									]}
-								>
-									<Text style={estilos.labelInput}>
-										Disponibilidade
-									</Text>
-									<Text style={estilos.textoDica}>
-										Quanto da sua renda fixa você quer
-										dedicar para a sua meta?
-									</Text>
-									<TextInput
-										style={estilos.input}
-										clearTextOnFocus={true}
-										onChangeText={handleChange(
-											"disponibilidade"
-										)}
-										onBlur={handleBlur("disponibilidade")}
-										value={values.disponibilidade}
-										blurOnSubmit={true}
-										keyboardType={"numeric"}
-										placeholder={"Exemplo: 20 indica 20%"}
 										placeholderTextColor={"#A0AEC0"}
 									/>
 
@@ -145,7 +167,7 @@ export default function FormularioMeta() {
 									title="Submit"
 								>
 									<Text style={estilos.textoBotao}>
-										Confirmar Meta
+										Confirmar
 									</Text>
 								</TouchableOpacity>
 							</View>
