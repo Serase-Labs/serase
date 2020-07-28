@@ -14,7 +14,6 @@ import {
 
 import { Formik} from "formik";
 import * as yup from 'yup';
-import {setLocale} from 'yup';
 import tailwind from "tailwind-rn";
 
 const headerHeight = StatusBar.currentHeight;
