@@ -12,8 +12,9 @@ import {
   TouchableNativeFeedback,
 } from "react-native";
 
-import { Formik, ErrorMessage } from "formik";
+import { Formik} from "formik";
 import * as yup from 'yup';
+import {setLocale} from 'yup';
 import tailwind from "tailwind-rn";
 
 const headerHeight = StatusBar.currentHeight;
@@ -55,14 +56,19 @@ const estilos = {
 	botaoGoogle: tailwind("bg-blue-500 py-2 rounded w-64 mb-5"),
 };
 
-const validations = yup.object().shape({
+const formatoEmail = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+).(\.[a-z]{2,3})$";
+
+const validationsCadastro = yup.object().shape({
   nome: yup.string()
     .required('Campo Obrigatório'),
   email: yup.string()
-    .required('Campo Obrigatório'),
+    .required('Campo Obrigatório')
+    .matches(formatoEmail, 'Formato Inválido'),
   senha: yup.string()
-    .required('Campo Obrigatório').min(8,'Digite pelo menos 8 caracteres'),
+    .required('Campo Obrigatório')
+    .min(8, 'Digite pelo menos 8 caracteres'),
   senhaConfirmacao: yup.string()
+    .required('Campo Obrigatório')
     .oneOf([yup.ref('senha'), null], 'As senhas não correspondem')
 });
 
@@ -91,7 +97,7 @@ export default function Cadastro() {
 							{ senhaConfirmacao: "" })
 						}
             onSubmit={(values) => console.log(values)}
-            validationSchema = {validations}
+            validationSchema = {validationsCadastro}
 					>
 						{({
 							handleChange,
@@ -157,6 +163,11 @@ export default function Cadastro() {
 										placeholder={"Insira a sua senha"}
 										placeholderTextColor={"#A0AEC0"}
 									/>
+									{errors.senha && (
+										<Text style={estilos.errorInput}>
+											{errors.senha}
+										</Text>
+									)}
 								</View>
 								<View
 									style={[
@@ -180,7 +191,7 @@ export default function Cadastro() {
 										placeholder={"Repita a sua senha"}
 										placeholderTextColor={"#A0AEC0"}
 									/>
-									{errors.senha && (
+									{errors.senhaConfirmacao && (
 										<Text style={estilos.errorInput}>
 											{errors.senhaConfirmacao}
 										</Text>
@@ -190,7 +201,7 @@ export default function Cadastro() {
 								<TouchableOpacity
 									style={estilos.botaoPrimarioGrande}
 									onPress={handleSubmit}
-									title="Submit"
+                  title="Submit"
 								>
 									<Text style={estilos.textoBotao}>
 										Cadastrar
