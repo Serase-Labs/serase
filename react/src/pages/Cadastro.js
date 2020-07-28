@@ -9,9 +9,11 @@ import {
 	StyleSheet,
 	KeyboardAvoidingView,
 	ScrollView,
+  TouchableNativeFeedback,
 } from "react-native";
 
-import { Formik } from "formik";
+import { Formik, ErrorMessage } from "formik";
+import * as yup from 'yup';
 import tailwind from "tailwind-rn";
 
 const headerHeight = StatusBar.currentHeight;
@@ -53,6 +55,18 @@ const estilos = {
 	botaoGoogle: tailwind("bg-blue-500 py-2 rounded w-64 mb-5"),
 };
 
+const validations = yup.object().shape({
+  nome: yup.string()
+    .required('Campo Obrigatório'),
+  email: yup.string()
+    .required('Campo Obrigatório'),
+  senha: yup.string()
+    .required('Campo Obrigatório').min(8,'Digite pelo menos 8 caracteres'),
+  senhaConfirmacao: yup.string()
+    .oneOf([yup.ref('senha'), null], 'As senhas não correspondem')
+});
+
+
 export default function Cadastro() {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
@@ -76,7 +90,8 @@ export default function Cadastro() {
 							{ senha: "" },
 							{ senhaConfirmacao: "" })
 						}
-						onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => console.log(values)}
+            validationSchema = {validations}
 					>
 						{({
 							handleChange,
@@ -101,7 +116,7 @@ export default function Cadastro() {
 
 									{errors.nome && (
 										<Text style={estilos.errorInput}>
-											{errors.email}
+											{errors.nome}
 										</Text>
 									)}
 								</View>
