@@ -1,8 +1,9 @@
 import React from 'react';
 import {View,Image,Text,TextInput,KeyboardAvoidingView} from 'react-native';
 import tailwind from 'tailwind-rn';
+import {Formik} from 'formik';
 
-export default function Cadastro() {
+function Cadastro() {
   return (
     <KeyboardAvoidingView>
 
@@ -52,3 +53,5 @@ export default function Cadastro() {
     </KeyboardAvoidingView>
   );
 }
+
+export default Cadastro();
