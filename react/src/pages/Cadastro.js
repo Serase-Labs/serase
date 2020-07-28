@@ -71,7 +71,7 @@ export default function Cadastro() {
 				<View style={estilos.containerFormulario}>
 					<Formik
 						initialValues={
-							({ senha: "" },
+							({nome: "" },
 							{ email: "" },
 							{ senha: "" },
 							{ senhaConfirmacao: "" })
@@ -93,7 +93,7 @@ export default function Cadastro() {
 										clearTextOnFocus={true}
 										onChangeText={handleChange("nome")}
 										onBlur={handleBlur("nome")}
-										value={values.email}
+										value={values.nome}
 										blurOnSubmit={true}
 										placeholder={"Insira o seu nome"}
 										placeholderTextColor={"#A0AEC0"}
