@@ -2,19 +2,6 @@ import "react-native-gesture-handler";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
-<<<<<<< HEAD
-import Login from './pages/Login';
-import Cadastro from './pages/Cadastro';
-import VisualizacaoGeral from './pages/VisualizacaoGeral'; 
-
-const Routes = createAppContainer(
-    createSwitchNavigator({
-        Login,
-        Cadastro,
-        VisualizacaoGeral,
-
-    })
-=======
 import Temp from "./pages/Temp";
 import PaginaInicial from "./pages/PaginaInicial";
 import Login from "./pages/Login";
@@ -41,7 +28,6 @@ const Routes = createAppContainer(
 			initialRouteName: "Temp",
 		}
 	)
->>>>>>> dev
 );
 
 export default Routes;
