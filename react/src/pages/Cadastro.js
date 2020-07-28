@@ -53,7 +53,7 @@ const estilos = {
 	botaoGoogle: tailwind("bg-blue-500 py-2 rounded w-64 mb-5"),
 };
 
-export default function Cadastro() {
+export default function Cadastro({navigation}) {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={estilos.telaInterior}>
@@ -76,7 +76,11 @@ export default function Cadastro() {
 							{ senha: "" },
 							{ senhaConfirmacao: "" })
 						}
-						onSubmit={(values) => console.log(values)}
+						onSubmit={(values) => {
+							console.log(values);
+							navigation.navigate("VisualizacaoGeral");
+						}
+						}
 					>
 						{({
 							handleChange,
@@ -181,7 +185,7 @@ export default function Cadastro() {
 										Cadastrar
 									</Text>
 								</TouchableOpacity>
-								<TouchableOpacity style={estilos.botaoGoogle}>
+								<TouchableOpacity style={estilos.botaoGoogle} onPress={() =>navigation.navigate("VisualizacaoGeral")}>
 									<Text style={estilos.textoBotao}>
 										Cadastrar com o Google
 									</Text>
