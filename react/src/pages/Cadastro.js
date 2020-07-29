@@ -67,8 +67,7 @@ const validationsCadastro = yup.object().shape({
     .oneOf([yup.ref('senha'), null], 'As senhas não correspondem')
 });
 
-
-export default function Cadastro() {
+export default function Cadastro({navigation}) {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={estilos.telaInterior}>
@@ -91,8 +90,11 @@ export default function Cadastro() {
 							{ senha: "" },
 							{ senhaConfirmacao: "" })
 						}
-            onSubmit={(values) => console.log(values)}
+						onSubmit={(values) => {
             validationSchema = {validationsCadastro}
+							navigation.navigate("VisualizacaoGeral");
+						}
+						}
 					>
 						{({
 							handleChange,

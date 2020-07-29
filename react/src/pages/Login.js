@@ -54,7 +54,7 @@ const estilos = {
 	botaoGoogle: tailwind("bg-blue-500 py-2 rounded w-64 mb-5"),
 };
 
-export default function Login() {
+export default function Login({navigation}) {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={estilos.telaInterior}>
@@ -72,7 +72,10 @@ export default function Login() {
 				<View style={estilos.containerFormulario}>
 					<Formik
 						initialValues={({ email: "" }, { senha: "" })}
-						onSubmit={(values) => console.log(values)}
+						onSubmit={(values) => {
+							console.log(values);
+							navigation.navigate("VisualizacaoGeral");
+						}}
 						validate={(values) => {
 							const errors = {};
 							if (!values.email) {
@@ -159,7 +162,7 @@ export default function Login() {
 										Entrar
 									</Text>
 								</TouchableOpacity>
-								<TouchableOpacity style={estilos.botaoGoogle}>
+									<TouchableOpacity style={estilos.botaoGoogle} onPress={() =>navigation.navigate("VisualizacaoGeral")}>
 									<Text style={estilos.textoBotao}>
 										Entrar com o Google
 									</Text>
@@ -170,6 +173,7 @@ export default function Login() {
 								</Text>
 								<TouchableOpacity
 									style={estilos.botaoTerciarioGrande}
+									onPress={() => navigation.navigate("Cadastro")}
 								>
 									<Text style={estilos.textoBotaoTerciario}>
 										Cadastrar

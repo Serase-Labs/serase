@@ -11,16 +11,16 @@ const estilos = {
 	textoBotao: tailwind("text-white font-medium text-lg text-center"),
 };
 
-export default function Login() {
+export default function Login({ navigation }) {
 	return (
 		<View style={estilos.tela}>
 			<Image source={require("../assets/primarylogo144x144.png")} />
 			<Text style={estilos.titulo}>Serase</Text>
 
-			<TouchableOpacity style={estilos.botaoSecundarioMedio}>
+			<TouchableOpacity style={estilos.botaoSecundarioMedio} onPress={() => navigation.navigate("Login")}>
 				<Text style={estilos.textoBotao}>Fazer Login</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={estilos.botaoPrimarioMedio}>
+			<TouchableOpacity style={estilos.botaoPrimarioMedio} onPress={() => navigation.navigate("Cadastro")}>
 				<Text style={estilos.textoBotao}>Cadastrar</Text>
 			</TouchableOpacity>
 		</View>
