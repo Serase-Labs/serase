@@ -11,7 +11,8 @@ import {
 	ScrollView,
 } from "react-native";
 
-import { Formik } from "formik";
+import { Formik} from "formik";
+import * as yup from 'yup';
 import tailwind from "tailwind-rn";
 
 const headerHeight = StatusBar.currentHeight;
@@ -48,10 +49,23 @@ const estilos = {
 	textoBotaoTerciario: tailwind(
 		"text-blue-700 font-medium text-lg text-center"
 	),
-
-	// Revisar se vamos utilizar autenticação pela Google
-	botaoGoogle: tailwind("bg-blue-500 py-2 rounded w-64 mb-5"),
 };
+
+const formatoEmail = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+).(\.[a-z]{2,3})$";
+
+const validationsCadastro = yup.object().shape({
+  nome: yup.string()
+    .required('Campo Obrigatório'),
+  email: yup.string()
+    .required('Campo Obrigatório')
+    .matches(formatoEmail, 'Formato Inválido'),
+  senha: yup.string()
+    .required('Campo Obrigatório')
+    .min(8, 'Digite pelo menos 8 caracteres'),
+  senhaConfirmacao: yup.string()
+    .required('Campo Obrigatório')
+    .oneOf([yup.ref('senha'), null], 'As senhas não correspondem')
+});
 
 export default function Cadastro({navigation}) {
 	return (
@@ -71,16 +85,16 @@ export default function Cadastro({navigation}) {
 				<View style={estilos.containerFormulario}>
 					<Formik
 						initialValues={
-							({ senha: "" },
+							({nome: "" },
 							{ email: "" },
 							{ senha: "" },
 							{ senhaConfirmacao: "" })
 						}
 						onSubmit={(values) => {
-							console.log(values);
 							navigation.navigate("VisualizacaoGeral");
 						}
 						}
+						validationSchema = {validationsCadastro}
 					>
 						{({
 							handleChange,
@@ -97,7 +111,7 @@ export default function Cadastro({navigation}) {
 										clearTextOnFocus={true}
 										onChangeText={handleChange("nome")}
 										onBlur={handleBlur("nome")}
-										value={values.email}
+										value={values.nome}
 										blurOnSubmit={true}
 										placeholder={"Insira o seu nome"}
 										placeholderTextColor={"#A0AEC0"}
@@ -105,7 +119,7 @@ export default function Cadastro({navigation}) {
 
 									{errors.nome && (
 										<Text style={estilos.errorInput}>
-											{errors.email}
+											{errors.nome}
 										</Text>
 									)}
 								</View>
@@ -146,6 +160,11 @@ export default function Cadastro({navigation}) {
 										placeholder={"Insira a sua senha"}
 										placeholderTextColor={"#A0AEC0"}
 									/>
+									{errors.senha && (
+										<Text style={estilos.errorInput}>
+											{errors.senha}
+										</Text>
+									)}
 								</View>
 								<View
 									style={[
@@ -169,7 +188,7 @@ export default function Cadastro({navigation}) {
 										placeholder={"Repita a sua senha"}
 										placeholderTextColor={"#A0AEC0"}
 									/>
-									{errors.senha && (
+									{errors.senhaConfirmacao && (
 										<Text style={estilos.errorInput}>
 											{errors.senhaConfirmacao}
 										</Text>
@@ -179,15 +198,10 @@ export default function Cadastro({navigation}) {
 								<TouchableOpacity
 									style={estilos.botaoPrimarioGrande}
 									onPress={handleSubmit}
-									title="Submit"
+                  					title="Submit"
 								>
 									<Text style={estilos.textoBotao}>
 										Cadastrar
-									</Text>
-								</TouchableOpacity>
-								<TouchableOpacity style={estilos.botaoGoogle} onPress={() =>navigation.navigate("VisualizacaoGeral")}>
-									<Text style={estilos.textoBotao}>
-										Cadastrar com o Google
 									</Text>
 								</TouchableOpacity>
 							</View>
