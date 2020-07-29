@@ -13,11 +13,23 @@ import {
 
 import { Formik } from "formik";
 import tailwind from "tailwind-rn";
+import * as yup from 'yup';
 
 const headerHeight = StatusBar.currentHeight;
 
 const estiloExcecao = StyleSheet.create({
 	container: { paddingTop: headerHeight },
+});
+
+const validationFormDividas = yup.object().shape({
+	valorDivida: yup.number()
+		.required('Campo Obrigatório')
+		.positive('Somente valores positivos'),
+	juros: yup.number()
+		.required('Campo Obrigatório')
+		.positive('Somente valores positivos')
+	
+
 });
 
 export default function FormularioDivida() {
@@ -49,6 +61,11 @@ export default function FormularioDivida() {
 							{ periodoJuros: "" },
 							{ prazo: "" })
 						}
+						onSubmit={(values) => {
+							console.log(values);
+						}
+						}
+						validationSchema = {validationFormDividas}
 					>
 						{({
 							handleChange,

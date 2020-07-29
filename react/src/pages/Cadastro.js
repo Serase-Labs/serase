@@ -91,6 +91,7 @@ export default function Cadastro({navigation}) {
 							{ senhaConfirmacao: "" })
 						}
 						onSubmit={(values) => {
+							console.log(values);
 							navigation.navigate("VisualizacaoGeral");
 						}
 						}
