@@ -11,6 +11,7 @@ import {
 	ScrollView,
 } from "react-native";
 
+import * as yup from "yup";
 import { Formik } from "formik";
 import tailwind from "tailwind-rn";
 
@@ -18,6 +19,19 @@ const headerHeight = StatusBar.currentHeight;
 
 const estiloExcecao = StyleSheet.create({
 	container: { paddingTop: headerHeight },
+});
+
+const validationsFormRenda = yup.object().shape({
+	rendaFixa: yup.number()
+		.required('Campo Obrigatório')
+		.positive('Apenas valores positivos'),
+	dataPagamento: yup.date()
+		.required('Campo Obrigatório'),
+	despesaFixa: yup.number()
+		.required('Campo Obrigatório'),
+	dependentes: yup.number()
+		.required('Campo Obrigatório')
+		.positive('Apenas valores positivos')
 });
 
 export default function FormularioDivida() {
@@ -50,6 +64,7 @@ export default function FormularioDivida() {
 							{ dependentes: "" })
 						}
 						onSubmit={(values) => console.log(values)}
+						validationSchema = {validationsFormRenda}
 					>
 						{({
 							handleChange,
@@ -127,9 +142,9 @@ export default function FormularioDivida() {
 										placeholderTextColor={"#A0AEC0"}
 									/>
 
-									{errors.rendaFixa && (
+									{errors.despesaFixa && (
 										<Text style={estilos.errorInput}>
-											{errors.rendaFixa}
+											{errors.despesaFixa}
 										</Text>
 									)}
 								</View>
