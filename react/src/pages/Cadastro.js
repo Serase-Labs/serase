@@ -91,10 +91,10 @@ export default function Cadastro({navigation}) {
 							{ senhaConfirmacao: "" })
 						}
 						onSubmit={(values) => {
-            validationSchema = {validationsCadastro}
 							navigation.navigate("VisualizacaoGeral");
 						}
 						}
+						validationSchema = {validationsCadastro}
 					>
 						{({
 							handleChange,
@@ -198,7 +198,7 @@ export default function Cadastro({navigation}) {
 								<TouchableOpacity
 									style={estilos.botaoPrimarioGrande}
 									onPress={handleSubmit}
-                  title="Submit"
+                  					title="Submit"
 								>
 									<Text style={estilos.textoBotao}>
 										Cadastrar
