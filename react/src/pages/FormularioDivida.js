@@ -26,9 +26,12 @@ const validationFormDividas = yup.object().shape({
 		.required('Campo Obrigatório')
 		.positive('Somente valores positivos'),
 	juros: yup.number()
+		.required('Campo Obrigatório'),
+	periodoJuros: yup.string()
 		.required('Campo Obrigatório')
-		.positive('Somente valores positivos')
-	
+		.matches(/(semanal|mensal)/, 'Por favor digite "semanal" ou "mensal" para o período dos juros'),
+	prazo: yup.string()
+		.required('Campo Obrigatório')
 
 });
 
@@ -136,7 +139,6 @@ export default function FormularioDivida() {
 										onBlur={handleBlur("periodoJuros")}
 										value={values.periodoJuros}
 										blurOnSubmit={true}
-										keyboardType={"numeric"}
 										placeholder={
 											"O juros é semanal ou mensal?"
 										}
