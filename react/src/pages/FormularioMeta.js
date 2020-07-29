@@ -11,6 +11,7 @@ import {
 	ScrollView,
 } from "react-native";
 
+import * as yup from 'yup';
 import { Formik } from "formik";
 import tailwind from "tailwind-rn";
 
@@ -18,6 +19,17 @@ const headerHeight = StatusBar.currentHeight;
 
 const estiloExcecao = StyleSheet.create({
 	container: { paddingTop: headerHeight },
+});
+
+const validationsFormMeta = yup.object().shape({
+	quantia: yup.number()
+		.required('Campo Obrigatório')
+		.positive('Apenas valores positivos'),
+	disponibilidade:  yup.number()
+		.required('Campo Obrigatório')
+		.positive('Apenas valores positivos'),
+	prazo: yup.date()
+		.required('Campo Obrogatório')
 });
 
 export default function FormularioMeta() {
@@ -49,6 +61,7 @@ export default function FormularioMeta() {
 							{ disponibilidade: "" })
 						}
 						onSubmit={(values) => console.log(values)}
+						validationSchema = {validationsFormMeta}
 					>
 						{({
 							handleChange,

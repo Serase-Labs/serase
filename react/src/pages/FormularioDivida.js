@@ -30,7 +30,7 @@ const validationFormDividas = yup.object().shape({
 	periodoJuros: yup.string()
 		.required('Campo Obrigatório')
 		.matches(/(semanal|mensal)/, 'Por favor digite "semanal" ou "mensal" para o período dos juros'),
-	prazo: yup.string()
+	prazo: yup.date()
 		.required('Campo Obrigatório')
 
 });
