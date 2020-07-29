@@ -9,7 +9,6 @@ import {
 	StyleSheet,
 	KeyboardAvoidingView,
 	ScrollView,
-  TouchableNativeFeedback,
 } from "react-native";
 
 import { Formik} from "formik";
@@ -50,9 +49,6 @@ const estilos = {
 	textoBotaoTerciario: tailwind(
 		"text-blue-700 font-medium text-lg text-center"
 	),
-
-	// Revisar se vamos utilizar autenticação pela Google
-	botaoGoogle: tailwind("bg-blue-500 py-2 rounded w-64 mb-5"),
 };
 
 const formatoEmail = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+).(\.[a-z]{2,3})$";
@@ -204,11 +200,6 @@ export default function Cadastro() {
 								>
 									<Text style={estilos.textoBotao}>
 										Cadastrar
-									</Text>
-								</TouchableOpacity>
-								<TouchableOpacity style={estilos.botaoGoogle}>
-									<Text style={estilos.textoBotao}>
-										Cadastrar com o Google
 									</Text>
 								</TouchableOpacity>
 							</View>
