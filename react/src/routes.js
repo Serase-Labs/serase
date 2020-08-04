@@ -10,6 +10,7 @@ import VisualizacaoGeral from "./pages/VisualizacaoGeral";
 import FormularioMetas from "./pages/FormularioMeta.js";
 import FormularioDivida from "./pages/FormularioDivida.js";
 import FormularioRenda from "./pages/FormularioRenda.js";
+import PerfilDeUso from "./pages/PerfilDeUso.js";
 
 const Routes = createAppContainer(
 	createStackNavigator(
@@ -22,6 +23,7 @@ const Routes = createAppContainer(
 			FormularioMetas,
 			FormularioDivida,
 			FormularioRenda,
+			PerfilDeUso
 		},
 		{
 			headerMode: "none",
