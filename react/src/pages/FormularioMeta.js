@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	Text,
 	View,
@@ -11,7 +11,8 @@ import {
 	ScrollView,
 } from "react-native";
 
-import * as yup from 'yup';
+import DateTimePicker from "@react-native-community/datetimepicker";
+import * as yup from "yup";
 import { Formik } from "formik";
 import tailwind from "tailwind-rn";
 
@@ -22,17 +23,31 @@ const estiloExcecao = StyleSheet.create({
 });
 
 const validationsFormMeta = yup.object().shape({
-	quantia: yup.number()
-		.required('Campo Obrigatório')
-		.positive('Apenas valores positivos'),
-	disponibilidade:  yup.number()
-		.required('Campo Obrigatório')
-		.positive('Apenas valores positivos'),
-	prazo: yup.date()
-		.required('Campo Obrogatório')
+	quantia: yup
+		.number()
+		.required("Campo Obrigatório")
+		.positive("Apenas valores positivos"),
+	disponibilidade: yup
+		.number()
+		.required("Campo Obrigatório")
+		.positive("Apenas valores positivos"),
+	prazo: yup.date().required("Campo Obrogatório"),
 });
 
 export default function FormularioMeta() {
+	const [date, setDate] = useState(new Date());
+	const [mode, setMode] = useState("date");
+	const [show, setShow] = useState(false);
+
+	const showMode = (currentMode) => {
+		setShow(true);
+		setMode(currentMode);
+	};
+
+	const showDatePicker = () => {
+		showMode("date");
+	};
+
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={[estilos.telaInterior]}>
@@ -61,12 +76,13 @@ export default function FormularioMeta() {
 							{ disponibilidade: "" })
 						}
 						onSubmit={(values) => console.log(values)}
-						validationSchema = {validationsFormMeta}
+						validationSchema={validationsFormMeta}
 					>
 						{({
 							handleChange,
 							handleBlur,
 							handleSubmit,
+							setFieldValue,
 							values,
 							errors,
 						}) => (
@@ -95,30 +111,46 @@ export default function FormularioMeta() {
 										</Text>
 									)}
 								</View>
-								<View style={[estilos.containerInput]}>
+								<TouchableOpacity
+									style={[estilos.containerInput]}
+									onPress={showDatePicker}
+								>
 									<Text style={estilos.labelInput}>
 										Prazo
 									</Text>
 									<TextInput
 										style={estilos.input}
-										clearTextOnFocus={true}
-										onChangeText={handleChange("prazo")}
-										onBlur={handleBlur("prazo")}
+										editable={false}
 										value={values.prazo}
-										blurOnSubmit={true}
-										keyboardType={"numeric"}
 										placeholder={
 											"Quando deseja atingir a meta?"
 										}
 										placeholderTextColor={"#A0AEC0"}
 									/>
 
+									{show && (
+										<DateTimePicker
+											value={date}
+											mode={mode}
+											display="default"
+											onChange={(event, selectedDate) => {
+												setShow(false);
+												const currentDate = selectedDate.toString();
+												setFieldValue(
+													"prazo",
+													currentDate
+												);
+												console.log(currentDate);
+											}}
+										/>
+									)}
+
 									{errors.prazo && (
 										<Text style={estilos.errorInput}>
 											{errors.prazo}
 										</Text>
 									)}
-								</View>
+								</TouchableOpacity>
 								<View
 									style={[
 										estilos.containerInput,

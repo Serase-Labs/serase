@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	Text,
 	View,
@@ -9,11 +9,13 @@ import {
 	StyleSheet,
 	KeyboardAvoidingView,
 	ScrollView,
+	Picker,
 } from "react-native";
 
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { Formik } from "formik";
 import tailwind from "tailwind-rn";
-import * as yup from 'yup';
+import * as yup from "yup";
 
 const headerHeight = StatusBar.currentHeight;
 
@@ -22,20 +24,25 @@ const estiloExcecao = StyleSheet.create({
 });
 
 const validationFormDividas = yup.object().shape({
-	valorDivida: yup.number()
-		.required('Campo Obrigatório')
-		.positive('Somente valores positivos'),
-	juros: yup.number()
-		.required('Campo Obrigatório'),
-	periodoJuros: yup.string()
-		.required('Campo Obrigatório')
-		.matches(/(semanal|mensal)/, 'Por favor digite "semanal" ou "mensal" para o período dos juros'),
-	prazo: yup.date()
-		.required('Campo Obrigatório')
-
+	valorDivida: yup
+		.number()
+		.required("Campo Obrigatório")
+		.positive("Somente valores positivos"),
+	juros: yup.number().required("Campo Obrigatório"),
+	periodoJuros: yup.string().required("Campo Obrigatório"),
+	prazo: yup.date().required("Campo Obrigatório"),
 });
 
 export default function FormularioDivida() {
+	const [date, setDate] = useState(new Date());
+	const [mode, setMode] = useState("date");
+	const [show, setShow] = useState(false);
+
+	const showDatePicker = () => {
+		setShow(true);
+		setMode("date");
+	};
+
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={[estilos.telaInterior]}>
@@ -66,14 +73,14 @@ export default function FormularioDivida() {
 						}
 						onSubmit={(values) => {
 							console.log(values);
-						}
-						}
-						validationSchema = {validationFormDividas}
+						}}
+						validationSchema={validationFormDividas}
 					>
 						{({
 							handleChange,
 							handleBlur,
 							handleSubmit,
+							setFieldValue,
 							values,
 							errors,
 						}) => (
@@ -128,22 +135,39 @@ export default function FormularioDivida() {
 								</View>
 								<View style={[estilos.containerInput]}>
 									<Text style={estilos.labelInput}>
-										Período de Juros
+										Frequência de Juros
 									</Text>
-									<TextInput
-										style={estilos.input}
-										clearTextOnFocus={true}
-										onChangeText={handleChange(
-											"periodoJuros"
-										)}
-										onBlur={handleBlur("periodoJuros")}
-										value={values.periodoJuros}
-										blurOnSubmit={true}
-										placeholder={
-											"O juros é semanal ou mensal?"
-										}
-										placeholderTextColor={"#A0AEC0"}
-									/>
+
+									<Picker
+										mode="dropdown"
+										onValueChange={(
+											itemValue,
+											itemIndex
+										) => {
+											setFieldValue(
+												"periodoJuros",
+												itemValue
+											);
+											console.log(itemValue);
+										}}
+									>
+										<Picker.Item
+											label="Anualmente"
+											value="anualmente"
+										/>
+										<Picker.Item
+											label="Mensalmente"
+											value="mensalmente"
+										/>
+										<Picker.Item
+											label="Semanalmente"
+											value="semanalmente"
+										/>
+										<Picker.Item
+											label="Sem Juros"
+											value="nunca"
+										/>
+									</Picker>
 
 									{errors.periodoJuros && (
 										<Text style={estilos.errorInput}>
@@ -151,35 +175,47 @@ export default function FormularioDivida() {
 										</Text>
 									)}
 								</View>
-								<View
+								<TouchableOpacity
 									style={[
 										estilos.containerInput,
 										tailwind("mb-6"),
 									]}
+									onPress={showDatePicker}
 								>
 									<Text style={estilos.labelInput}>
 										Prazo
 									</Text>
+
 									<TextInput
 										style={estilos.input}
-										clearTextOnFocus={true}
-										onChangeText={handleChange("prazo")}
-										onBlur={handleBlur("prazo")}
+										editable={false}
 										value={values.prazo}
-										blurOnSubmit={true}
-										keyboardType={"numeric"}
-										placeholder={
-											"Qual o limite dessa dívida?"
-										}
+										placeholder={"Selecione a data."}
 										placeholderTextColor={"#A0AEC0"}
 									/>
 
+									{show && (
+										<DateTimePicker
+											value={date}
+											mode={mode}
+											display="default"
+											onChange={(event, selectedDate) => {
+												setShow(false);
+												const currentDate = selectedDate.toString();
+												setFieldValue(
+													"prazo",
+													currentDate
+												);
+												console.log(currentDate);
+											}}
+										/>
+									)}
 									{errors.prazo && (
 										<Text style={estilos.errorInput}>
 											{errors.prazo}
 										</Text>
 									)}
-								</View>
+								</TouchableOpacity>
 								<TouchableOpacity
 									style={estilos.botaoPrimarioGrande}
 									onPress={handleSubmit}
