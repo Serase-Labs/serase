@@ -12,6 +12,8 @@ import {
 	Picker,
 } from "react-native";
 
+import IndicadorNavegacao from "../components/IndicadorNavegacao";
+
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Formik } from "formik";
 import tailwind from "tailwind-rn";
@@ -46,18 +48,7 @@ export default function FormularioDivida() {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={[estilos.telaInterior]}>
-				<View
-					accessibilityRole="header"
-					style={[tailwind("mb-6"), estilos.componenteLocalizacao]}
-				>
-					<Image
-						style={estilos.logoLocalizacao}
-						source={require("../assets/monologo512x512.png")}
-					/>
-					<Text style={estilos.textoLocalizacao}>
-						Formulário de Divida
-					</Text>
-				</View>
+				<IndicadorNavegacao tela="Formulário de Dívida" />
 
 				<Text style={[estilos.textoFormulario, tailwind("mb-6")]}>
 					Nos dê informações sobre a dívida que pretende quitar.
@@ -237,12 +228,6 @@ export default function FormularioDivida() {
 const estilos = {
 	tela: tailwind("flex-1 bg-white"),
 	telaInterior: tailwind("flex-1"),
-
-	componenteLocalizacao: tailwind(
-		"w-full flex flex-row items-center pt-5 pl-5"
-	),
-	logoLocalizacao: tailwind("mr-3 w-8 h-8"),
-	textoLocalizacao: tailwind("text-base"),
 
 	textoFormulario: tailwind(
 		"text-lg text-gray-900 w-3/4 flex self-center text-center"

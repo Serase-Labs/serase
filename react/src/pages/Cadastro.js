@@ -11,8 +11,9 @@ import {
 	ScrollView,
 } from "react-native";
 
-import { Formik} from "formik";
-import * as yup from 'yup';
+import IndicadorNavegacao from "../components/IndicadorNavegacao";
+import { Formik } from "formik";
+import * as yup from "yup";
 import tailwind from "tailwind-rn";
 
 const headerHeight = StatusBar.currentHeight;
@@ -26,12 +27,6 @@ const estiloExcecao = StyleSheet.create({
 const estilos = {
 	tela: tailwind("bg-white flex-1"),
 	telaInterior: tailwind("flex-1"),
-
-	componenteLocalizacao: tailwind(
-		"w-full flex flex-row items-center pt-5 pl-5"
-	),
-	logoLocalizacao: tailwind("mr-3 w-8 h-8"),
-	textoLocalizacao: tailwind("text-base"),
 
 	containerFormulario: tailwind("w-full items-center"),
 	containerInput: tailwind("w-64 mb-2"),
@@ -51,41 +46,35 @@ const estilos = {
 	),
 };
 
-const formatoEmail = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+).(\.[a-z]{2,3})$";
+const formatoEmail =
+	"^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+).(.[a-z]{2,3})$";
 
 const validationsCadastro = yup.object().shape({
-  nome: yup.string()
-    .required('Campo Obrigatório'),
-  email: yup.string()
-    .required('Campo Obrigatório')
-    .matches(formatoEmail, 'Formato Inválido'),
-  senha: yup.string()
-    .required('Campo Obrigatório')
-    .min(8, 'Digite pelo menos 8 caracteres'),
-  senhaConfirmacao: yup.string()
-    .required('Campo Obrigatório')
-    .oneOf([yup.ref('senha'), null], 'As senhas não correspondem')
+	nome: yup.string().required("Campo Obrigatório"),
+	email: yup
+		.string()
+		.required("Campo Obrigatório")
+		.matches(formatoEmail, "Formato Inválido"),
+	senha: yup
+		.string()
+		.required("Campo Obrigatório")
+		.min(8, "Digite pelo menos 8 caracteres"),
+	senhaConfirmacao: yup
+		.string()
+		.required("Campo Obrigatório")
+		.oneOf([yup.ref("senha"), null], "As senhas não correspondem"),
 });
 
-export default function Cadastro({navigation}) {
+export default function Cadastro({ navigation }) {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={estilos.telaInterior}>
-				<View
-					accessibilityRole="header"
-					style={[tailwind("mb-6"), estilos.componenteLocalizacao]}
-				>
-					<Image
-						style={estilos.logoLocalizacao}
-						source={require("../assets/monologo512x512.png")}
-					/>
-					<Text style={estilos.textoLocalizacao}>Cadastro</Text>
-				</View>
+				<IndicadorNavegacao tela="Cadastro" />
 
 				<View style={estilos.containerFormulario}>
 					<Formik
 						initialValues={
-							({nome: "" },
+							({ nome: "" },
 							{ email: "" },
 							{ senha: "" },
 							{ senhaConfirmacao: "" })
@@ -93,9 +82,8 @@ export default function Cadastro({navigation}) {
 						onSubmit={(values) => {
 							console.log(values);
 							navigation.navigate("VisualizacaoGeral");
-						}
-						}
-						validationSchema = {validationsCadastro}
+						}}
+						validationSchema={validationsCadastro}
 					>
 						{({
 							handleChange,
@@ -199,7 +187,7 @@ export default function Cadastro({navigation}) {
 								<TouchableOpacity
 									style={estilos.botaoPrimarioGrande}
 									onPress={handleSubmit}
-                  					title="Submit"
+									title="Submit"
 								>
 									<Text style={estilos.textoBotao}>
 										Cadastrar

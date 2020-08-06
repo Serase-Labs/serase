@@ -10,6 +10,8 @@ import {
 	KeyboardAvoidingView,
 	ScrollView,
 } from "react-native";
+
+import IndicadorNavegacao from "../components/IndicadorNavegacao";
 import { Formik } from "formik";
 import tailwind from "tailwind-rn";
 
@@ -24,12 +26,6 @@ const estiloExcecao = StyleSheet.create({
 const estilos = {
 	tela: tailwind("flex-1 bg-white"),
 	telaInterior: tailwind("flex-1"),
-
-	componenteLocalizacao: tailwind(
-		"w-full flex flex-row items-center pt-5 pl-5"
-	),
-	logoLocalizacao: tailwind("mr-3 w-8 h-8"),
-	textoLocalizacao: tailwind("text-base"),
 
 	containerFormulario: tailwind("w-full items-center"),
 	containerInput: tailwind("w-64 mb-2"),
@@ -54,20 +50,11 @@ const estilos = {
 	botaoGoogle: tailwind("bg-blue-500 py-2 rounded w-64 mb-5"),
 };
 
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={estilos.telaInterior}>
-				<View
-					accessibilityRole="header"
-					style={[tailwind("mb-16"), estilos.componenteLocalizacao]}
-				>
-					<Image
-						style={estilos.logoLocalizacao}
-						source={require("../assets/monologo512x512.png")}
-					/>
-					<Text style={estilos.textoLocalizacao}>Fazer Login</Text>
-				</View>
+				<IndicadorNavegacao tela="Login" />
 
 				<View style={estilos.containerFormulario}>
 					<Formik
@@ -162,7 +149,12 @@ export default function Login({navigation}) {
 										Entrar
 									</Text>
 								</TouchableOpacity>
-									<TouchableOpacity style={estilos.botaoGoogle} onPress={() =>navigation.navigate("VisualizacaoGeral")}>
+								<TouchableOpacity
+									style={estilos.botaoGoogle}
+									onPress={() =>
+										navigation.navigate("VisualizacaoGeral")
+									}
+								>
 									<Text style={estilos.textoBotao}>
 										Entrar com o Google
 									</Text>
@@ -173,7 +165,9 @@ export default function Login({navigation}) {
 								</Text>
 								<TouchableOpacity
 									style={estilos.botaoTerciarioGrande}
-									onPress={() => navigation.navigate("Cadastro")}
+									onPress={() =>
+										navigation.navigate("Cadastro")
+									}
 								>
 									<Text style={estilos.textoBotaoTerciario}>
 										Cadastrar
