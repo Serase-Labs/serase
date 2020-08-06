@@ -2,7 +2,6 @@ import React from "react";
 import {
 	Text,
 	View,
-	Image,
 	TouchableOpacity,
 	TextInput,
 	StatusBar,
@@ -41,7 +40,7 @@ export default function FormularioDivida() {
 			<ScrollView style={[estilos.telaInterior]}>
 				<IndicadorNavegacao tela="Formulário de Renda" />
 
-				<Text style={[estilos.textoFormulario, tailwind("mb-6")]}>
+				<Text style={[estilos.textoFormulario, tailwind("mb-6 mt-6")]}>
 					Precisamos traçar o seu perfil financeiro.
 				</Text>
 
@@ -83,32 +82,6 @@ export default function FormularioDivida() {
 									{errors.rendaFixa && (
 										<Text style={estilos.errorInput}>
 											{errors.rendaFixa}
-										</Text>
-									)}
-								</View>
-								<View style={[estilos.containerInput]}>
-									<Text style={estilos.labelInput}>
-										Data de Pagamento
-									</Text>
-									<TextInput
-										style={estilos.input}
-										clearTextOnFocus={true}
-										onChangeText={handleChange(
-											"dataPagamento"
-										)}
-										onBlur={handleBlur("dataPagamento")}
-										value={values.dataPagamento}
-										blurOnSubmit={true}
-										keyboardType={"numeric"}
-										placeholder={
-											"Quando seu pagamento cai?"
-										}
-										placeholderTextColor={"#A0AEC0"}
-									/>
-
-									{errors.dataPagamento && (
-										<Text style={estilos.errorInput}>
-											{errors.dataPagamento}
 										</Text>
 									)}
 								</View>
