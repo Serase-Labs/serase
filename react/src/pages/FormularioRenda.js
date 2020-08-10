@@ -26,7 +26,6 @@ const validationsFormRenda = yup.object().shape({
 		.number()
 		.required("Campo Obrigatório")
 		.positive("Apenas valores positivos"),
-	dataPagamento: yup.date().required("Campo Obrigatório"),
 	despesaFixa: yup.number().required("Campo Obrigatório"),
 	dependentes: yup
 		.number()
@@ -48,7 +47,6 @@ export default function FormularioDivida() {
 					<Formik
 						initialValues={
 							({ rendaFixa: "" },
-							{ dataPagamento: "" },
 							{ despesaFixa: "" },
 							{ dependentes: "" })
 						}
