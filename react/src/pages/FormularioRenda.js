@@ -33,7 +33,7 @@ const validationsFormRenda = yup.object().shape({
 		.positive("Apenas valores positivos"),
 });
 
-export default function FormularioDivida() {
+export default function FormularioDivida({navigation}) {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={[estilos.telaInterior]}>
@@ -50,7 +50,10 @@ export default function FormularioDivida() {
 							{ despesaFixa: "" },
 							{ dependentes: "" })
 						}
-						onSubmit={(values) => console.log(values)}
+						onSubmit={(values) => {
+							console.log(values);
+							navigation.navigate("VisualizacaoGeral");
+						}}
 						validationSchema={validationsFormRenda}
 					>
 						{({

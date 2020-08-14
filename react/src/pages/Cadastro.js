@@ -81,7 +81,7 @@ export default function Cadastro({ navigation }) {
 						}
 						onSubmit={(values) => {
 							console.log(values);
-							navigation.navigate("VisualizacaoGeral");
+							navigation.navigate("PerfilDeUso");
 						}}
 						validationSchema={validationsCadastro}
 					>

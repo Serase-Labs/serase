@@ -35,7 +35,7 @@ const validationFormDividas = yup.object().shape({
 	prazo: yup.date().required("Campo Obrigatório"),
 });
 
-export default function FormularioDivida() {
+export default function FormularioDivida({ navigation }) {
 	const [date, setDate] = useState(new Date());
 	const [mode, setMode] = useState("date");
 	const [show, setShow] = useState(false);
@@ -64,6 +64,7 @@ export default function FormularioDivida() {
 						}
 						onSubmit={(values) => {
 							console.log(values);
+							navigation.navigate("VisualizacaoGeral");
 						}}
 						validationSchema={validationFormDividas}
 					>
