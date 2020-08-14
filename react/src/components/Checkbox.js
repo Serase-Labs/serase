@@ -1,18 +1,22 @@
 import React from "react";
 import {
-    Text,
+    Animated,
     View,
+    TouchableOpacity
 } from "react-native";
 
 import tailwind from "tailwind-rn";
 
 
 const estilos = {
-    checkbox: tailwind("rounded-full border-gray-400 w-5 h-5 border mr-3"),
-    checkbox_check: tailwind("border-green-400 border-4"),
+    checkbox: tailwind("rounded-full border-gray-400 w-5 h-5 mr-3"),
+    checkbox_check: tailwind("border-green-400"),
     containerInput: tailwind("w-64"),
 };
 
+const borda_tamanho = 1;
+const borda_check = 4;
+const tempo_animacao = 200;
 
 export class Checkbox extends React.Component{
 
@@ -20,31 +24,75 @@ export class Checkbox extends React.Component{
         super(props);
         this.state = {
             selecionado: false,
+            fadeAnim: new Animated.Value(borda_tamanho)
         };
+    }
+
+    get valor(){
+        return this.props.valor;
     }
 
     deselecionar(){
         this.setState({
             selecionado: false
         });
+
+        this._fadeOut();
+
+        if (this.props.onChange)
+            this.props.onChange(false);
     }
 
     selecionar(){
         this.setState({
             selecionado: true
         });
+
+        this._fadeIn();
+
+        if (this.props.onChange)
+            this.props.onChange(true);
     }
 
     handlerSelecionar(){
-        if (this.state.selecionado)
+        if (this.state.selecionado){
             this.deselecionar();
-        else
+        }
+        else{
             this.selecionar();
+        }
 
-        console.log(this.props)
+        if (this.props.controller)
+            this.props.controller.handlerSelecionado(this);
+    }
+
+    renderChildren() {
+        // Não queria ter que clonar os elementos, porém não consegui achar uma solução melhor tendo em vista que não temos acesso direto ao filho
+        return React.Children.map(this.props.children, child => {
+            return React.cloneElement(child, {
+                checkbox: this
+            });
+        })
+    }
+
+    _fadeIn = () => {
+        console.log("aaa");
+        Animated.timing(this.state.fadeAnim, {
+            toValue: borda_check,
+            duration: tempo_animacao
+        }).start();
+    }
+
+    _fadeOut = () => {
+        console.log("bbb");
+        Animated.timing(this.state.fadeAnim, {
+            toValue: borda_tamanho,
+            duration: tempo_animacao
+        }).start();
     }
 
     render() {
+        
         let estilo_checkbox_bola = [estilos.checkbox];
 
         if (this.state.selecionado){
@@ -52,12 +100,12 @@ export class Checkbox extends React.Component{
         }
 
         return (
-            <View style={tailwind("flex-row mb-2")}>
-                <View style={estilo_checkbox_bola} onClick={this.handlerSelecionar.bind(this)} />
+            <TouchableOpacity activeOpacity={0.5} style={tailwind("flex-row mb-2")} onPress={this.handlerSelecionar.bind(this)}>
+                <Animated.View style={[{ borderWidth: this.state.fadeAnim }, estilo_checkbox_bola]} />
                 <View style={estilos.containerInput}>
-                    {this.props.children}
+                    {this.renderChildren()}
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }
@@ -71,20 +119,40 @@ export class CheckboxControl extends React.Component{
     }
 
     get valor(){
-        return this.state.selecionado.valor;
+        return this.state.selecionado ? this.state.selecionado.valor : null;
     }
 
     handlerSelecionado(checkbox){
-        if (this.state.selecionado && this.state.selecionado!=checkbox){
-            this.state.selecionado.deselecionar();
+        const callback = this.props.onChange || (() => {});
+
+        if(this.state.selecionado == null){
             this.state.selecionado = checkbox;
+            callback(checkbox.valor);
         }
+        else if (this.state.selecionado!=checkbox){
+            this.state.selecionado.deselecionar();
+            this.setState({ selecionado: checkbox});
+            callback(checkbox.valor);
+        } else {
+            this.state.selecionado = null;
+            callback(null);
+        }
+        
+    }
+
+    renderChildren(){
+        // Não queria ter que clonar os elementos, porém não consegui achar uma solução melhor tendo em vista que não temos acesso direto ao filho
+        return React.Children.map(this.props.children, child => {
+            return React.cloneElement(child, {
+                controller: this
+            });
+        })
     }
 
     render(){
         return (
             <View>
-                {this.props.children}
+                {this.renderChildren()}
             </View>
         );
     }

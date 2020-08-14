@@ -24,103 +24,139 @@ const estiloExcecao = StyleSheet.create({
 const estilos = {
 	tela: tailwind("flex-1 bg-white"),
 	telaInterior: tailwind("flex-1"),
-
-	componenteLocalizacao: tailwind(
-		"w-full flex flex-row items-center pt-5 pl-5"
-	),
+	componenteLocalizacao: tailwind("w-full flex flex-row items-center pt-5 pl-5"),
 	logoLocalizacao: tailwind("mr-3 w-8 h-8"),
 	textoLocalizacao: tailwind("text-base"),
-
-	textoFormulario: tailwind(
-		"text-lg text-gray-900 w-3/4 flex self-center text-center"
-	),
-
-	containerFormulario: tailwind("w-full items-center"),
+	textoFormulario: tailwind("text-lg text-gray-900 w-3/4 flex self-center text-center"),
+	containerFormulario: tailwind("w-full h-full items-center"),
 	containerInput: tailwind("w-64"),
-	labelInput: tailwind("text-gray-700 text-base font-bold mb-1"),
-	textoDica: tailwind("text-gray-700 text-base mb-3"),
-	input: tailwind(
-		"border border-gray-500 rounded w-full py-2 px-3 text-gray-700 text-base"
-	),
-	errorInput: tailwind(
-		"bg-red-100 border border-red-400 text-red-700 px-4 py-2 mt-2 rounded relative"
-	),
-
-	botaoPrimarioGrande: tailwind("bg-green-400 py-2 rounded w-64 mb-5"),
+	labelInput: tailwind("text-base font-bold mb-1"),
+	textoDica: tailwind("text-base mb-3"),
+	corCinza: tailwind("text-gray-700"),
+	corVerde: tailwind("text-green-400"),
+	input: tailwind("border border-gray-500 rounded w-full py-2 px-3 text-gray-700 text-base"),
+	errorInput: tailwind("bg-red-100 border border-red-400 text-red-700 px-4 py-2 mt-2 rounded relative"),
+	botaoPrimarioGrande: tailwind("py-2 rounded w-64 mb-5"),
+	botaoDesabilitado: tailwind("bg-gray-500 bg-opacity-75"),
+	botaoHabilitado: tailwind("bg-green-400 bg-opacity-100"),
 	textoBotao: tailwind("text-white font-medium text-lg text-center"),
 	botaoTerciarioGrande: tailwind("bg-transparent py-2 rounded w-64"),
-	textoBotaoTerciario: tailwind(
-		"text-blue-700 font-medium text-lg text-center"
-	),
+	textoBotaoTerciario: tailwind("text-blue-700 font-medium text-lg text-center"),
 };
 
 const perfis = Object.entries({
-	"Diário Financeiro": "Anote suas compras e despesas. Observe seu comportamento financeiro.",
-	"Quitador de Divída": "Anote suas compras e despesas enquanto segue um planejamento para quitar sua divída.",
-	"Meta Fechada": "Anote suas compras e despesas enquanto segue um planejamento para alcançar uma meta pessoal.",
+	"Diário Financeiro": {
+		desc: "Anote suas compras e despesas. Observe seu comportamento financeiro.",
+		page: "FormularioRenda"
+	},
+	"Quitador de Divída": {
+		desc: "Anote suas compras e despesas enquanto segue um planejamento para quitar sua divída.",
+		page: "FormularioDivida"
+	},
+	"Meta Fechada": {
+		desc: "Anote suas compras e despesas enquanto segue um planejamento para alcançar uma meta pessoal.",
+		page: "FormularioMeta"
+	},
 });
 
-function selecionaUm(nome){
-	let el=null;
+class DetalhesPerfilDeUso extends React.Component{
+	constructor(props) {
+		super(props);
+	}
 
-	for(let i=0; i< perfis.length; i++){
-		let nomePerfil = perfis[i][0];
-		if(nomePerfil==nome)
-			el = elementos_checkbox[i];
+	render(){
+		let checkbox_selecionado = this.props.checkbox ? this.props.checkbox.state.selecionado : false;
+
+		const estilo_label = [estilos.labelInput];
+		const estilo_desc = [estilos.textoDica];
+
+		if(checkbox_selecionado){
+			estilo_label.push(estilos.corVerde);
+			estilo_desc.push(estilos.corVerde);
+		} else {
+			estilo_label.push(estilos.corCinza);
+			estilo_desc.push(estilos.corCinza);
+		}
+
+		return (
+		<View>
+			<Text style={estilo_label}>
+				{this.props.nome}
+			</Text>
+			<Text style={estilo_desc}>
+				{this.props.desc}
+			</Text>
+		</View>
+		);	
 	}
 }
 
-const elementos_checkbox = perfis.map(([nome, desc]) =>
-	<Checkbox key={nome}>
-		<Text style={estilos.labelInput}>
-			{nome}
-		</Text>
-		<Text style={estilos.textoDica}>
-			{desc}
-		</Text>
-	</Checkbox>
-);
+export default class PerfilDeUso extends React.Component{
+	constructor(props) {
+		super(props);
+		this.state = {
+			perfil: null
+		};
 
+		this.redirecionar = this.redirecionar.bind(this);
+	}
 
-export default function PerfilDeUso() {
-	return (
-		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
-			<ScrollView style={[estilos.telaInterior]}>
-				<View
-					accessibilityRole="header"
-					style={[tailwind("mb-6"), estilos.componenteLocalizacao]}
-				>
-					<Image
-						style={estilos.logoLocalizacao}
-						source={require("../assets/monologo512x512.png")}
-					/>
-					<Text style={estilos.textoLocalizacao}>
-						Perfil de Uso
+	redirecionar() {
+		console.log(this.state.perfil);
+		if (this.state.perfil != null)
+			this.props.navigation.navigate(this.state.perfil);
+	}
+
+	render(){
+		const checkbox_controle = (
+			<CheckboxControl onChange={valor => this.setState({perfil: valor}) }>
+				{perfis.map(([nome, infos]) =>
+
+					<Checkbox key={nome} valor={infos.page}>
+						<DetalhesPerfilDeUso nome={nome} desc={infos.desc} />
+					</Checkbox>
+				)}
+			</CheckboxControl>
+		);
+
+		const estilos_botao = [estilos.botaoPrimarioGrande, this.state.perfil == null ? estilos.botaoDesabilitado : estilos.botaoHabilitado];
+
+		return (
+			<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
+				<ScrollView style={[estilos.telaInterior]}>
+					<View
+						accessibilityRole="header"
+						style={[tailwind("mb-6"), estilos.componenteLocalizacao]}
+					>
+						<Image
+							style={estilos.logoLocalizacao}
+							source={require("../assets/monologo512x512.png")}
+						/>
+						<Text style={estilos.textoLocalizacao}>
+							Perfil de Uso
 					</Text>
-				</View>
+					</View>
 
-				<Text style={[estilos.textoFormulario, tailwind("mb-6")]}>
-					Escolha como você deseja usar o <Text style={tailwind("text-green-400")}>SeraSe.</Text>
-				</Text>
+					<Text style={[estilos.textoFormulario, tailwind("mb-6")]}>
+						Escolha como você deseja usar o <Text style={tailwind("text-green-400")}>SeraSe.</Text>
+					</Text>
 
-				<View style={estilos.containerFormulario}>
-					<View>
-						<CheckboxControl>
-							{elementos_checkbox}
-						</CheckboxControl>
+					<View style={estilos.containerFormulario}>
+						{checkbox_controle}
 						<TouchableOpacity
-							style={estilos.botaoPrimarioGrande}
+							style={estilos_botao}
 							title="Submit"
+							onPress={this.redirecionar}
+							disabled={this.state.perfil == null}
 						>
 							<Text style={estilos.textoBotao}>
 								Confirmar Dados
 							</Text>
 						</TouchableOpacity>
 					</View>
-				</View>
-			</ScrollView>
-		</KeyboardAvoidingView>
-	);
+				</ScrollView>
+			</KeyboardAvoidingView>
+		);
+	}
 }
-
 
