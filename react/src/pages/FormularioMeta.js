@@ -35,7 +35,7 @@ const validationsFormMeta = yup.object().shape({
 	prazo: yup.date().required("Campo Obrogatório"),
 });
 
-export default function FormularioMeta() {
+export default function FormularioMeta({ navigation }) {
 	const [date, setDate] = useState(new Date());
 	const [mode, setMode] = useState("date");
 	const [show, setShow] = useState(false);
@@ -65,7 +65,10 @@ export default function FormularioMeta() {
 							{ prazo: "" },
 							{ disponibilidade: "" })
 						}
-						onSubmit={(values) => console.log(values)}
+						onSubmit={(values) => {
+							console.log(values);
+							navigation.navigate("VisualizacaoGeral");
+						}}
 						validationSchema={validationsFormMeta}
 					>
 						{({

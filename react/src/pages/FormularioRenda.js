@@ -26,7 +26,6 @@ const validationsFormRenda = yup.object().shape({
 		.number()
 		.required("Campo Obrigatório")
 		.positive("Apenas valores positivos"),
-	dataPagamento: yup.date().required("Campo Obrigatório"),
 	despesaFixa: yup.number().required("Campo Obrigatório"),
 	dependentes: yup
 		.number()
@@ -34,7 +33,7 @@ const validationsFormRenda = yup.object().shape({
 		.positive("Apenas valores positivos"),
 });
 
-export default function FormularioDivida() {
+export default function FormularioDivida({navigation}) {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={[estilos.telaInterior]}>
@@ -48,11 +47,13 @@ export default function FormularioDivida() {
 					<Formik
 						initialValues={
 							({ rendaFixa: "" },
-							{ dataPagamento: "" },
 							{ despesaFixa: "" },
 							{ dependentes: "" })
 						}
-						onSubmit={(values) => console.log(values)}
+						onSubmit={(values) => {
+							console.log(values);
+							navigation.navigate("VisualizacaoGeral");
+						}}
 						validationSchema={validationsFormRenda}
 					>
 						{({
