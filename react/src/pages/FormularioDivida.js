@@ -36,6 +36,10 @@ const validationFormDividas = yup.object().shape({
 });
 
 export default function FormularioDivida({ navigation }) {
+	// Hooks para o Select
+	const [selectedValue, setSelectedValue] = useState("anualmente");
+
+	// Hooks para o Date Picker
 	const [date, setDate] = useState(new Date());
 	const [mode, setMode] = useState("date");
 	const [show, setShow] = useState(false);
@@ -132,6 +136,7 @@ export default function FormularioDivida({ navigation }) {
 
 									<Picker
 										mode="dropdown"
+										selectedValue={selectedValue}
 										onValueChange={(
 											itemValue,
 											itemIndex
@@ -140,6 +145,7 @@ export default function FormularioDivida({ navigation }) {
 												"periodoJuros",
 												itemValue
 											);
+											setSelectedValue(itemValue);
 											console.log(itemValue);
 										}}
 									>
