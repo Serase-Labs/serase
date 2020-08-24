@@ -44,6 +44,7 @@ const estilos = {
 	textoBotaoTerciario: tailwind(
 		"text-blue-700 font-medium text-lg text-center"
 	),
+	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
 };
 
 const formatoEmail =
@@ -191,6 +192,17 @@ export default function Cadastro({ navigation }) {
 								>
 									<Text style={estilos.textoBotao}>
 										Cadastrar
+									</Text>
+								</TouchableOpacity>
+								<Text style={estilos.textoTerciario}>
+									Já possui uma conta?
+								</Text>
+								<TouchableOpacity
+									style={estilos.botaoTerciarioGrande}
+									onPress={() => navigation.navigate("Login")}
+								>
+									<Text style={estilos.textoBotaoTerciario}>
+										Fazer Login
 									</Text>
 								</TouchableOpacity>
 							</View>

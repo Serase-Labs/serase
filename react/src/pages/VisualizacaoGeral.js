@@ -2,7 +2,6 @@ import * as React from "react";
 import {
 	StatusBar,
 	StyleSheet,
-	Image,
 	Text,
 	View,
 	TouchableOpacity,
@@ -13,7 +12,6 @@ import IconeMenu from "../assets/icons/IconeMenu";
 import IconeDespesa from "../assets/icons/IconeDespesa";
 import IconeReceita from "../assets/icons/IconeReceita";
 import IconeRelatorio from "../assets/icons/IconeRelatorio";
-import IconeInformacao from "../assets/icons/IconeInformacao";
 
 const headerHeight = StatusBar.currentHeight;
 
