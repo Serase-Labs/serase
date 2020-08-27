@@ -3,7 +3,7 @@ import Svg, { Path } from "react-native-svg";
 import React from "react";
 import { View, StyleSheet } from "react-native";
 
-export default class SvgExample extends React.Component {
+export default class IconeAdicionar extends React.Component {
 	constructor(props) {
 		super(props);
 		// A elaborar

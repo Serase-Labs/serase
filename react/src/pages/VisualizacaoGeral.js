@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import {
 	StatusBar,
 	StyleSheet,
@@ -6,6 +7,7 @@ import {
 	Text,
 	View,
 	TouchableOpacity,
+	ScrollView,
 } from "react-native";
 import tailwind from "tailwind-rn";
 
@@ -13,7 +15,7 @@ import IconeMenu from "../assets/icons/IconeMenu";
 import IconeDespesa from "../assets/icons/IconeDespesa";
 import IconeReceita from "../assets/icons/IconeReceita";
 import IconeRelatorio from "../assets/icons/IconeRelatorio";
-import IconeInformacao from "../assets/icons/IconeInformacao";
+import ListaVazia from "../components/ListaVazia.js";
 
 const headerHeight = StatusBar.currentHeight;
 
@@ -42,6 +44,8 @@ const estiloExcecao = StyleSheet.create({
 });
 
 export default function VisualizacaoGeral() {
+	const [populada, setPopulada] = useState(false);
+
 	const balanca_valores = [
 		["R$500", "NA BALANÇA ATUAL"],
 		["R$2.000", "GUARDADO"],
@@ -57,7 +61,11 @@ export default function VisualizacaoGeral() {
 	];
 
 	return (
-		<View style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}>
+		<ScrollView
+			bounces={true}
+			showsVerticalScrollIndicator={false}
+			style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}
+		>
 			<View
 				style={tailwind(
 					"p-5 w-full flex flex-row justify-between items-center"
@@ -84,7 +92,6 @@ export default function VisualizacaoGeral() {
 					tailwind(
 						"mx-5 p-5 bg-blue-700 flex flex-row justify-between rounded-md"
 					),
-					{ elevation: 3 },
 				]}
 			>
 				<View>
@@ -118,7 +125,7 @@ export default function VisualizacaoGeral() {
 						tailwind(
 							"w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md"
 						),
-						{ elevation: 1 },
+						{ elevation: 2 },
 					]}
 				>
 					<View style={tailwind("w-8 h-8 mb-1")}>
@@ -179,7 +186,16 @@ export default function VisualizacaoGeral() {
 				<Text style={tailwind("text-lg font-bold")}>
 					Movimentações Recentes
 				</Text>
+
+				{populada == false ? (
+					<ListaVazia
+						mensagem="Você ainda não adicionou nenhuma movimentação, assim que o fizer
+				elas aparecerão aqui."
+					/>
+				) : (
+					<Text>AAAA</Text>
+				)}
 			</View>
-		</View>
+		</ScrollView>
 	);
 }
