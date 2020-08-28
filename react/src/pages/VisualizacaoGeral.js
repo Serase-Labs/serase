@@ -43,7 +43,9 @@ const estiloExcecao = StyleSheet.create({
 	},
 });
 
-export default function VisualizacaoGeral() {
+export default function VisualizacaoGeral({ navigation }) {
+	// Hook implementado pra teste do componente ListaVazia
+	// Deve ser retirado quando a conexão com o BD for implementada
 	const [populada, setPopulada] = useState(false);
 
 	const balanca_valores = [
@@ -127,6 +129,7 @@ export default function VisualizacaoGeral() {
 						),
 						{ elevation: 2 },
 					]}
+					onPress={() => navigation.navigate("Receitas")}
 				>
 					<View style={tailwind("w-8 h-8 mb-1")}>
 						<IconeReceita uso="sistema" />
@@ -147,6 +150,7 @@ export default function VisualizacaoGeral() {
 						),
 						{ elevation: 1 },
 					]}
+					onPress={() => navigation.navigate("Despesas")}
 				>
 					<View style={tailwind("w-8 h-8 mb-1")}>
 						<IconeDespesa uso="sistema" />
@@ -167,6 +171,7 @@ export default function VisualizacaoGeral() {
 						),
 						{ elevation: 1 },
 					]}
+					onPress={() => navigation.navigate("Relatorios")}
 				>
 					<View style={tailwind("w-8 h-8 mb-1")}>
 						<IconeRelatorio />
@@ -187,14 +192,16 @@ export default function VisualizacaoGeral() {
 					Movimentações Recentes
 				</Text>
 
-				{populada == false ? (
-					<ListaVazia
-						mensagem="Você ainda não adicionou nenhuma movimentação, assim que o fizer
+				<View style={tailwind("opacity-25")}>
+					{populada == false ? (
+						<ListaVazia
+							mensagem="Você ainda não adicionou nenhuma movimentação, assim que o fizer
 				elas aparecerão aqui."
-					/>
-				) : (
-					<Text>AAAA</Text>
-				)}
+						/>
+					) : (
+						<Text>AAAA</Text>
+					)}
+				</View>
 			</View>
 		</ScrollView>
 	);
