@@ -2,8 +2,6 @@ import React from "react";
 import {
 	Text,
 	View,
-	Image,
-	TouchableOpacity,
 	TextInput,
 	StatusBar,
 	StyleSheet,
@@ -12,6 +10,7 @@ import {
 } from "react-native";
 
 import IndicadorNavegacao from "../components/IndicadorNavegacao";
+import Botao from "../components/Botao";
 import { Formik } from "formik";
 import * as yup from "yup";
 import tailwind from "tailwind-rn";
@@ -38,12 +37,6 @@ const estilos = {
 		"bg-red-100 border border-red-400 text-red-700 px-4 py-2 mt-2 rounded relative"
 	),
 
-	botaoPrimarioGrande: tailwind("bg-green-400 py-2 rounded w-64 mb-5"),
-	textoBotao: tailwind("text-white font-medium text-lg text-center"),
-	botaoTerciarioGrande: tailwind("bg-transparent py-2 rounded w-64"),
-	textoBotaoTerciario: tailwind(
-		"text-blue-700 font-medium text-lg text-center"
-	),
 	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
 };
 
@@ -185,26 +178,24 @@ export default function Cadastro({ navigation }) {
 									)}
 								</View>
 
-								<TouchableOpacity
-									style={estilos.botaoPrimarioGrande}
+								<Botao
+									ordem="primario"
+									tamanho="grande"
 									onPress={handleSubmit}
-									title="Submit"
-								>
-									<Text style={estilos.textoBotao}>
-										Cadastrar
-									</Text>
-								</TouchableOpacity>
+									label="Cadastrar"
+									espacamento={true}
+								></Botao>
+
 								<Text style={estilos.textoTerciario}>
 									Já possui uma conta?
 								</Text>
-								<TouchableOpacity
-									style={estilos.botaoTerciarioGrande}
+
+								<Botao
+									ordem="terciario"
+									tamanho="grande"
 									onPress={() => navigation.navigate("Login")}
-								>
-									<Text style={estilos.textoBotaoTerciario}>
-										Fazer Login
-									</Text>
-								</TouchableOpacity>
+									label="Fazer Login"
+								></Botao>
 							</View>
 						)}
 					</Formik>
