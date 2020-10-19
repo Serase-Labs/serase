@@ -12,6 +12,9 @@ import FormularioDivida from "./pages/FormularioDivida.js";
 import FormularioRenda from "./pages/FormularioRenda.js";
 import PerfilDeUso from "./pages/PerfilDeUso.js";
 
+// Não-oficial
+import Inicio from "./pages/Inicio.js";
+
 const Routes = createAppContainer(
 	createStackNavigator(
 		{
@@ -23,7 +26,8 @@ const Routes = createAppContainer(
 			FormularioMeta,
 			FormularioDivida,
 			FormularioRenda,
-			PerfilDeUso
+			PerfilDeUso,
+			Inicio,
 		},
 		{
 			headerMode: "none",
