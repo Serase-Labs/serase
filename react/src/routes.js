@@ -11,6 +11,9 @@ import FormularioMeta from "./pages/FormularioMeta.js";
 import FormularioDivida from "./pages/FormularioDivida.js";
 import FormularioRenda from "./pages/FormularioRenda.js";
 import PerfilDeUso from "./pages/PerfilDeUso.js";
+import Receitas from "./pages/Receitas.js";
+import Despesas from "./pages/Despesas.js";
+import Relatorios from "./pages/Relatorios.js";
 
 // Não-oficial
 import Inicio from "./pages/Inicio.js";
@@ -26,8 +29,10 @@ const Routes = createAppContainer(
 			FormularioMeta,
 			FormularioDivida,
 			FormularioRenda,
+			Receitas,
+			Despesas,
+			Relatorios,
 			PerfilDeUso,
-			Inicio,
 		},
 		{
 			headerMode: "none",
