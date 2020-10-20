@@ -9,12 +9,12 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { NavigationContainer, TabActions } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-// Telas chamadas pelo Menu.
-// Não são as telas oficiais, obviamente, mas as coloquei pra testar a
-// funcionalidade do menu.
+// Telas chamadas pelo Menu e seus ícones correspondentes.
 import VisualizacaoGeral from "./VisualizacaoGeral.js";
-import PerfilDeUso from "./PerfilDeUso.js";
+import IconeInicio from "../assets/icons/IconeInicio.js";
 import MovimentacaoComum from "./MovimentacaoComum.js";
+import Central from "./Central.js";
+import IconeCentral from "../assets/icons/IconeCentral.js";
 
 // Estilização do botão de adicionar
 import IconeAdicionar from "../assets/icons/IconeAdicionar.js";
@@ -60,7 +60,60 @@ export default function Inicio({ navigation }) {
 									</TouchableOpacity>
 								</>
 							);
+						} else if (route.name === "Inicio") {
+							button = focused ? (
+								<>
+									<View
+										style={tailwind(
+											"flex h-full justify-center items-center w-32"
+										)}
+									>
+										<View style={tailwind("w-6 h-6")}>
+											<IconeInicio estado="ativo" />
+										</View>
+									</View>
+								</>
+							) : (
+								<>
+									<View
+										style={tailwind(
+											"flex h-full justify-center items-center w-32"
+										)}
+									>
+										<View style={tailwind("w-6 h-6")}>
+											<IconeInicio estado="inativo" />
+										</View>
+									</View>
+								</>
+							);
+						} else if (route.name === "Central") {
+							button = focused ? (
+								<>
+									<View
+										style={tailwind(
+											"flex h-full justify-center items-center w-32"
+										)}
+									>
+										<View style={tailwind("w-6 h-6")}>
+											<IconeCentral estado="ativo" />
+										</View>
+									</View>
+								</>
+							) : (
+								<>
+									<View
+										style={tailwind(
+											"flex h-full justify-center items-center w-32"
+										)}
+									>
+										<View style={tailwind("w-6 h-6")}>
+											<IconeCentral estado="inativo" />
+										</View>
+									</View>
+								</>
+							);
 						}
+
 						return button;
 					},
 				})}
@@ -75,7 +128,7 @@ export default function Inicio({ navigation }) {
 			>
 				<Tab.Screen name="Inicio" component={VisualizacaoGeral} />
 				<Tab.Screen name="Adicionar" component={MovimentacaoComum} />
-				<Tab.Screen name="Settings" component={PerfilDeUso} />
+				<Tab.Screen name="Central" component={Central} />
 			</Tab.Navigator>
 		</NavigationContainer>
 	);
