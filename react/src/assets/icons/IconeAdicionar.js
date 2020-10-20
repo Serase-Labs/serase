@@ -7,7 +7,7 @@ export default class IconeAdicionar extends React.Component {
 	constructor(props) {
 		super(props);
 		// A elaborar
-		this.color = props.uso == "sistema" ? "#2A4365" : "#2AF598";
+		this.color = props.uso == "sistema" ? "#FFFFFF" : "#2AF598";
 	}
 
 	render() {
@@ -22,8 +22,8 @@ export default class IconeAdicionar extends React.Component {
 					strokeWidth="1.5"
 					height={"100%"}
 					width="100%"
-					viewBox="0 0 100 100"
-					color="red"
+					viewBox="0 0 24 24"
+					color={this.color}
 				>
 					<Path
 						stroke="currentColor"

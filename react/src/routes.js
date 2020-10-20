@@ -17,6 +17,7 @@ import Relatorios from "./pages/Relatorios.js";
 
 // Não-oficial
 import Inicio from "./pages/Inicio.js";
+import MovimentacaoComum from "./pages/MovimentacaoComum.js";
 
 const Routes = createAppContainer(
 	createStackNavigator(
@@ -33,6 +34,8 @@ const Routes = createAppContainer(
 			Despesas,
 			Relatorios,
 			PerfilDeUso,
+			Inicio,
+			MovimentacaoComum,
 		},
 		{
 			headerMode: "none",
