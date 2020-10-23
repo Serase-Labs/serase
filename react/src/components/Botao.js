@@ -67,11 +67,3 @@ export default function Botao(props) {
 // se um botão possui outro elemento imediatamente abaixo dele,
 // é imperativo que esse valor seja true.
 Botao.defaultProps = { espacamento: false };
-
-// Os tipos aceitos para cada uma das props
-Botao.propTypes = {
-	ordem: PropTypes.string,
-	tamanho: PropTypes.string,
-	label: PropTypes.string,
-	espacamento: PropTypes.bool,
-};

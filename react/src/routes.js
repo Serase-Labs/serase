@@ -11,6 +11,7 @@ import FormularioMeta from "./pages/FormularioMeta.js";
 import FormularioDivida from "./pages/FormularioDivida.js";
 import FormularioRenda from "./pages/FormularioRenda.js";
 import PerfilDeUso from "./pages/PerfilDeUso.js";
+import Confirmacao from "./pages/Confirmacao.js";
 
 const Routes = createAppContainer(
 	createStackNavigator(
@@ -23,7 +24,8 @@ const Routes = createAppContainer(
 			FormularioMeta,
 			FormularioDivida,
 			FormularioRenda,
-			PerfilDeUso
+			PerfilDeUso,
+			Confirmacao,
 		},
 		{
 			headerMode: "none",
