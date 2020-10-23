@@ -1,14 +1,11 @@
 import React from "react";
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View, Image } from "react-native";
 import tailwind from "tailwind-rn";
+import Botao from "../components/Botao.js";
 
 const estilos = {
 	tela: tailwind("pt-32 items-center h-full bg-white"),
 	titulo: tailwind("mt-6 mb-16 text-4xl font-bold text-blue-800"),
-
-	botaoPrimarioGrande: tailwind("bg-green-400 py-2 rounded w-64"),
-	botaoSecundarioGrande: tailwind("bg-blue-800 py-2 rounded w-64 mb-4"),
-	textoBotao: tailwind("text-white font-medium text-lg text-center"),
 };
 
 export default function Login({ navigation }) {
@@ -45,31 +42,21 @@ export default function Login({ navigation }) {
 					Sua vida financeira, na palma da sua mão.
 				</Text>
 
-				<TouchableOpacity
-					style={estilos.botaoSecundarioGrande}
+				<Botao
+					ordem="secundario"
+					tamanho="grande"
 					onPress={() => navigation.navigate("Login")}
-				>
-					<Text style={estilos.textoBotao}>Fazer Login</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={estilos.botaoPrimarioGrande}
+					label="Fazer Login"
+					espacamento={true}
+				></Botao>
+
+				<Botao
+					ordem="primario"
+					tamanho="grande"
 					onPress={() => navigation.navigate("Cadastro")}
-				>
-					<Text style={estilos.textoBotao}>Cadastrar</Text>
-				</TouchableOpacity>
+					label="Cadastrar"
+				></Botao>
 			</View>
 		</View>
-
-		/* <View style={estilos.tela}>
-			<Image source={require("../assets/primarylogo144x144.png")} />
-			<Text style={estilos.titulo}>Serase</Text>
-
-			<TouchableOpacity style={estilos.botaoSecundarioMedio} onPress={() => navigation.navigate("Login")}>
-				<Text style={estilos.textoBotao}>Fazer Login</Text>
-			</TouchableOpacity>
-			<TouchableOpacity style={estilos.botaoPrimarioMedio} onPress={() => navigation.navigate("Cadastro")}>
-				<Text style={estilos.textoBotao}>Cadastrar</Text>
-			</TouchableOpacity>
-		</View> */
 	);
 }

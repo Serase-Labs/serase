@@ -2,8 +2,6 @@ import React from "react";
 import {
 	Text,
 	View,
-	Image,
-	TouchableOpacity,
 	TextInput,
 	StatusBar,
 	StyleSheet,
@@ -12,6 +10,7 @@ import {
 } from "react-native";
 
 import IndicadorNavegacao from "../components/IndicadorNavegacao";
+import Botao from "../components/Botao.js";
 import { Formik } from "formik";
 import tailwind from "tailwind-rn";
 
@@ -140,39 +139,26 @@ export default function Login({ navigation }) {
 										</Text>
 									)}
 								</View>
-								<TouchableOpacity
-									style={estilos.botaoPrimarioGrande}
+								<Botao
+									ordem="primario"
+									tamanho="grande"
 									onPress={handleSubmit}
-									title="Submit"
-								>
-									<Text style={estilos.textoBotao}>
-										Entrar
-									</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
-									style={estilos.botaoGoogle}
-									onPress={() =>
-										navigation.navigate("VisualizacaoGeral")
-									}
-								>
-									<Text style={estilos.textoBotao}>
-										Entrar com o Google
-									</Text>
-								</TouchableOpacity>
+									label="Entrar"
+									espacamento={true}
+								></Botao>
 
 								<Text style={estilos.textoTerciario}>
 									Ainda não possui uma conta?
 								</Text>
-								<TouchableOpacity
-									style={estilos.botaoTerciarioGrande}
+
+								<Botao
+									ordem="terciario"
+									tamanho="grande"
 									onPress={() =>
 										navigation.navigate("Cadastro")
 									}
-								>
-									<Text style={estilos.textoBotaoTerciario}>
-										Cadastrar
-									</Text>
-								</TouchableOpacity>
+									label="Cadastrar"
+								></Botao>
 							</View>
 						)}
 					</Formik>
