@@ -12,6 +12,13 @@ import FormularioDivida from "./pages/FormularioDivida.js";
 import FormularioRenda from "./pages/FormularioRenda.js";
 import PerfilDeUso from "./pages/PerfilDeUso.js";
 import Confirmacao from "./pages/Confirmacao.js";
+import Receitas from "./pages/Receitas.js";
+import Despesas from "./pages/Despesas.js";
+import Relatorios from "./pages/Relatorios.js";
+
+// Não-oficial
+import Inicio from "./pages/Inicio.js";
+import MovimentacaoComum from "./pages/MovimentacaoComum.js";
 
 const Routes = createAppContainer(
 	createStackNavigator(
@@ -26,6 +33,12 @@ const Routes = createAppContainer(
 			FormularioRenda,
 			PerfilDeUso,
 			Confirmacao,
+			Receitas,
+			Despesas,
+			Relatorios,
+			PerfilDeUso,
+			Inicio,
+			MovimentacaoComum,
 		},
 		{
 			headerMode: "none",
