@@ -10,11 +10,11 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
-import IconeMenu from "../assets/icons/IconeMenu";
-import IconeDespesa from "../assets/icons/IconeDespesa";
-import IconeReceita from "../assets/icons/IconeReceita";
-import IconeRelatorio from "../assets/icons/IconeRelatorio";
-import ListaVazia from "../components/ListaVazia.js";
+import IconeMenu from "./assets/IconeMenu";
+import IconeDespesa from "./assets/IconeDespesa";
+import IconeReceita from "./assets/IconeReceita";
+import IconeRelatorio from "./assets/IconeRelatorio";
+import ListaVazia from "./components/ListaVazia.js";
 
 const headerHeight = StatusBar.currentHeight;
 

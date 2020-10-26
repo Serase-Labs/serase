@@ -9,8 +9,7 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
-import IconeMenu from "../assets/icons/IconeMenu";
-import FormularioVazio from "../assets/ilustracoes/FormularioVazio";
+import FormularioVazio from "../assets/IlustracaoFormularioVazio";
 
 export default function ListaVazia({ mensagem }) {
 	return (

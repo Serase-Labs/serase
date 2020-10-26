@@ -2,8 +2,8 @@ import React from "react";
 import tailwind from "tailwind-rn";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
-import Botao from "../components/Botao.js";
-import IlustracaoCadastro from "../assets/ilustracoes/IlustracaoCadastro.js";
+import Botao from "../comum/components/Botao.js";
+import IlustracaoCadastro from "../comum/assets/IlustracaoCadastro.js";
 
 const windowHeight = Dimensions.get("window").height;
 

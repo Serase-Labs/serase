@@ -11,13 +11,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // Telas chamadas pelo Menu e seus ícones correspondentes.
 import VisualizacaoGeral from "./VisualizacaoGeral.js";
-import IconeInicio from "../assets/icons/IconeInicio.js";
-import MovimentacaoComum from "./MovimentacaoComum.js";
-import Central from "./Central.js";
-import IconeCentral from "../assets/icons/IconeCentral.js";
+import IconeInicio from "./assets/IconeInicio.js";
+import MovimentacaoComum from "../feature-movimentacoes/MovimentacaoComum.js";
+import Central from "../feature-notificacoes/Central.js";
+import IconeCentral from "./assets/IconeCentral.js";
 
 // Estilização do botão de adicionar
-import IconeAdicionar from "../assets/icons/IconeAdicionar.js";
+import IconeAdicionar from "./assets/IconeAdicionar.js";
 const cor = StyleSheet.create({
 	primaria: {
 		height: 60,

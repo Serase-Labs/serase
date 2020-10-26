@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
-import IconeVoltar from "../assets/icons/IconeVoltar";
+import IconeVoltar from "../assets/IconeVoltar";
 
 export default function IndicadorRetorno({ telaAtual }) {
 	return (

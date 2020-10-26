@@ -9,15 +9,13 @@ import {
 	StyleSheet,
 	KeyboardAvoidingView,
 	ScrollView,
-	Picker,
 } from "react-native";
 
-import IndicadorNavegacao from "../components/IndicadorNavegacao";
-
+import IndicadorNavegacao from "../comum/components/IndicadorNavegacao";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import * as yup from "yup";
 import { Formik } from "formik";
 import tailwind from "tailwind-rn";
-import * as yup from "yup";
 
 const headerHeight = StatusBar.currentHeight;
 
@@ -25,52 +23,53 @@ const estiloExcecao = StyleSheet.create({
 	container: { paddingTop: headerHeight },
 });
 
-const validationFormDividas = yup.object().shape({
-	valorDivida: yup
+const validationsFormMeta = yup.object().shape({
+	quantia: yup
 		.number()
 		.required("Campo Obrigatório")
-		.positive("Somente valores positivos"),
-	juros: yup.number().required("Campo Obrigatório"),
-	periodoJuros: yup.string().required("Campo Obrigatório"),
-	prazo: yup.date().required("Campo Obrigatório"),
+		.positive("Apenas valores positivos"),
+	disponibilidade: yup
+		.number()
+		.required("Campo Obrigatório")
+		.positive("Apenas valores positivos"),
+	prazo: yup.date().required("Campo Obrogatório"),
 });
 
-export default function FormularioDivida({ navigation }) {
-	// Hooks para o Select
-	const [selectedValue, setSelectedValue] = useState("anualmente");
-
-	// Hooks para o Date Picker
+export default function FormularioMeta({ navigation }) {
 	const [date, setDate] = useState(new Date());
 	const [mode, setMode] = useState("date");
 	const [show, setShow] = useState(false);
 
-	const showDatePicker = () => {
+	const showMode = (currentMode) => {
 		setShow(true);
-		setMode("date");
+		setMode(currentMode);
+	};
+
+	const showDatePicker = () => {
+		showMode("date");
 	};
 
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={[estilos.telaInterior]}>
-				<IndicadorNavegacao tela="Formulário de Dívida" />
+				<IndicadorNavegacao tela="Formulário de Meta" />
 
-				<Text style={[estilos.textoFormulario, tailwind("mb-6")]}>
-					Nos dê informações sobre a dívida que pretende quitar.
+				<Text style={[estilos.textoFormulario, tailwind("mb-10")]}>
+					Nos dê informações sobre a sua meta financeira.
 				</Text>
 
 				<View style={estilos.containerFormulario}>
 					<Formik
 						initialValues={
-							({ valorDivida: "" },
-							{ juros: "" },
-							{ periodoJuros: "" },
-							{ prazo: "" })
+							({ quantia: "" },
+							{ prazo: "" },
+							{ disponibilidade: "" })
 						}
 						onSubmit={(values) => {
 							console.log(values);
 							navigation.navigate("VisualizacaoGeral");
 						}}
-						validationSchema={validationFormDividas}
+						validationSchema={validationsFormMeta}
 					>
 						{({
 							handleChange,
@@ -83,112 +82,42 @@ export default function FormularioDivida({ navigation }) {
 							<View>
 								<View style={[estilos.containerInput]}>
 									<Text style={estilos.labelInput}>
-										Valor
+										Quantia
 									</Text>
 									<TextInput
 										style={estilos.input}
 										clearTextOnFocus={true}
-										onChangeText={handleChange(
-											"valorDivida"
-										)}
-										onBlur={handleBlur("valorDivida")}
-										value={values.valorDivida}
+										onChangeText={handleChange("quantia")}
+										onBlur={handleBlur("quantia")}
+										value={values.quantia}
 										blurOnSubmit={true}
 										keyboardType={"numeric"}
 										placeholder={
-											"Qual o valor da sua dívida?"
+											"Quanto você pretende juntar?"
 										}
 										placeholderTextColor={"#A0AEC0"}
 									/>
 
-									{errors.valorDivida && (
+									{errors.quantia && (
 										<Text style={estilos.errorInput}>
-											{errors.valorDivida}
-										</Text>
-									)}
-								</View>
-								<View style={[estilos.containerInput]}>
-									<Text style={estilos.labelInput}>
-										Juros
-									</Text>
-									<TextInput
-										style={estilos.input}
-										clearTextOnFocus={true}
-										onChangeText={handleChange("juros")}
-										onBlur={handleBlur("juros")}
-										value={values.juros}
-										blurOnSubmit={true}
-										keyboardType={"numeric"}
-										placeholder={"Qual a taxa de juros?"}
-										placeholderTextColor={"#A0AEC0"}
-									/>
-
-									{errors.juros && (
-										<Text style={estilos.errorInput}>
-											{errors.juros}
-										</Text>
-									)}
-								</View>
-								<View style={[estilos.containerInput]}>
-									<Text style={estilos.labelInput}>
-										Frequência de Juros
-									</Text>
-
-									<Picker
-										mode="dropdown"
-										selectedValue={selectedValue}
-										onValueChange={(
-											itemValue,
-											itemIndex
-										) => {
-											setFieldValue(
-												"periodoJuros",
-												itemValue
-											);
-											setSelectedValue(itemValue);
-											console.log(itemValue);
-										}}
-									>
-										<Picker.Item
-											label="Anualmente"
-											value="anualmente"
-										/>
-										<Picker.Item
-											label="Mensalmente"
-											value="mensalmente"
-										/>
-										<Picker.Item
-											label="Semanalmente"
-											value="semanalmente"
-										/>
-										<Picker.Item
-											label="Sem Juros"
-											value="nunca"
-										/>
-									</Picker>
-
-									{errors.periodoJuros && (
-										<Text style={estilos.errorInput}>
-											{errors.periodoJuros}
+											{errors.quantia}
 										</Text>
 									)}
 								</View>
 								<TouchableOpacity
-									style={[
-										estilos.containerInput,
-										tailwind("mb-6"),
-									]}
+									style={[estilos.containerInput]}
 									onPress={showDatePicker}
 								>
 									<Text style={estilos.labelInput}>
 										Prazo
 									</Text>
-
 									<TextInput
 										style={estilos.input}
 										editable={false}
 										value={values.prazo}
-										placeholder={"Selecione a data."}
+										placeholder={
+											"Quando deseja atingir a meta?"
+										}
 										placeholderTextColor={"#A0AEC0"}
 									/>
 
@@ -208,19 +137,53 @@ export default function FormularioDivida({ navigation }) {
 											}}
 										/>
 									)}
+
 									{errors.prazo && (
 										<Text style={estilos.errorInput}>
 											{errors.prazo}
 										</Text>
 									)}
 								</TouchableOpacity>
+								<View
+									style={[
+										estilos.containerInput,
+										tailwind("mb-6"),
+									]}
+								>
+									<Text style={estilos.labelInput}>
+										Disponibilidade
+									</Text>
+									<Text style={estilos.textoDica}>
+										Quanto da sua renda fixa você quer
+										dedicar para a sua meta?
+									</Text>
+									<TextInput
+										style={estilos.input}
+										clearTextOnFocus={true}
+										onChangeText={handleChange(
+											"disponibilidade"
+										)}
+										onBlur={handleBlur("disponibilidade")}
+										value={values.disponibilidade}
+										blurOnSubmit={true}
+										keyboardType={"numeric"}
+										placeholder={"Exemplo: 20 indica 20%"}
+										placeholderTextColor={"#A0AEC0"}
+									/>
+
+									{errors.prazo && (
+										<Text style={estilos.errorInput}>
+											{errors.prazo}
+										</Text>
+									)}
+								</View>
 								<TouchableOpacity
 									style={estilos.botaoPrimarioGrande}
 									onPress={handleSubmit}
 									title="Submit"
 								>
 									<Text style={estilos.textoBotao}>
-										Confirmar
+										Confirmar Meta
 									</Text>
 								</TouchableOpacity>
 							</View>

@@ -9,8 +9,8 @@ import {
 	ScrollView,
 } from "react-native";
 
-import IndicadorNavegacao from "../components/IndicadorNavegacao";
-import Botao from "../components/Botao";
+import IndicadorNavegacao from "../comum/components/IndicadorNavegacao";
+import Botao from "../comum/components/Botao";
 import { Formik } from "formik";
 import * as yup from "yup";
 import tailwind from "tailwind-rn";

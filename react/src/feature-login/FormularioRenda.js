@@ -10,7 +10,7 @@ import {
 	ScrollView,
 } from "react-native";
 
-import IndicadorNavegacao from "../components/IndicadorNavegacao";
+import IndicadorNavegacao from "../comum/components/IndicadorNavegacao";
 import * as yup from "yup";
 import { Formik } from "formik";
 import tailwind from "tailwind-rn";
@@ -33,7 +33,7 @@ const validationsFormRenda = yup.object().shape({
 		.positive("Apenas valores positivos"),
 });
 
-export default function FormularioDivida({navigation}) {
+export default function FormularioDivida({ navigation }) {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView style={[estilos.telaInterior]}>

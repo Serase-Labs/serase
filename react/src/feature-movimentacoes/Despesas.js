@@ -10,8 +10,8 @@ import {
 import tailwind from "tailwind-rn";
 
 // Componentes
-import IndicadorRetorno from "../components/IndicadorRetorno";
-import ListaVazia from "../components/ListaVazia";
+import IndicadorRetorno from "../comum/components/IndicadorRetorno.js";
+import ListaVazia from "../comum/components/ListaVazia";
 
 const headerHeight = StatusBar.currentHeight;
 
@@ -29,25 +29,25 @@ const estilos = {
 	textoBotao: tailwind("text-white font-medium text-lg text-center"),
 };
 
-export default function Relatorios() {
+export default function Despesas() {
 	const [populada, setPopulada] = useState(false);
 
 	return (
 		<View style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}>
-			<IndicadorRetorno telaAtual="Relatórios" />
+			<IndicadorRetorno telaAtual="Despesas" />
 
 			{populada == true ? (
 				<Text>AAAA</Text>
 			) : (
 				<>
 					<View style={tailwind("flex justify-center flex-1")}>
-						<ListaVazia mensagem="Você ainda não relatou nenhuma movimentação. Assim que o fizer, seus relatórios serão gerados." />
+						<ListaVazia mensagem="Você ainda não relatou nenhuma despesa. Assim que o fizer, ela aparecerá aqui." />
 						<View style={tailwind("flex w-full items-center")}>
 							<TouchableOpacity
 								style={estilos.botaoPrimarioGrande}
 							>
 								<Text style={estilos.textoBotao}>
-									Adicionar Movimentação
+									Adicionar Despesa
 								</Text>
 							</TouchableOpacity>
 						</View>
