@@ -4,7 +4,7 @@
 // Se desejar componetizar externamente cada uma das interfaces,
 // fique a vontade. Talvez fique confuso tudo junto já que não existe lógica
 // compartilhada entre as duas funcionalidaes.
-import React from "react";
+import React, {useState} from "react";
 import {
 	StatusBar,
 	Text,
@@ -19,7 +19,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 // Componentes de navegação
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { date } from "yup";
+import { date, object } from "yup";
 // Documentação do Material Top (https://reactnavigation.org/docs/material-top-tab-navigator)
 const Tab = createMaterialTopTabNavigator();
 
@@ -29,6 +29,30 @@ const estiloExcecao = StyleSheet.create({
 		paddingTop: headerHeight,
 	},
 });
+
+const today = new Date();
+
+const schema = object({
+  birthday: date(23-10-2020).transform("#data").max(today),
+});
+
+//Input colorido 
+//const inputColorido = document.querySelector("#colorido");
+//inputColorido.addEventListener(inputPrincipal, _ =>{
+
+	//if(inputColorido.value.lenght > 1 ){
+		//const inputVerde = StyleSheet.create({
+			//container: {
+				//inputPrincipal: tailwind("bg-green-400")
+			//},
+		//});
+	//}
+	//else{
+		//inputPrincipal: tailwind("bg-green-400")
+	//}
+
+//})
+
 
 // Essas funções aqui foram retiradas do exemplo na documentação do React Navigation
 // estava com preguiça de inventar outra coisa e aí só copiei pra teste.
@@ -42,6 +66,7 @@ function HomeScreen() {
 			<Text style={[estilos.labelInputPrincipal]}>
 				Quanto você ganhou?
 			</Text>
+<<<<<<< HEAD:react/src/feature-movimentacoes/MovimentacaoComum.js
 			<TextInput
 				style={[estilos.inputPrincipal]}
 				placeholder={"R$ 0,00"}
@@ -50,6 +75,22 @@ function HomeScreen() {
 
 			<Text style={[estilos.labelInput]}>Data da Receita</Text>
 			<TextInput
+=======
+				<TextInput nativeID = "colorido" 
+				
+				style={[estilos.inputPrincipal]}
+				placeholder={"R$ 0,00"}
+				keyboardType={"numeric"}
+			>
+			</TextInput>
+			
+			
+
+			<Text style={[estilos.labelInput]}>
+				Data da Receita
+			</Text>
+			<TextInput nativeID={ "#data"}
+>>>>>>> 28bbf47... Resolvendo o Erro Mismatch:react/src/pages/MovimentacaoComum.js
 				style={estilos.input}
 				placeholder={"20/10/2020"}
 				placeholderTextColor={"#A0AEC0"}
@@ -114,8 +155,15 @@ function SettingsScreen() {
 				style={[estilos.input]}
 				placeholder={"Alimentação, Trasnporte, Saúde"}
 				placeholderTextColor={"#A0AEC0"}
+<<<<<<< HEAD:react/src/feature-movimentacoes/MovimentacaoComum.js
 			></TextInput>
 			<TextInput
+=======
+			>
+			</TextInput>
+			
+			<TextInput 
+>>>>>>> 28bbf47... Resolvendo o Erro Mismatch:react/src/pages/MovimentacaoComum.js
 				style={[estilos.input]}
 				placeholder={"Aplicativo de comida, trasnporte"}
 				placeholderTextColor={"#A0AEC0"}
@@ -154,8 +202,11 @@ export default function MovimentacaoComum() {
 			<NavigationContainer>
 				<Tab.Navigator
 					screenOptions={({ route }) => ({
+						labelStyle: { fontSize: 12 },
+    					tabStyle: { width: 100 },
+    					style: { backgroundColor: 'powderblue' },
 						tabBarIcon: ({ focused, color, size }) => {
-							let button;
+							let button1, button2;
 
 							// Para personalizar os botões que aparecem na Tab
 							// você pode gerar componentes de botão, como eu fiz
@@ -163,26 +214,23 @@ export default function MovimentacaoComum() {
 							// Documentação de estilização além disso:
 							// https://reactnavigation.org/docs/tab-based-navigation#customizing-the-appearance
 							if (route.name === "Receita") {
-								button = (
-									<>
-										<TouchableOpacity>
-											<Text>Receita</Text>
-										</TouchableOpacity>
-									</>
-								);
-							} else {
-								button = (
-									<>
-										<TouchableOpacity>
-											<Text>Despesa</Text>
-										</TouchableOpacity>
-									</>
-								);
-							}
-
-							return button;
-						},
-					})}
+									button = focused
+									  ? 'ios-information-circle'
+									  : 'ios-information-circle-outline';
+								  } else if (route.name === 'Settings') {
+									button = focused ? 'ios-list-box' : 'ios-list';
+								  }
+					  
+								  // You can return any component that you like here!
+								  return <Ionicons name={button} size={size} background-Color={"#2C5282"} />;
+								},
+							  })}
+							  tabBarOptions={{
+								activeTintColor: '#2c5282',
+								labelStyle: { fontSize: 12, fontWeight: 'bold', fontFamily: "Roboto" },
+								style: { backgroundColor: 'white' },
+							  }}
+					
 				>
 					<Tab.Screen name="Receita" component={HomeScreen} />
 					<Tab.Screen name="Despesa" component={SettingsScreen} />
@@ -236,10 +284,15 @@ const estilos = {
 		"border border-red-700 rounded font-bold text-4xl py-6 px-20 mb-8 text-gray-700 text-base max-w-xs"
 	),
 
+<<<<<<< HEAD:react/src/feature-movimentacoes/MovimentacaoComum.js
 	labelInput: tailwind("text-gray-700 text-base font-bold mb-3 mr-40"),
 	input: tailwind(
 		"border border-gray-700 rounded w-64 py-2 px-2 mx-12 mb-4 ml-8 text-gray-700 text-base"
 	),
+=======
+	labelInput: tailwind("text-gray-700 text-base font-bold px-2 mb-3 mr-40"),
+	input: tailwind("border border-gray-700 rounded w-64 py-2 px-2 mx-12 mb-4 ml-8 text-gray-700 text base"),
+>>>>>>> 28bbf47... Resolvendo o Erro Mismatch:react/src/pages/MovimentacaoComum.js
 
 	labelInputcategoria: tailwind(
 		"text-gray-700 text-base font-bold mb-3 mr-40 ml-8"
@@ -249,6 +302,7 @@ const estilos = {
 		"bg-green-400 py-2 rounded w-32 mb-8 mr-1 mt-12 ml-16"
 	),
 	textoBotaoAdicionar: tailwind("text-white font-medium text-lg text-center"),
+<<<<<<< HEAD:react/src/feature-movimentacoes/MovimentacaoComum.js
 	botaoCancelar: tailwind("py-2 rounded ml-8 mb-20 mt-12 mr-0"),
 	textoBotaoCancelar: tailwind(
 		"text-blue-700 font-medium text-lg text-center"
@@ -265,3 +319,15 @@ const estilos = {
 		"text-blue-700 font-medium text-lg text-center"
 	),
 };
+=======
+	botaoCancelar: tailwind("relative py-2 rounded ml-8 mb-20 mt-12"),
+	textoBotaoCancelar: tailwind("text-blue-700 font-medium text-lg text-center"),
+
+	botaoAdicionarVermelho: tailwind("bg-green-400 py-2 rounded w-32 mb-8 mr-1 mt-4 ml-16"),
+	textoBotaoAdicionarVermelho: tailwind("text-white font-medium text-lg text-center"),
+	botaoCancelarVermelho: tailwind("py-2 rounded ml-8 mb-20 mt-4 mr-0 "),
+	textoBotaoCancelarVermelho: tailwind("text-blue-700 font-medium text-lg text-center"),
+	
+
+}
+>>>>>>> 28bbf47... Resolvendo o Erro Mismatch:react/src/pages/MovimentacaoComum.js
