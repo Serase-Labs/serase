@@ -1,0 +1,19 @@
+{
+    "status": 200,
+    "conteudo": [
+        { "id": 1, "nome": "Alimentação" },
+        { "id": 2, "nome": "Habitação" },
+        { "id": 3, "nome": "Saúde" },
+        { "id": 4, "nome": "Educação" },
+        { "id": 5, "nome": "Transporte" },
+        { "id": 6, "nome": "Lazer" },
+        { "id": 7, "nome": "Compras" },
+        { "id": 8, "nome": "Outros" },
+        { "id": 9, "nome": "Loteria" },
+        { "id": 10, "nome": "Aposta" },
+        { "id": 11, "nome": "Presente" },
+        { "id": 12, "nome": "Salario" },
+        { "id": 13, "nome": "Venda" }
+    ],
+    "total": 13
+}
