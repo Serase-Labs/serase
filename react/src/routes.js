@@ -3,22 +3,22 @@ import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
 import Temp from "./pages/Temp";
-import PaginaInicial from "./pages/PaginaInicial";
-import Login from "./pages/Login";
-import Cadastro from "./pages/Cadastro";
-import VisualizacaoGeral from "./pages/VisualizacaoGeral";
-import FormularioMeta from "./pages/FormularioMeta.js";
-import FormularioDivida from "./pages/FormularioDivida.js";
-import FormularioRenda from "./pages/FormularioRenda.js";
-import PerfilDeUso from "./pages/PerfilDeUso.js";
-import Confirmacao from "./pages/Confirmacao.js";
-import Receitas from "./pages/Receitas.js";
-import Despesas from "./pages/Despesas.js";
-import Relatorios from "./pages/Relatorios.js";
+import PaginaInicial from "./comum/PaginaInicial";
+import Login from "./feature-login/Login";
+import Cadastro from "./feature-login/Cadastro";
+import VisualizacaoGeral from "./comum/VisualizacaoGeral";
+import FormularioMeta from "./feature-login/FormularioMeta.js";
+import FormularioDivida from "./feature-login/FormularioDivida.js";
+import FormularioRenda from "./feature-login/FormularioRenda.js";
+import PerfilDeUso from "./feature-login/PerfilDeUso.js";
+import Confirmacao from "./feature-login/Confirmacao.js";
+import Receitas from "./feature-movimentacoes/Receitas.js";
+import Despesas from "./feature-movimentacoes/Despesas.js";
+import Relatorios from "./feature-relatorios/Relatorios.js";
 
 // Não-oficial
-import Inicio from "./pages/Inicio.js";
-import MovimentacaoComum from "./pages/MovimentacaoComum.js";
+import Inicio from "./comum/Inicio.js";
+import MovimentacaoComum from "./feature-movimentacoes/MovimentacaoComum.js";
 
 const Routes = createAppContainer(
 	createStackNavigator(

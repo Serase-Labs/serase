@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, Image } from "react-native";
 import tailwind from "tailwind-rn";
-import Botao from "../components/Botao.js";
+import Botao from "./components/Botao.js";
 
 const estilos = {
 	tela: tailwind("pt-32 items-center h-full bg-white"),
@@ -27,7 +27,7 @@ export default function Login({ navigation }) {
 					Gerencie suas despesas, metas e dívidas.
 				</Text>
 				<Image
-					source={require("../assets/images/MockupTelaInicial.png")}
+					source={require("./assets/MockupTelaInicial.png")}
 				></Image>
 			</View>
 			<View style={tailwind("bg-white items-center py-6")}>
