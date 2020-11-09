@@ -9,10 +9,21 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
-// Componentes
+// Componentes Criados
 import IndicadorRetorno from "../comum/components/IndicadorRetorno.js";
 import ListaVazia from "../comum/components/ListaVazia";
+import Botao from "../comum/components/Botao.js";
+import IlustracaoRelatorio from "./assets/IlustracaoRelatorio";
 
+// Componentes Externos
+import { NavigationContainer } from "@react-navigation/native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+// Telas
+import RelatorioSemanal from "./RelatorioSemanal.js";
+import RelatorioMensal from "./RelatorioMensal.js";
+import RelatorioAnual from "./RelatorioAnual.js";
+
+// Estilizacao
 const headerHeight = StatusBar.currentHeight;
 
 const estiloExcecao = StyleSheet.create({
@@ -24,32 +35,129 @@ const estiloExcecao = StyleSheet.create({
 	},
 });
 
-const estilos = {
-	botaoPrimarioGrande: tailwind("bg-green-400 py-2 rounded w-56 mb-5"),
-	textoBotao: tailwind("text-white font-medium text-lg text-center"),
-};
+// Componente de navegação com estilização
+// sobrescrevendo o Material Design
+function BarraNavegacao({ state, descriptors, navigation }) {
+	const focusedOptions = descriptors[state.routes[state.index].key].options;
 
-export default function Relatorios() {
-	const [populada, setPopulada] = useState(false);
+	if (focusedOptions.tabBarVisible === false) {
+		return null;
+	}
+
+	return (
+		<View style={tailwind("mx-5 my-5 flex flex-row")}>
+			{state.routes.map((route, index) => {
+				const { options } = descriptors[route.key];
+				const label =
+					options.tabBarLabel !== undefined
+						? options.tabBarLabel
+						: options.title !== undefined
+						? options.title
+						: route.name;
+
+				const isFocused = state.index === index;
+
+				const onPress = () => {
+					const event = navigation.emit({
+						type: "tabPress",
+						target: route.key,
+						canPreventDefault: true,
+					});
+
+					if (!isFocused && !event.defaultPrevented) {
+						navigation.navigate(route.name);
+					}
+				};
+
+				const onLongPress = () => {
+					navigation.emit({
+						type: "tabLongPress",
+						target: route.key,
+					});
+				};
+
+				return (
+					<TouchableOpacity
+						accessibilityRole="button"
+						accessibilityState={isFocused ? { selected: true } : {}}
+						accessibilityLabel={options.tabBarAccessibilityLabel}
+						testID={options.tabBarTestID}
+						onPress={onPress}
+						onLongPress={onLongPress}
+						style={{ flex: 1 }}
+					>
+						<Text
+							style={[
+								{
+									backgroundColor: isFocused
+										? "#E2E8F0"
+										: "#FFFFFF",
+								},
+								tailwind(
+									"text-blue-800 text-base rounded-md py-3 text-center"
+								),
+							]}
+						>
+							{label}
+						</Text>
+					</TouchableOpacity>
+				);
+			})}
+		</View>
+	);
+}
+
+const Tab = createMaterialTopTabNavigator();
+
+export default function Relatorios({ navigation }) {
+	const [populada, setPopulada] = useState(true);
 
 	return (
 		<View style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}>
 			<IndicadorRetorno telaAtual="Relatórios" />
 
-			{populada == true ? (
-				<Text>AAAA</Text>
+			{populada == false ? (
+				<View style={tailwind("flex justify-center flex-1")}>
+					<ListaVazia mensagem="Você ainda não relatou nenhuma movimentação. Assim que o fizer, seus relatórios serão gerados." />
+					<View style={tailwind("flex w-full items-center")}>
+						<Botao
+							ordem="primario"
+							tamanho="grande"
+							onPress={() =>
+								navigation.navigate("MovimentacaoComum")
+							}
+							label="Adicionar Movimentação"
+						></Botao>
+					</View>
+				</View>
 			) : (
 				<>
-					<View style={tailwind("flex justify-center flex-1")}>
-						<ListaVazia mensagem="Você ainda não relatou nenhuma movimentação. Assim que o fizer, seus relatórios serão gerados." />
-						<View style={tailwind("flex w-full items-center")}>
-							<TouchableOpacity
-								style={estilos.botaoPrimarioGrande}
-							>
-								<Text style={estilos.textoBotao}>
-									Adicionar Movimentação
-								</Text>
-							</TouchableOpacity>
+					<View style={tailwind("flex-1")}>
+						<View style={tailwind("h-32")}>
+							<IlustracaoRelatorio />
+						</View>
+
+						<View style={tailwind("flex-1")}>
+							<NavigationContainer>
+								<Tab.Navigator
+									tabBar={(props) => (
+										<BarraNavegacao {...props} />
+									)}
+								>
+									<Tab.Screen
+										name="Semana"
+										component={RelatorioSemanal}
+									/>
+									<Tab.Screen
+										name="Mês"
+										component={RelatorioMensal}
+									/>
+									<Tab.Screen
+										name="Ano"
+										component={RelatorioAnual}
+									/>
+								</Tab.Navigator>
+							</NavigationContainer>
 						</View>
 					</View>
 				</>
