@@ -1,0 +1,282 @@
+[
+    {
+        "id": 1,
+        "descricao": "Spotify",
+        "data-geracao": "02/11/2020",
+        "data-lancamento": "",
+        "valor-esperado": -26.9,
+        "valor-pago": "",
+        "categoria": "Lazer",
+        "padrao": "Spotify"
+    },
+    {
+        "id": 2,
+        "descricao": "Sanduba com Mate Couro",
+        "data-geracao": "",
+        "data-lancamento": "01/11/2020",
+        "valor-esperado": "",
+        "valor-pago": -15.75,
+        "categoria": "Alimentação",
+        "padrao": ""
+    },
+    {
+        "id": 3,
+        "descricao": "Bebida pro Halloween",
+        "data-geracao": "",
+        "data-lancamento": "30/10/2020",
+        "valor-esperado": "",
+        "valor-pago": -24,
+        "categoria": "Lazer",
+        "padrao": ""
+    },
+    {
+        "id": 4,
+        "descricao": "Make pro Halloween",
+        "data-geracao": "",
+        "data-lancamento": "30/10/2020",
+        "valor-esperado": "",
+        "valor-pago": -10,
+        "categoria": "Lazer",
+        "padrao": ""
+    },
+    {
+        "id": 5,
+        "descricao": "Dinheiro do Spotify",
+        "data-geracao": "",
+        "data-lancamento": "26/10/2020",
+        "valor-esperado": "",
+        "valor-pago": 20,
+        "categoria": "Outros",
+        "padrao": ""
+    },
+    {
+        "id": 6,
+        "descricao": "Quebrando a quarentena",
+        "data-geracao": "",
+        "data-lancamento": "17/10/2020",
+        "valor-esperado": "",
+        "valor-pago": -17,
+        "categoria": "Transporte",
+        "padrao": ""
+    },
+    {
+        "id": 7,
+        "descricao": "Compras",
+        "data-geracao": "",
+        "data-lancamento": "10/10/2020",
+        "valor-esperado": "",
+        "valor-pago": -425.5,
+        "categoria": "Compras",
+        "padrao": ""
+    },
+    {
+        "id": 8,
+        "descricao": "Bolsa da IC",
+        "data-geracao": "08/10/2020",
+        "data-lancamento": "08/10/2020",
+        "valor-esperado": 300,
+        "valor-pago": 300,
+        "categoria": "Salario",
+        "padrao": "Bolsa da IC"
+    },
+    {
+        "id": 9,
+        "descricao": "Conta de Luz",
+        "data-geracao": "07/10/2020",
+        "data-lancamento": "08/10/2020",
+        "valor-esperado": -95.25,
+        "valor-pago": -95.25,
+        "categoria": "Habitação",
+        "padrao": "Conta de Luz"
+    },
+    {
+        "id": 10,
+        "descricao": "Internet",
+        "data-geracao": "07/10/2020",
+        "data-lancamento": "08/10/2020",
+        "valor-esperado": -59.9,
+        "valor-pago": -59.9,
+        "categoria": "Habitação",
+        "padrao": "Internet"
+    },
+    {
+        "id": 11,
+        "descricao": "Salário",
+        "data-geracao": "07/10/2020",
+        "data-lancamento": "07/10/2020",
+        "valor-esperado": 2356,
+        "valor-pago": 2356,
+        "categoria": "Salário",
+        "padrao": "Salário"
+    },
+    {
+        "id": 12,
+        "descricao": "Churros",
+        "data-geracao": "",
+        "data-lancamento": "03/10/2020",
+        "valor-esperado": "",
+        "valor-pago": -5,
+        "categoria": "Alimentação",
+        "padrao": ""
+    },
+    {
+        "id": 13,
+        "descricao": "Spotify",
+        "data-geracao": "01/10/2020",
+        "data-lancamento": "08/10/2020",
+        "valor-esperado": -26.9,
+        "valor-pago": -26.9,
+        "categoria": "Lazer",
+        "padrao": "Spotify"
+    },
+    {
+        "id": 14,
+        "descricao": "Milkshake do Mc Donalds",
+        "data-geracao": "",
+        "data-lancamento": "15/09/2020",
+        "valor-esperado": "",
+        "valor-pago": -10,
+        "categoria": "Alimentação",
+        "padrao": ""
+    },
+    {
+        "id": 15,
+        "descricao": "Compras",
+        "data-geracao": "",
+        "data-lancamento": "12/09/2020",
+        "valor-esperado": "",
+        "valor-pago": -354.4,
+        "categoria": "Compras",
+        "padrao": ""
+    },
+    {
+        "id": 16,
+        "descricao": "Bolsa da IC",
+        "data-geracao": "08/09/2020",
+        "data-lancamento": "08/09/2020",
+        "valor-esperado": 300,
+        "valor-pago": 300,
+        "categoria": "Salario",
+        "padrao": "Bolsa da IC"
+    },
+    {
+        "id": 17,
+        "descricao": "Conta de Luz",
+        "data-geracao": "07/09/2020",
+        "data-lancamento": "08/09/2020",
+        "valor-esperado": -86.5,
+        "valor-pago": -86.5,
+        "categoria": "Habitação",
+        "padrao": "Conta de Luz"
+    },
+    {
+        "id": 18,
+        "descricao": "Internet",
+        "data-geracao": "07/09/2020",
+        "data-lancamento": "08/09/2020",
+        "valor-esperado": -59.9,
+        "valor-pago": -59.9,
+        "categoria": "Habitação",
+        "padrao": "Internet"
+    },
+    {
+        "id": 19,
+        "descricao": "Salário",
+        "data-geracao": "07/09/2020",
+        "data-lancamento": "07/09/2020",
+        "valor-esperado": 2356,
+        "valor-pago": 2356,
+        "categoria": "Salário",
+        "padrao": "Salário"
+    },
+    {
+        "id": 20,
+        "descricao": "Viola",
+        "data-geracao": "",
+        "data-lancamento": "02/09/2020",
+        "valor-esperado": "",
+        "valor-pago": -389.9,
+        "categoria": "Lazer",
+        "padrao": ""
+    },
+    {
+        "id": 21,
+        "descricao": "Spotify",
+        "data-geracao": "01/09/2020",
+        "data-lancamento": "08/09/2020",
+        "valor-esperado": -26.9,
+        "valor-pago": -26.9,
+        "categoria": "Lazer",
+        "padrao": "Spotify"
+    },
+    {
+        "id": 22,
+        "descricao": "Bolsa da IC",
+        "data-geracao": "10/08/2020",
+        "data-lancamento": "10/08/2020",
+        "valor-esperado": 300,
+        "valor-pago": 300,
+        "categoria": "Salario",
+        "padrao": "Bolsa da IC"
+    },
+    {
+        "id": 23,
+        "descricao": "Conta de Luz",
+        "data-geracao": "07/08/2020",
+        "data-lancamento": "10/08/2020",
+        "valor-esperado": -102.8,
+        "valor-pago": -102.8,
+        "categoria": "Habitação",
+        "padrao": "Conta de Luz"
+    },
+    {
+        "id": 24,
+        "descricao": "Internet",
+        "data-geracao": "07/08/2020",
+        "data-lancamento": "10/08/2020",
+        "valor-esperado": -59.9,
+        "valor-pago": -59.9,
+        "categoria": "Habitação",
+        "padrao": "Internet"
+    },
+    {
+        "id": 25,
+        "descricao": "Salário",
+        "data-geracao": "07/08/2020",
+        "data-lancamento": "07/08/2020",
+        "valor-esperado": 2356,
+        "valor-pago": 2356,
+        "categoria": "Salário",
+        "padrao": "Salário"
+    },
+    {
+        "id": 26,
+        "descricao": "Spotify",
+        "data-geracao": "01/08/2020",
+        "data-lancamento": "10/08/2020",
+        "valor-esperado": -26.9,
+        "valor-pago": -26.9,
+        "categoria": "Lazer",
+        "padrao": "Spotify"
+    },
+    {
+        "id": 27,
+        "descricao": "Adoção do Cumpa, o Cacto",
+        "data-geracao": "",
+        "data-lancamento": "16/07/2020",
+        "valor-esperado": "",
+        "valor-pago": -15,
+        "categoria": "Outros",
+        "padrao": ""
+    },
+    {
+        "id": 28,
+        "descricao": "Outer Wilds",
+        "data-geracao": "",
+        "data-lancamento": "10/07/2020",
+        "valor-esperado": "",
+        "valor-pago": -30.86,
+        "categoria": "Lazer",
+        "padrao": ""
+    }
+]

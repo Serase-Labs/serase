@@ -1,0 +1,52 @@
+{
+    "status": 200,
+    "conteudo": [
+        {
+            "id": 5,
+            "descricao": "Dinheiro do Spotify",
+            "data-lancamento": "26/10/2020",
+            "valor-pago": 20
+        },
+        {
+            "id": 8,
+            "descricao": "Bolsa da IC",
+            "data-lancamento": "08/10/2020",
+            "valor-pago": 300
+        },
+        {
+            "id": 11,
+            "descricao": "Salário",
+            "data-lancamento": "07/10/2020",
+            "valor-pago": 2356
+        },
+        {
+            "id": 16,
+            "descricao": "Bolsa da IC",
+            "data-lancamento": "08/09/2020",
+            "valor-pago": 300
+        },
+        {
+            "id": 19,
+            "descricao": "Salário",
+            "data-lancamento": "07/09/2020",
+            "valor-pago": 2356
+        },
+        {
+            "id": 22,
+            "descricao": "Bolsa da IC",
+            "data-lancamento": "10/08/2020",
+            "valor-pago": 300
+        },
+        {
+            "id": 25,
+            "descricao": "Salário",
+            "data-lancamento": "07/08/2020",
+            "valor-pago": 2356
+        }
+    ],
+    "total": 7,
+    "limite": 10,
+    "offset": 0,
+    "proxima": null,
+    "anterior": null
+}

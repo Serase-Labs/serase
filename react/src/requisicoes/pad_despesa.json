@@ -1,0 +1,39 @@
+{
+    "status": 200,
+    "conteudo": [
+        {
+            "id": 1,
+            "despesa-ou-receita": "despesa",
+            "descricao": "Spotify",
+            "periodo": 1,
+            "valor-padrao": -26.9,
+            "dia-cobranca": 1,
+            "dia-inicio": "18/04/2018",
+            "dia-fim": "",
+            "categoria": "Lazer"
+        },
+        {
+            "id": 3,
+            "despesa-ou-receita": "despesa",
+            "descricao": "Conta de Luz",
+            "periodo": 1,
+            "valor-padrao": "",
+            "dia-cobranca": 5,
+            "dia-inicio": "",
+            "dia-fim": "",
+            "categoria": "Casa"
+        },
+        {
+            "id": 4,
+            "despesa-ou-receita": "despesa",
+            "descricao": "Internet",
+            "periodo": 1,
+            "valor-padrao": -59.9,
+            "dia-cobranca": 5,
+            "dia-inicio": "04/02/2020",
+            "dia-fim": "",
+            "categoria": "Casa"
+        }
+    ],
+    "total": 3
+}

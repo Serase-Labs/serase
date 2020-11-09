@@ -1,0 +1,28 @@
+{
+    "status": 200,
+    "conteudo": [
+        {
+            "id": 2,
+            "despesa-ou-receita": "receita",
+            "descricao": "Bolsa da IC",
+            "periodo": 1,
+            "valor-padrao": 300,
+            "dia-cobranca": 6,
+            "dia-inicio": "08/07/2020",
+            "dia-fim": "08/07/2021",
+            "categoria": "Bolsa"
+        },
+        {
+            "id": 5,
+            "despesa-ou-receita": "receita",
+            "descricao": "Salário",
+            "periodo": 1,
+            "valor-padrao": 2356,
+            "dia-cobranca": 5,
+            "dia-inicio": "",
+            "dia-fim": "",
+            "categoria": "Outros"
+        }
+    ],
+    "total": 2
+}

@@ -1,0 +1,130 @@
+{
+    "status": 200,
+    "conteudo": [
+        {
+            "id": 2,
+            "descricao": "Sanduba com Mate Couro",
+            "data-lancamento": "01/11/2020",
+            "valor-pago": -15.75
+        },
+        {
+            "id": 3,
+            "descricao": "Bebida pro Halloween",
+            "data-lancamento": "30/10/2020",
+            "valor-pago": -24
+        },
+        {
+            "id": 4,
+            "descricao": "Make pro Halloween",
+            "data-lancamento": "30/10/2020",
+            "valor-pago": -10
+        },
+        {
+            "id": 6,
+            "descricao": "Quebrando a quarentena",
+            "data-lancamento": "17/10/2020",
+            "valor-pago": -17
+        },
+        {
+            "id": 7,
+            "descricao": "Compras",
+            "data-lancamento": "10/10/2020",
+            "valor-pago": -425.5
+        },
+        {
+            "id": 9,
+            "descricao": "Conta de Luz",
+            "data-lancamento": "08/10/2020",
+            "valor-pago": -95.25
+        },
+        {
+            "id": 10,
+            "descricao": "Internet",
+            "data-lancamento": "08/10/2020",
+            "valor-pago": -59.9
+        },
+        {
+            "id": 12,
+            "descricao": "Churros",
+            "data-lancamento": "03/10/2020",
+            "valor-pago": -5
+        },
+        {
+            "id": 13,
+            "descricao": "Spotify",
+            "data-lancamento": "08/10/2020",
+            "valor-pago": -26.9
+        },
+        {
+            "id": 14,
+            "descricao": "Milkshake do Mc Donalds",
+            "data-lancamento": "15/09/2020",
+            "valor-pago": -10
+        },
+        {
+            "id": 15,
+            "descricao": "Compras",
+            "data-lancamento": "12/09/2020",
+            "valor-pago": -354.4
+        },
+        {
+            "id": 17,
+            "descricao": "Conta de Luz",
+            "data-lancamento": "08/09/2020",
+            "valor-pago": -86.5
+        },
+        {
+            "id": 18,
+            "descricao": "Internet",
+            "data-lancamento": "08/09/2020",
+            "valor-pago": -59.9
+        },
+        {
+            "id": 20,
+            "descricao": "Viola",
+            "data-lancamento": "02/09/2020",
+            "valor-pago": -389.9
+        },
+        {
+            "id": 21,
+            "descricao": "Spotify",
+            "data-lancamento": "08/09/2020",
+            "valor-pago": -26.9
+        },
+        {
+            "id": 23,
+            "descricao": "Conta de Luz",
+            "data-lancamento": "10/08/2020",
+            "valor-pago": -102.8
+        },
+        {
+            "id": 24,
+            "descricao": "Internet",
+            "data-lancamento": "10/08/2020",
+            "valor-pago": -59.9
+        },
+        {
+            "id": 26,
+            "descricao": "Spotify",
+            "data-lancamento": "10/08/2020",
+            "valor-pago": -26.9
+        },
+        {
+            "id": 27,
+            "descricao": "Adoção do Cumpa, o Cacto",
+            "data-lancamento": "16/07/2020",
+            "valor-pago": -15
+        },
+        {
+            "id": 28,
+            "descricao": "Outer Wilds",
+            "data-lancamento": "10/07/2020",
+            "valor-pago": -30.86
+        }
+    ],
+    "total": 20,
+    "limite": 20,
+    "offset": 0,
+    "proxima": null,
+    "anterior": null
+}
