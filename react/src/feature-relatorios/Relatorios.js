@@ -6,6 +6,7 @@ import {
 	Text,
 	View,
 	TouchableOpacity,
+	ScrollView,
 } from "react-native";
 import tailwind from "tailwind-rn";
 
@@ -113,7 +114,9 @@ export default function Relatorios({ navigation }) {
 	const [populada, setPopulada] = useState(true);
 
 	return (
-		<View style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}>
+		<ScrollView
+			style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}
+		>
 			<IndicadorRetorno telaAtual="Relatórios" />
 
 			{populada == false ? (
@@ -162,6 +165,6 @@ export default function Relatorios({ navigation }) {
 					</View>
 				</>
 			)}
-		</View>
+		</ScrollView>
 	);
 }
