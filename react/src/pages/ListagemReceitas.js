@@ -89,7 +89,7 @@ export default function VisualizacaoGeral({ navigation }) {
 			
 			
 			<View style={[tailwind("flex-row bg-white justify-center")]}>
-			
+					<IconeCarteiraReceita/>
 			</View>
 			<View style={tailwind("justify-between flex-row p-3")}>
 				
