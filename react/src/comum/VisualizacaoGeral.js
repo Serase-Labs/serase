@@ -74,7 +74,7 @@ export default function VisualizacaoGeral({ navigation }) {
 			>
 				<Text style={tailwind("text-lg")}>
 					Olá,{" "}
-					<Text style={tailwind("text-lg font-bold")}>
+					<Text style={[tailwind("text-xl font-bold")]}>
 						Peter Parker
 					</Text>
 				</Text>
@@ -187,7 +187,7 @@ export default function VisualizacaoGeral({ navigation }) {
 			</View>
 
 			<View style={tailwind("px-5")}>
-				<Text style={tailwind("text-lg font-bold")}>
+				<Text style={[tailwind("text-lg font-bold text-gray-800")]}>
 					Movimentações Recentes
 				</Text>
 

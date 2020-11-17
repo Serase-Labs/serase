@@ -9,7 +9,7 @@ import {
 	FlatList,
 	Dimensions,
 } from "react-native";
-import { StackedBarChart } from "react-native-chart-kit";
+import { StackedBarChart, BarChart } from "react-native-chart-kit";
 import tailwind from "tailwind-rn";
 
 import IconeDespesa from "../comum/assets/IconeDespesa";
@@ -42,7 +42,7 @@ const Item = ({ item, onPress }) => {
 
 const chartData = {
 	labels: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-	legend: ["L1", "L2"],
+	legend: [],
 	data: [
 		[60, 60],
 		[30, 30],
@@ -135,11 +135,13 @@ export default function RelatorioSemanal() {
 					Movimentações
 				</Text>
 
-				<View style={tailwind("flex items-center")}>
+				<View style={tailwind("")}>
 					<StackedBarChart
 						data={chartData}
 						width={(Dimensions.get("window").width / 100) * 90}
 						height={220}
+						hideLegend={true}
+						showLegend={false}
 						chartConfig={{
 							backgroundGradientFrom: "#ffffff",
 							backgroundGradientTo: "#ffffff",
@@ -160,13 +162,33 @@ export default function RelatorioSemanal() {
 							},
 
 							propsForVerticalLabels: {
-								textAnchor: "middle",
-							},
-							propsForHorizontalLabels: {
 								textAnchor: "end",
 							},
+							propsForHorizontalLabels: {
+								textAnchor: "middle",
+							},
+							barPercentage: 1,
 						}}
 					/>
+				</View>
+
+				<View
+					style={tailwind(
+						"flex flex-row items-center justify-center my-2"
+					)}
+				>
+					<View style={tailwind("flex flex-row items-center px-2")}>
+						<View
+							style={tailwind("w-4 h-4 bg-green-400 mr-2")}
+						></View>
+						<Text style={tailwind("text-gray-600")}>Receitas</Text>
+					</View>
+					<View style={tailwind("flex flex-row items-center px-2")}>
+						<View
+							style={tailwind("w-4 h-4 bg-red-400 mr-2")}
+						></View>
+						<Text style={tailwind("text-gray-600")}>Despesas</Text>
+					</View>
 				</View>
 			</View>
 

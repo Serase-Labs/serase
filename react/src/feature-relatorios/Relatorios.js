@@ -79,6 +79,7 @@ function BarraNavegacao({ state, descriptors, navigation }) {
 
 				return (
 					<TouchableOpacity
+						key={index}
 						accessibilityRole="button"
 						accessibilityState={isFocused ? { selected: true } : {}}
 						accessibilityLabel={options.tabBarAccessibilityLabel}
