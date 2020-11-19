@@ -1,3 +1,8 @@
+// Este arquivo abriga a interface e lógica
+// da ilustração e barra de navegação
+// que invoca as páginas de relatório
+// por período.
+
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -10,19 +15,18 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
-// Componentes Criados
+// Componentes Internos
 import IndicadorRetorno from "../comum/components/IndicadorRetorno.js";
 import ListaVazia from "../comum/components/ListaVazia";
 import Botao from "../comum/components/Botao.js";
 import IlustracaoRelatorio from "./assets/IlustracaoRelatorio";
+import RelatorioSemanal from "./RelatorioSemanal.js";
+import RelatorioMensal from "./RelatorioMensal.js";
+import RelatorioAnual from "./RelatorioAnual.js";
 
 // Componentes Externos
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-// Telas
-import RelatorioSemanal from "./RelatorioSemanal.js";
-import RelatorioMensal from "./RelatorioMensal.js";
-import RelatorioAnual from "./RelatorioAnual.js";
 
 // Estilizacao
 const headerHeight = StatusBar.currentHeight;

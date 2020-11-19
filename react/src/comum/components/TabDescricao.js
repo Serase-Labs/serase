@@ -1,9 +1,13 @@
+// Esse componente é capaz de se abrir e fechar
+// respectivamente exibindo ou escondendo
+// qualquer conteúdo children sob domínio.
+
 import * as React from "react";
 import { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import tailwind from "tailwind-rn";
 
-import IconeSeta from "../../comum/assets/IconeSeta";
+import IconeSeta from "../assets/IconeSeta";
 
 export default function TabGrafico(props) {
 	const [toggleGraficoCategoria, setToggleGraficoCategoria] = useState(false);
