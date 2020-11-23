@@ -8,12 +8,16 @@ import {
 	KeyboardAvoidingView,
 	ScrollView,
 } from "react-native";
+import tailwind from "tailwind-rn";
 
+// Imports internos
 import IndicadorNavegacao from "../comum/components/IndicadorNavegacao";
 import Botao from "../comum/components/Botao";
+import { Input, Error } from "../comum/components/Input";
+
+// Imports externos
 import { Formik } from "formik";
 import * as yup from "yup";
-import tailwind from "tailwind-rn";
 
 const headerHeight = StatusBar.currentHeight;
 
@@ -28,15 +32,6 @@ const estilos = {
 	telaInterior: tailwind("flex-1"),
 
 	containerFormulario: tailwind("w-full items-center"),
-	containerInput: tailwind("w-64 mb-2"),
-	labelInput: tailwind("text-gray-700 text-base font-bold mb-3"),
-	input: tailwind(
-		"border border-gray-500 rounded w-full py-2 px-3 text-gray-700 text-base"
-	),
-	errorInput: tailwind(
-		"bg-red-100 border border-red-400 text-red-700 px-4 py-2 mt-2 rounded relative"
-	),
-
 	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
 };
 
@@ -87,96 +82,73 @@ export default function Cadastro({ navigation }) {
 							errors,
 						}) => (
 							<View>
-								<View style={estilos.containerInput}>
-									<Text style={estilos.labelInput}>Nome</Text>
-									<TextInput
-										style={estilos.input}
-										clearTextOnFocus={true}
-										onChangeText={handleChange("nome")}
-										onBlur={handleBlur("nome")}
-										value={values.nome}
-										blurOnSubmit={true}
-										placeholder={"Insira o seu nome"}
-										placeholderTextColor={"#A0AEC0"}
-									/>
-
+								<Input
+									label="Nome"
+									onChangeText={handleChange("nome")}
+									onBlur={handleBlur("nome")}
+									value={values.nome}
+									placeholder={"Insira o seu nome"}
+									espacamento={false}
+								>
 									{errors.nome && (
-										<Text style={estilos.errorInput}>
+										<Text style={Error()}>
 											{errors.nome}
 										</Text>
 									)}
-								</View>
-								<View style={[estilos.containerInput]}>
-									<Text style={estilos.labelInput}>
-										Email
-									</Text>
-									<TextInput
-										style={estilos.input}
-										clearTextOnFocus={true}
-										onChangeText={handleChange("email")}
-										onBlur={handleBlur("email")}
-										value={values.email}
-										blurOnSubmit={true}
-										keyboard={"email-address"}
-										placeholder={"Insira o seu email"}
-										placeholderTextColor={"#A0AEC0"}
-									/>
+								</Input>
 
+								<Input
+									label="Email"
+									onChangeText={handleChange("email")}
+									onBlur={handleBlur("email")}
+									value={values.email}
+									keyboard={"email-address"}
+									placeholder={"Insira o seu email"}
+									espacamento={false}
+								>
 									{errors.email && (
-										<Text style={estilos.errorInput}>
+										<Text style={Error()}>
 											{errors.email}
 										</Text>
 									)}
-								</View>
-								<View style={[estilos.containerInput]}>
-									<Text style={estilos.labelInput}>
-										Senha
-									</Text>
-									<TextInput
-										style={estilos.input}
-										onChangeText={handleChange("senha")}
-										onBlur={handleBlur("senha")}
-										value={values.senha}
-										blurOnSubmit={true}
-										textContentType={"password"}
-										secureTextEntry={true}
-										placeholder={"Insira a sua senha"}
-										placeholderTextColor={"#A0AEC0"}
-									/>
+								</Input>
+
+								<Input
+									label="Senha"
+									onChangeText={handleChange("senha")}
+									onBlur={handleBlur("senha")}
+									value={values.senha}
+									textContentType={"password"}
+									secureTextEntry={true}
+									placeholder={"Insira a sua senha"}
+									espacamento={false}
+								>
 									{errors.senha && (
-										<Text style={estilos.errorInput}>
+										<Text style={Error()}>
 											{errors.senha}
 										</Text>
 									)}
-								</View>
-								<View
-									style={[
-										estilos.containerInput,
-										tailwind("mb-12"),
-									]}
+								</Input>
+
+								<Input
+									label="Confirmar Senha"
+									style={estilos.input}
+									onChangeText={handleChange(
+										"senhaConfirmacao"
+									)}
+									onBlur={handleBlur("senhaConfirmacao")}
+									value={values.senhaConfirmacao}
+									textContentType={"password"}
+									secureTextEntry={true}
+									placeholder={"Repita a sua senha"}
+									espacamento={true}
 								>
-									<Text style={estilos.labelInput}>
-										Confirmar Senha
-									</Text>
-									<TextInput
-										style={estilos.input}
-										onChangeText={handleChange(
-											"senhaConfirmacao"
-										)}
-										onBlur={handleBlur("senhaConfirmacao")}
-										value={values.senhaConfirmacao}
-										blurOnSubmit={true}
-										textContentType={"password"}
-										secureTextEntry={true}
-										placeholder={"Repita a sua senha"}
-										placeholderTextColor={"#A0AEC0"}
-									/>
 									{errors.senhaConfirmacao && (
 										<Text style={estilos.errorInput}>
 											{errors.senhaConfirmacao}
 										</Text>
 									)}
-								</View>
+								</Input>
 
 								<Botao
 									ordem="primario"

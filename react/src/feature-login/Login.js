@@ -2,17 +2,20 @@ import React from "react";
 import {
 	Text,
 	View,
-	TextInput,
 	StatusBar,
 	StyleSheet,
 	KeyboardAvoidingView,
 	ScrollView,
 } from "react-native";
+import tailwind from "tailwind-rn";
 
+// Imports internos
 import IndicadorNavegacao from "../comum/components/IndicadorNavegacao";
 import Botao from "../comum/components/Botao.js";
+import { Input, Error } from "../comum/components/Input";
+
+// Imports externos
 import { Formik } from "formik";
-import tailwind from "tailwind-rn";
 
 const headerHeight = StatusBar.currentHeight;
 
@@ -28,20 +31,6 @@ const estilos = {
 
 	containerFormulario: tailwind("w-full items-center"),
 	containerInput: tailwind("w-64 mb-2"),
-	labelInput: tailwind("text-gray-700 text-base font-bold mb-3"),
-	input: tailwind(
-		"border border-gray-500 rounded w-full py-2 px-3 text-gray-700 text-base"
-	),
-	errorInput: tailwind(
-		"bg-red-100 border border-red-400 text-red-700 px-4 py-2 mt-2 rounded relative"
-	),
-
-	botaoPrimarioGrande: tailwind("bg-green-400 py-2 rounded w-64 mb-5"),
-	textoBotao: tailwind("text-white font-medium text-lg text-center"),
-	botaoTerciarioGrande: tailwind("bg-transparent py-2 rounded w-64"),
-	textoBotaoTerciario: tailwind(
-		"text-blue-700 font-medium text-lg text-center"
-	),
 
 	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
 
@@ -90,55 +79,40 @@ export default function Login({ navigation }) {
 							errors,
 						}) => (
 							<View>
-								<View style={[estilos.containerInput]}>
-									<Text style={estilos.labelInput}>
-										Email
-									</Text>
-									<TextInput
-										style={estilos.input}
-										clearTextOnFocus={true}
-										onChangeText={handleChange("email")}
-										onBlur={handleBlur("email")}
-										value={values.email}
-										blurOnSubmit={true}
-										keyboard={"email-address"}
-										placeholder={"Insira o seu email"}
-										placeholderTextColor={"#A0AEC0"}
-									/>
-
+								<Input
+									label="Email"
+									onChangeText={handleChange("email")}
+									onBlur={handleBlur("email")}
+									value={values.email}
+									keyboard={"email-address"}
+									placeholder={"Insira o seu email"}
+									textContentType={"name"}
+									espacamento={false}
+								>
 									{errors.email && (
-										<Text style={estilos.errorInput}>
+										<Text style={Error()}>
 											{errors.email}
 										</Text>
 									)}
-								</View>
-								<View
-									style={[
-										estilos.containerInput,
-										tailwind("mb-12"),
-									]}
-								>
-									<Text style={estilos.labelInput}>
-										Senha
-									</Text>
-									<TextInput
-										style={estilos.input}
-										onChangeText={handleChange("senha")}
-										onBlur={handleBlur("senha")}
-										value={values.senha}
-										blurOnSubmit={true}
-										textContentType={"password"}
-										secureTextEntry={true}
-										placeholder={"Insira a sua senha"}
-										placeholderTextColor={"#A0AEC0"}
-									/>
+								</Input>
 
+								<Input
+									label="Senha"
+									onChangeText={handleChange("senha")}
+									onBlur={handleBlur("senha")}
+									value={values.senha}
+									textContentType={"password"}
+									secureTextEntry={true}
+									placeholder={"Insira a sua senha"}
+									espacamento={true}
+								>
 									{errors.senha && (
-										<Text style={estilos.errorInput}>
+										<Text style={Error()}>
 											{errors.senha}
 										</Text>
 									)}
-								</View>
+								</Input>
+
 								<Botao
 									ordem="primario"
 									tamanho="grande"
