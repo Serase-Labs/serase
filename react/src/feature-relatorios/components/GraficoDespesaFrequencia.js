@@ -1,5 +1,6 @@
 import * as React from "react";
-import { View, Dimensions } from "react-native";
+import { useState } from "react";
+import { View, Dimensions, Text } from "react-native";
 import tailwind from "tailwind-rn";
 
 //////// Dados falsos utilizados para testes de gráficos
@@ -20,10 +21,16 @@ const commitsData = [
 	{ date: "2020-10-30", count: 4 },
 ];
 
-// Componentes externos
+// Componentes Internos
+
+// Componentes Externos
 import { ContributionGraph } from "react-native-chart-kit";
 
 export default function GraficoDespesaFrequencia() {
+	// Atualizam a legenda interativa do gráfico
+	const [data, setData] = useState(null);
+	const [count, setCount] = useState(null);
+
 	return (
 		<View style={tailwind("flex items-center pt-6")}>
 			<ContributionGraph
@@ -34,7 +41,9 @@ export default function GraficoDespesaFrequencia() {
 				squareSize={20}
 				horizontal={false}
 				showMonthLabels={false}
-				onDayPress={(value, item) => console.log(value, item)}
+				onDayPress={(value, item) => {
+					console.log(value);
+				}}
 				width={(Dimensions.get("window").width / 100) * 70}
 				height={120}
 				chartConfig={{
@@ -45,6 +54,18 @@ export default function GraficoDespesaFrequencia() {
 					style: {},
 				}}
 			/>
+			{/* <View
+				style={tailwind(
+					"bg-gray-100 mx-5 rounded flex flex-col items-center py-4 my-4 w-full"
+				)}
+			>
+				<Text style={tailwind("text-base text-gray-900")}>
+					Data: {data}
+				</Text>
+				<Text style={tailwind("text-base text-gray-900")}>
+					{count} Movimentações
+				</Text>
+			</View> */}
 		</View>
 	);
 }

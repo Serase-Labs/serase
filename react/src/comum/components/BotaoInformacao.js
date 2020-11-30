@@ -18,7 +18,9 @@ export default function BotaoInformacao(props) {
 			onPress={props.onPress}
 			key={props.titulo}
 		>
-			<Text style={tailwind("text-white text-lg text-gray-100")}>
+			<Text
+				style={tailwind("text-gray-100 text-lg text-gray-100 w-10/12")}
+			>
 				{props.titulo}
 			</Text>
 			<Text style={tailwind("text-white text-lg font-bold")}>

@@ -27,7 +27,7 @@ const tipoDespesaData = [
 // Componentes externos
 import { PieChart } from "react-native-chart-kit";
 
-export default function GraficoDespesaPadrao() {
+export default function GraficoDespesaPadrao({ periodo }) {
 	return (
 		<View style={tailwind("flex items-center pt-6")}>
 			<PieChart
@@ -49,21 +49,30 @@ export default function GraficoDespesaPadrao() {
 
 			<View
 				style={tailwind(
-					"flex flex-row items-center justify-center my-2"
+					"flex flex-row items-center justify-center my-2 flex-wrap"
 				)}
 			>
-				<View style={tailwind("flex flex-row items-center px-2")}>
-					<View style={tailwind("w-4 h-4 bg-green-400 mr-2")}></View>
-					<Text style={tailwind("text-gray-600")}>Fixas</Text>
-				</View>
-				<View style={tailwind("flex flex-row items-center px-2")}>
-					<View style={tailwind("w-4 h-4 bg-yellow-200 mr-2")}></View>
-					<Text style={tailwind("text-gray-600")}>Variáveis</Text>
-				</View>
-				<View style={tailwind("flex flex-row items-center px-2")}>
-					<View style={tailwind("w-4 h-4 bg-blue-700 mr-2")}></View>
-					<Text style={tailwind("text-gray-600")}>Outras</Text>
-				</View>
+				{tipoDespesaData.map((value, index) => {
+					console.log(value);
+					return (
+						<View
+							style={tailwind("flex flex-row items-center p-2")}
+							key={index}
+						>
+							<View
+								style={[
+									tailwind(
+										"w-4 h-4 bg-green-400 mr-2 rounded-sm"
+									),
+									{ backgroundColor: value.color },
+								]}
+							></View>
+							<Text style={tailwind("text-gray-600")}>
+								{value.population}% - {value.name}
+							</Text>
+						</View>
+					);
+				})}
 			</View>
 		</View>
 	);

@@ -44,7 +44,7 @@ export default function RelatorioSemanal() {
 	};
 
 	return (
-		<View style={tailwind("bg-white")}>
+		<View style={tailwind("bg-white flex-1")}>
 			{/* Blocos de informações estáticos */}
 			<View style={tailwind("flex flex-row justify-between mx-5 mb-5")}>
 				<BlocoInformacao titulo="Gasto Total" conteudo="R$1200" />

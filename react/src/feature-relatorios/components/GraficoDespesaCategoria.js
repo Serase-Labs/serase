@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, Text } from "react-native";
 import tailwind from "tailwind-rn";
 
 //////// Dados falsos utilizados para testes de gráficos
@@ -43,7 +43,7 @@ const categoriaData = [
 // Componentes externos
 import { PieChart } from "react-native-chart-kit";
 
-export default function GraficoCategoriaMensal() {
+export default function GraficoCategoriaMensal({ periodo }) {
 	return (
 		<View style={tailwind("flex items-center pt-6")}>
 			<PieChart
@@ -62,6 +62,34 @@ export default function GraficoCategoriaMensal() {
 				paddingLeft={(Dimensions.get("window").width / 100) * 25}
 				hasLegend={false}
 			/>
+
+			<View
+				style={tailwind(
+					"flex flex-row items-center justify-center my-2 flex-wrap"
+				)}
+			>
+				{categoriaData.map((value, index) => {
+					console.log(value);
+					return (
+						<View
+							style={tailwind("flex flex-row items-center p-2")}
+							key={index}
+						>
+							<View
+								style={[
+									tailwind(
+										"w-4 h-4 bg-green-400 mr-2 rounded-sm"
+									),
+									{ backgroundColor: value.color },
+								]}
+							></View>
+							<Text style={tailwind("text-gray-600")}>
+								{value.population}% - {value.name}
+							</Text>
+						</View>
+					);
+				})}
+			</View>
 		</View>
 	);
 }

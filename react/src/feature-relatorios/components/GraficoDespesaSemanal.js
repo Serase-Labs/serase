@@ -29,7 +29,7 @@ const chartData = {
 		[30, 30],
 		[10, 20],
 	],
-	barColors: ["#65F6C1", "#F56565"],
+	barColors: ["#C7E9B4", "#2C7FB8"],
 };
 
 export default function GraficoDespesaSemanal() {
@@ -78,11 +78,21 @@ export default function GraficoDespesaSemanal() {
 				)}
 			>
 				<View style={tailwind("flex flex-row items-center px-2")}>
-					<View style={tailwind("w-4 h-4 bg-green-400 mr-2")}></View>
+					<View
+						style={[
+							tailwind("w-4 h-4 mr-2 rounded-sm"),
+							{ backgroundColor: "#C7E9B4" },
+						]}
+					></View>
 					<Text style={tailwind("text-gray-600")}>Receitas</Text>
 				</View>
 				<View style={tailwind("flex flex-row items-center px-2")}>
-					<View style={tailwind("w-4 h-4 bg-red-400 mr-2")}></View>
+					<View
+						style={[
+							tailwind("w-4 h-4 mr-2 rounded-sm"),
+							{ backgroundColor: "#2C7FB8" },
+						]}
+					></View>
 					<Text style={tailwind("text-gray-600")}>Despesas</Text>
 				</View>
 			</View>
