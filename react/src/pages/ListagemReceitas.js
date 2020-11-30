@@ -1,4 +1,6 @@
 import * as React from "react";
+import  { useState } from 'react';
+
 import {
 	StatusBar,
 	StyleSheet,
@@ -10,10 +12,10 @@ import {
 import tailwind from "tailwind-rn";
 
 import IconeVolta from "../assets/icons/IconeVolta";
-import IconeDespesa from "../assets/icons/IconeDespesaColorido";
-import IconeReceita from "../assets/icons/IconeReceitaColorido";
+import IconeReceita from "../assets/icons/IconeReceita";
 import IconeCarteiraReceita from "../assets/icons/IconeCarteiraReceita";
 import IconePesquisa from "../assets/icons/IconePesquisa";
+import { Value } from "react-native-reanimated";
 
 
 const headerHeight = StatusBar.currentHeight;
@@ -48,22 +50,58 @@ const estiloExcecao = StyleSheet.create({
 	},
 });
 
+
+
 export default function VisualizacaoGeral({ navigation }) {
-	const balanca_valores = [
-		["R$500", "NA BALANÇA ATUAL"],
-		["R$2.000", "GUARDADO"],
-		["52%", "DE DÍVIDA PAGA"],
-	];
+	const [isLoading, setLoading] = useState(true);
+	const [receitas, setReceita] = useState([]);
+	let movimentacoes =  getMovimentacoes();
+	
+	//then(setLoading(false))
+	
+	async function getMovimentacoes() {
+    let url = 'http://192.168.0.53:8080/movimentacoes/?tipo=receita';
+    try {
+		let res = await fetch(url);
+		let json = await res.json()
+		setReceita(json)
+		setLoading(false)
+        return await res.json();
+    } catch (error) {
+        console.log(error);
+	}
+	//finally {
+	//	setLoading(false)
+	//}
+	}
+	
+	function renderReceita(receitas) {
+		let dados = []; 
+		
+	console.log(receitas.conteudo);
 
-	const movimentacoes = [
-		[true, "Salário","21/03/2008", "1234,50"],
-		[true, "Salário","07/01/2002", "1234,50"],
-		[false, "Mercado","31/06/2019", "500,00"],
-		[false, "Ukulele","28/09/2005", "200,00"],
-		[true, "Mega Sena","30/02/2020", "1.000.000"],
-	];
-
+    receitas.conteudo.forEach(conteudo => {
+		dados.push(
+				<View style={estilos.movimentacao}>
+				
+					<View style={tailwind("w-8 h-8 mb-1 ")}>
+					<IconeReceita uso="sistema" />
+					</View>
+					<View style={tailwind(
+						"flex-col mx-6 flex-grow"
+					)}>
+					<Text style={estilos.movimentacaoTexto}>{conteudo.descricao}</Text>
+					<Text style={estilos.movimentacaoData}>{conteudo.valor_pago }</Text>
+					</View>
+					<Text style={estilos.movimentacaoValor}>{conteudo.data_lancamento}</Text>
+				</View>
+		);
+	});
+	return dados;
+	}
+	
 	return (
+		
 		<View style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}>  
             <View
 				style={tailwind(
@@ -89,7 +127,7 @@ export default function VisualizacaoGeral({ navigation }) {
 			
 			
 			<View style={[tailwind("flex-row bg-white justify-center")]}>
-					<IconeCarteiraReceita/>
+					
 			</View>
 			<View style={tailwind("justify-between flex-row p-3")}>
 				
@@ -100,30 +138,13 @@ export default function VisualizacaoGeral({ navigation }) {
 				<View style={[tailwind("flex-1")]}>
 				<IconePesquisa/>
 				</View>
-			</View>	
-					
+				</View>	
+				
 				<View style={tailwind("p-8")}>
+				{ isLoading ? <Text>Loading...</Text>: 
+				renderReceita(receitas)}
 				
-				
-                    {
-						
-                        movimentacoes.map((valores, i) =>
-							<View style={estilos.movimentacao} key={i}>
-							
-							<View style={tailwind("w-8 h-8 mb-1 ")}>
-							<IconeReceita uso="sistema" />
-								</View>
-								{valores[0] ? IconeReceita : IconeDespesa}
-								<View style={tailwind(
-									"flex-col mx-6 flex-grow"
-								)}>
-								<Text style={estilos.movimentacaoTexto}>{valores[1]}</Text>
-								<Text style={estilos.movimentacaoData}>{valores[2]}</Text>
-								</View>
-                                <Text style={estilos.movimentacaoValor}>{valores[3]}</Text>
-                            </View>
-                        )
-                    }
+                    
                 </View>
 		</View>
 	);

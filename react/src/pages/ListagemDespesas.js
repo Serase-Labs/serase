@@ -1,4 +1,5 @@
 import * as React from "react";
+import  { useState } from 'react';
 import {
 	StatusBar,
 	StyleSheet,
@@ -58,13 +59,53 @@ export default function VisualizacaoGeral({navigation}) {
 		["52%", "DE DÍVIDA PAGA"],
 	];
 
-	const movimentacoes = [
-		[true, "Salário","21/03/2008", "1234,50"],
-		[true, "Salário","07/01/2002", "1234,50"],
-		[false, "Mercado","31/06/2019", "500,00"],
-		[false, "Ukulele","28/09/2005", "200,00"],
-		[true, "Mega Sena","30/02/2020", "1.000.000"],
-	];
+	
+	const [isLoading, setLoading] = useState(true);
+	const [despesas, setDespesa] = useState([]);
+	let movimentacoes =  getMovimentacoes();
+	
+	//then(setLoading(false))
+	
+	async function getMovimentacoes() {
+    let url = 'http://192.168.0.53:8080/movimentacoes/?tipo=despesa';
+    try {
+		let res = await fetch(url);
+		let json = await res.json()
+		setDespesa(json)
+		setLoading(false)
+        return await res.json();
+    } catch (error) {
+        console.log(error);
+	}
+	//finally {
+	//	setLoading(false)
+	//}
+	}
+	
+	function renderDespesa(despesas) {
+		let dados = []; 
+		
+	console.log(despesas.conteudo);
+
+    despesas.conteudo.forEach(conteudo => {
+		dados.push(
+				<View style={estilos.movimentacao}>
+				
+					<View style={tailwind("w-8 h-8 mb-1 ")}>
+					<IconeReceita uso="sistema" />
+					</View>
+					<View style={tailwind(
+						"flex-col mx-6 flex-grow"
+					)}>
+					<Text style={estilos.movimentacaoTexto}>{conteudo.descricao}</Text>
+					<Text style={estilos.movimentacaoData}>{conteudo.valor_pago }</Text>
+					</View>
+					<Text style={estilos.movimentacaoValor}>{conteudo.data_lancamento}</Text>
+				</View>
+		);
+	});
+	return dados;
+	}
 
 	return (
 		<View style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}>  
@@ -203,23 +244,11 @@ export default function VisualizacaoGeral({navigation}) {
 			</View>
 				
 				<View style={tailwind("p-8")}>
-                    {
-                        movimentacoes.map((valores, i) =>
-						<View style={estilos.movimentacao} key={i}>
-						<View style={tailwind("w-8 h-8 mb-1 ")}>
-						<IconeDespesa uso="sistema" />
-							</View>
-							{valores[0] ? IconeReceita : IconeDespesa}
-							<View style={tailwind(
-								"flex-col mx-6 flex-grow"
-							)}>
-							<Text style={estilos.movimentacaoTexto}>{valores[1]}</Text>
-							<Text style={estilos.movimentacaoData}>{valores[2]}</Text>
-							</View>
-							<Text style={estilos.movimentacaoValor}>{valores[3]}</Text>
-						</View>
-                        )
-                    }
+                    
+                        
+						{ isLoading ? <Text>Loading...</Text>: 
+							renderDespesa(despesas)}
+                    
                 </View>
 		</View>
 	);
