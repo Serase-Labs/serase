@@ -88,8 +88,7 @@ export default function VisualizacaoGeral({navigation}) {
 	
 
     despesas.conteudo.forEach(conteudo => {
-		var d = new Date("2015/0/25");
-		d = conteudo.data_lancamento;
+		let d = conteudo.data_lancamento.split('-');
 		dados.push(
 				<View style={estilos.movimentacao}>
 				
@@ -102,7 +101,7 @@ export default function VisualizacaoGeral({navigation}) {
 					<Text style={estilos.movimentacaoTexto}>{conteudo.descricao}</Text>
 					<Text style={estilos.movimentacaoData}>{conteudo.valor_pago }</Text>
 					</View>
-					<Text style={estilos.movimentacaoValor}>{d}</Text>
+					<Text style={estilos.movimentacaoValor}>{d[2]}/{d[1]}/{d[0]}</Text>
 				</View>
 		);
 	});

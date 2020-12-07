@@ -81,9 +81,10 @@ export default function VisualizacaoGeral({ navigation }) {
 	function renderReceita(receitas) {
 		let dados = []; 
 		
-	console.log(receitas.conteudo);
 
     receitas.conteudo.forEach(conteudo => {
+		let d = conteudo.data_lancamento.split('-');
+		console.log(d);
 		dados.push(
 				<View style={estilos.movimentacao}>
 				
@@ -94,9 +95,10 @@ export default function VisualizacaoGeral({ navigation }) {
 						"flex-col mx-6 flex-grow"
 					)}>
 					<Text style={estilos.movimentacaoTexto}>{conteudo.descricao}</Text>
-					<Text style={estilos.movimentacaoData}>{conteudo.valor_pago }</Text>
+					<Text style={estilos.movimentacaoData}>{conteudo.valor_pago.replace('-','') }</Text>
 					</View>
-					<Text style={estilos.movimentacaoValor}>{conteudo.data_lancamento}</Text>
+					<Text style={estilos.movimentacaoValor}>{d[2]}/{d[1]}/{d[0]}</Text>
+					
 				</View>
 		);
 	});
