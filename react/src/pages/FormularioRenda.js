@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component, useState} from "react";
 import {
 	Text,
 	View,
@@ -14,12 +14,8 @@ import IndicadorNavegacao from "../components/IndicadorNavegacao";
 import * as yup from "yup";
 import { Formik } from "formik";
 import tailwind from "tailwind-rn";
+import {ModalTester, Modal} from "../components/Modal.js";
 
-const [isModalVisible, setModalVisible] = useState(false);
-  
-const toggleModal = () => {
-  setModalVisible(!isModalVisible);
-};
 
 const headerHeight = StatusBar.currentHeight;
 
@@ -162,13 +158,13 @@ const validationsFormRenda = yup.object().shape({
                 				</Text>
 								</TouchableOpacity>
 
-								<div className="ModalTester"></div>
-								<Modal 
+								<div className="ModalTester">
+								<Modal
         							visible={isModalVisible}
 									animationType='slide'
 									text = {"Blablaba"}
         						></Modal>
-
+								</div>
 
 								<TouchableOpacity
 									style={estilos.botaoPrimarioGrande}
