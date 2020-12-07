@@ -1,5 +1,5 @@
 import * as React from "react";
-import  { useState } from 'react';
+import  { useState,useEffect } from 'react';
 
 import {
 	StatusBar,
@@ -15,7 +15,7 @@ import IconeVolta from "../assets/icons/IconeVolta";
 import IconeReceita from "../assets/icons/IconeReceita";
 import IconeCarteiraReceita from "../assets/icons/IconeCarteiraReceita";
 import IconePesquisa from "../assets/icons/IconePesquisa";
-import { Value } from "react-native-reanimated";
+
 
 
 const headerHeight = StatusBar.currentHeight;
@@ -55,26 +55,29 @@ const estiloExcecao = StyleSheet.create({
 export default function VisualizacaoGeral({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [receitas, setReceita] = useState([]);
-	let movimentacoes =  getMovimentacoes();
+	
 	
 	//then(setLoading(false))
 	
-	async function getMovimentacoes() {
-    let url = 'http://192.168.0.53:8080/movimentacoes/?tipo=receita';
-    try {
-		let res = await fetch(url);
-		let json = await res.json()
+	 useEffect(()  => {
+		async function fectchData(){
+		let url = 'http://192.168.0.53:8080/movimentacoes/?tipo=despesa';
+		try{
+		let res =  await fetch(url);
+		let json =  await res.json()
 		setReceita(json)
 		setLoading(false)
-        return await res.json();
-    } catch (error) {
-        console.log(error);
-	}
+		return await res.json()
+		} catch(error){
+		}
+		}
+		fectchData();
+	 },[]);
+    
 	//finally {
 	//	setLoading(false)
-	//}
-	}
-	
+	//}	
+
 	function renderReceita(receitas) {
 		let dados = []; 
 		
@@ -140,7 +143,7 @@ export default function VisualizacaoGeral({ navigation }) {
 				</View>
 				</View>	
 				
-				<View style={tailwind("p-8")}>
+				<View style={tailwind("p-8 flex-col")}>
 				{ isLoading ? <Text>Loading...</Text>: 
 				renderReceita(receitas)}
 				

@@ -1,5 +1,5 @@
 import * as React from "react";
-import  { useState } from 'react';
+import  { useState, useEffect } from 'react';
 import {
 	StatusBar,
 	StyleSheet,
@@ -66,28 +66,30 @@ export default function VisualizacaoGeral({navigation}) {
 	
 	//then(setLoading(false))
 	
-	async function getMovimentacoes() {
-    let url = 'http://192.168.0.53:8080/movimentacoes/?tipo=despesa';
-    try {
-		let res = await fetch(url);
-		let json = await res.json()
-		setDespesa(json)
+	useEffect(()  => {
+		async function fectchData(){
+		let url = 'http://192.168.0.53:8080/movimentacoes/?tipo=despesa';
+		try{
+		let res =  await fetch(url);
+		let json =  await res.json()
+		setReceita(json)
 		setLoading(false)
-        return await res.json();
-    } catch (error) {
-        console.log(error);
-	}
-	//finally {
-	//	setLoading(false)
-	//}
-	}
+		return await res.json()
+		} catch(error){
+		}
+		}
+		fectchData();
+	 },[]);
 	
 	function renderDespesa(despesas) {
 		let dados = []; 
 		
 	console.log(despesas.conteudo);
+	
 
     despesas.conteudo.forEach(conteudo => {
+		var d = new Date("2015/0/25");
+		d = conteudo.data_lancamento;
 		dados.push(
 				<View style={estilos.movimentacao}>
 				
@@ -100,10 +102,11 @@ export default function VisualizacaoGeral({navigation}) {
 					<Text style={estilos.movimentacaoTexto}>{conteudo.descricao}</Text>
 					<Text style={estilos.movimentacaoData}>{conteudo.valor_pago }</Text>
 					</View>
-					<Text style={estilos.movimentacaoValor}>{conteudo.data_lancamento}</Text>
+					<Text style={estilos.movimentacaoValor}>{d}</Text>
 				</View>
 		);
 	});
+	
 	return dados;
 	}
 
@@ -243,9 +246,9 @@ export default function VisualizacaoGeral({navigation}) {
 				</View>
 			</View>
 				
-				<View style={tailwind("p-8")}>
+				<View style={tailwind("p-8 flex-col")}>
                     
-                        
+				
 						{ isLoading ? <Text>Loading...</Text>: 
 							renderDespesa(despesas)}
                     
