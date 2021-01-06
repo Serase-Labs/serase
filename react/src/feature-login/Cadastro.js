@@ -9,15 +9,20 @@ import {
 	ScrollView,
 } from "react-native";
 import tailwind from "tailwind-rn";
-
 // Imports internos
 import IndicadorNavegacao from "../comum/components/IndicadorNavegacao";
 import Botao from "../comum/components/Botao";
 import { Input, Error } from "../comum/components/Input";
-
 // Imports externos
 import { Formik } from "formik";
 import * as yup from "yup";
+
+const estilos = {
+	tela: tailwind("bg-white flex-1"),
+	telaInterior: tailwind("flex-1"),
+	containerFormulario: tailwind("w-full items-center"),
+	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
+};
 
 const headerHeight = StatusBar.currentHeight;
 
@@ -26,14 +31,6 @@ const estiloExcecao = StyleSheet.create({
 		paddingTop: headerHeight,
 	},
 });
-
-const estilos = {
-	tela: tailwind("bg-white flex-1"),
-	telaInterior: tailwind("flex-1"),
-
-	containerFormulario: tailwind("w-full items-center"),
-	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
-};
 
 const formatoEmail =
 	"^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+).(.[a-z]{2,3})$";
@@ -57,9 +54,15 @@ const validationsCadastro = yup.object().shape({
 export default function Cadastro({ navigation }) {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
-			<ScrollView style={estilos.telaInterior}>
-				<IndicadorNavegacao tela="Cadastro" />
-
+			<IndicadorNavegacao tela="Cadastro" />
+			<ScrollView
+				contentContainerStyle={{
+					flex: 1,
+					justifyContent: "center",
+					alignItems: "center",
+				}}
+				style={estilos.telaInterior}
+			>
 				<View style={estilos.containerFormulario}>
 					<Formik
 						initialValues={

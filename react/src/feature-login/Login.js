@@ -18,7 +18,6 @@ import { Formik } from "formik";
 const estilos = {
 	tela: tailwind("flex-1 bg-white"),
 	telaInterior: tailwind("flex-1"),
-
 	containerFormulario: tailwind("w-full items-center"),
 	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
 };
