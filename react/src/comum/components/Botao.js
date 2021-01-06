@@ -40,7 +40,7 @@ export default function Botao(props) {
 	return (
 		<TouchableOpacity
 			style={[
-				tailwind("py-2 rounded"),
+				tailwind("py-2 rounded-lg"),
 				ordem(props.ordem),
 				tamanho(props.tamanho),
 				props.espacamento == true ? tailwind("mb-4") : tailwind("mb-0"),
