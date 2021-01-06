@@ -2,49 +2,51 @@ import React from "react";
 import {
 	Text,
 	View,
+	Image,
 	StatusBar,
-	StyleSheet,
 	KeyboardAvoidingView,
 	ScrollView,
+	StyleSheet,
 } from "react-native";
 import tailwind from "tailwind-rn";
-
 // Imports internos
-import IndicadorNavegacao from "../comum/components/IndicadorNavegacao";
-import Botao from "../comum/components/Botao.js";
+import Botao from "../comum/components/Botao";
 import { Input, Error } from "../comum/components/Input";
-
 // Imports externos
 import { Formik } from "formik";
-
-const headerHeight = StatusBar.currentHeight;
-
-const estiloExcecao = StyleSheet.create({
-	container: {
-		paddingTop: headerHeight,
-	},
-});
 
 const estilos = {
 	tela: tailwind("flex-1 bg-white"),
 	telaInterior: tailwind("flex-1"),
 
 	containerFormulario: tailwind("w-full items-center"),
-	containerInput: tailwind("w-64 mb-2"),
-
 	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
-
-	// Revisar se vamos utilizar autenticação pela Google
-	botaoGoogle: tailwind("bg-blue-500 py-2 rounded w-64 mb-5"),
 };
+
+const headerHeight = StatusBar.currentHeight;
+const estiloExcecao = StyleSheet.create({
+	container: { paddingTop: headerHeight },
+});
 
 export default function Login({ navigation }) {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
-			<ScrollView style={estilos.telaInterior}>
-				<IndicadorNavegacao tela="Login" />
-
+			<ScrollView
+				contentContainerStyle={{
+					flex: 1,
+					justifyContent: "center",
+					alignItems: "center",
+				}}
+				style={estilos.telaInterior}
+			>
 				<View style={estilos.containerFormulario}>
+					<Image
+						style={[
+							{ resizeMode: "contain" },
+							tailwind("h-16 mb-12"),
+						]}
+						source={require("../comum/assets/lettermark128.png")}
+					/>
 					<Formik
 						initialValues={({ email: "" }, { senha: "" })}
 						onSubmit={(values) => {
@@ -131,7 +133,7 @@ export default function Login({ navigation }) {
 									onPress={() =>
 										navigation.navigate("Cadastro")
 									}
-									label="Cadastrar"
+									label="Criar Conta"
 								></Botao>
 							</View>
 						)}
