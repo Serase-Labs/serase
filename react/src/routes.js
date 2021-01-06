@@ -6,10 +6,6 @@ import Temp from "./pages/Temp";
 import Login from "./feature-login/Login";
 import Cadastro from "./feature-login/Cadastro";
 import VisualizacaoGeral from "./comum/VisualizacaoGeral";
-import FormularioMeta from "./feature-login/FormularioMeta.js";
-import FormularioDivida from "./feature-login/FormularioDivida.js";
-import FormularioRenda from "./feature-login/FormularioRenda.js";
-import PerfilDeUso from "./feature-login/PerfilDeUso.js";
 import Confirmacao from "./feature-login/Confirmacao.js";
 import Receitas from "./feature-movimentacoes/Receitas.js";
 import Despesas from "./feature-movimentacoes/Despesas.js";
@@ -25,15 +21,12 @@ const Routes = createAppContainer(
 			Login,
 			Cadastro,
 			VisualizacaoGeral,
-			FormularioMeta,
-			FormularioDivida,
-			FormularioRenda,
-			PerfilDeUso,
+
 			Confirmacao,
 			Receitas,
 			Despesas,
 			Relatorios,
-			PerfilDeUso,
+
 			MovimentacaoComum,
 		},
 		{
