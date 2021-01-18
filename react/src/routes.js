@@ -5,14 +5,14 @@ import { createStackNavigator } from "react-navigation-stack";
 import Temp from "./pages/Temp";
 import Login from "./feature-login/Login";
 import Cadastro from "./feature-login/Cadastro";
-import VisualizacaoGeral from "./comum/VisualizacaoGeral";
-import Confirmacao from "./feature-login/Confirmacao.js";
-import Receitas from "./feature-movimentacoes/Receitas.js";
-import Despesas from "./feature-movimentacoes/Despesas.js";
-import Relatorios from "./feature-relatorios/Relatorios.js";
+import Homepage from "./feature-login/Homepage";
+import Onboarding from "./feature-login/Onboarding.js";
 
-// Não-oficial
-import MovimentacaoComum from "./feature-movimentacoes/MovimentacaoComum.js";
+import ListaReceitas from "./feature-movimentacoes/ListaReceitas.js";
+import ListaDespesas from "./feature-movimentacoes/ListaDespesas.js";
+import AdicionaMovimentacao from "./feature-movimentacoes/AdicionaMovimentacao.js";
+
+import Relatorios from "./feature-relatorios/Relatorios.js";
 
 const Routes = createAppContainer(
 	createStackNavigator(
@@ -20,14 +20,12 @@ const Routes = createAppContainer(
 			Temp,
 			Login,
 			Cadastro,
-			VisualizacaoGeral,
-
-			Confirmacao,
-			Receitas,
-			Despesas,
+			Onboarding,
+			Homepage,
+			ListaReceitas,
+			ListaDespesas,
 			Relatorios,
-
-			MovimentacaoComum,
+			AdicionaMovimentacao,
 		},
 		{
 			headerMode: "none",

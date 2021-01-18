@@ -9,38 +9,12 @@ import {
 	ScrollView,
 } from "react-native";
 import tailwind from "tailwind-rn";
-
-import IconeMenu from "./assets/IconeMenu";
-import IconeDespesa from "./assets/IconeDespesa";
-import IconeReceita from "./assets/IconeReceita";
-import IconeRelatorio from "./assets/IconeRelatorio";
-import ListaVazia from "./components/ListaVazia.js";
-
-const headerHeight = StatusBar.currentHeight;
-
-const estilos = {
-	itemBalanca: tailwind("flex-1"),
-	itemBalancaValor: tailwind("text-white text-lg font-bold"),
-	itemBalancaDescricao: tailwind("text-white text-xs"),
-	botoesMain: tailwind(
-		"bg-gray-300 h-24 w-24 rounded-lg justify-center items-center"
-	),
-	botoesMainText: tailwind("text-blue-800 font-bold"),
-	botoesMainImg: tailwind("w-6 h-6"),
-	movimentacao: tailwind("flex-row mb-4"),
-	movimentacaoImg: tailwind("w-6 h-6"),
-	movimentacaoTexto: tailwind("text-base flex-grow text-left mx-6 font-bold"),
-	movimentacaoValor: tailwind("text-base"),
-};
-
-const estiloExcecao = StyleSheet.create({
-	botao: {
-		lineHeight: 68,
-	},
-	container: {
-		paddingTop: headerHeight,
-	},
-});
+// Imports internos
+import IconeMenu from "../comum/assets/IconeMenu";
+import IconeDespesa from "../comum/assets/IconeDespesa";
+import IconeReceita from "../comum/assets/IconeReceita";
+import IconeRelatorio from "../comum/assets/IconeRelatorio";
+import ListaVazia from "../comum/components/ListaVazia.js";
 
 export default function VisualizacaoGeral({ navigation }) {
 	// Hook implementado pra teste do componente ListaVazia
@@ -205,3 +179,29 @@ export default function VisualizacaoGeral({ navigation }) {
 		</ScrollView>
 	);
 }
+
+const headerHeight = StatusBar.currentHeight;
+
+const estilos = {
+	itemBalanca: tailwind("flex-1"),
+	itemBalancaValor: tailwind("text-white text-lg font-bold"),
+	itemBalancaDescricao: tailwind("text-white text-xs"),
+	botoesMain: tailwind(
+		"bg-gray-300 h-24 w-24 rounded-lg justify-center items-center"
+	),
+	botoesMainText: tailwind("text-blue-800 font-bold"),
+	botoesMainImg: tailwind("w-6 h-6"),
+	movimentacao: tailwind("flex-row mb-4"),
+	movimentacaoImg: tailwind("w-6 h-6"),
+	movimentacaoTexto: tailwind("text-base flex-grow text-left mx-6 font-bold"),
+	movimentacaoValor: tailwind("text-base"),
+};
+
+const estiloExcecao = StyleSheet.create({
+	botao: {
+		lineHeight: 68,
+	},
+	container: {
+		paddingTop: headerHeight,
+	},
+});

@@ -1,9 +1,3 @@
-// Essa tela comporta a interface de adição de Despesa e Receita comum.
-// Cada interface fica abrigada em uma seção do componente de Material Tab.
-// Existe uma funcionalidade de swipe entre as duas telas.
-// Se desejar componetizar externamente cada uma das interfaces,
-// fique a vontade. Talvez fique confuso tudo junto já que não existe lógica
-// compartilhada entre as duas funcionalidaes.
 import React, { useState } from "react";
 import {
 	StatusBar,
@@ -16,29 +10,65 @@ import {
 import tailwind from "tailwind-rn";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Picker } from "@react-native-community/picker";
-
-// Componentes de navegação
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-// Documentação do Material Top (https://reactnavigation.org/docs/material-top-tab-navigator)
+
+// Imports internos
+import Botao from "../comum/components/Botao";
+import Input from "../comum/components/Input";
+
 const Tab = createMaterialTopTabNavigator();
 
-const headerHeight = StatusBar.currentHeight;
-const estiloExcecao = StyleSheet.create({
-	container: {
-		paddingTop: headerHeight,
-	},
-});
-
-// Essas funções aqui foram retiradas do exemplo na documentação do React Navigation
-// estava com preguiça de inventar outra coisa e aí só copiei pra teste.
-// Estou deixando pra facilitar o entendimento de como funciona, mas deve ser subtituído
-// pelos componentes de AdicaoDespesa e AdicaoReceita aí :)
-function HomeScreen() {
+export default function AdicionaMovimentacao() {
 	return (
-		<View
-			style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-		>
+		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
+			<NavigationContainer>
+				<Tab.Navigator
+					screenOptions={({ route }) => ({
+						labelStyle: { fontSize: 12 },
+						tabStyle: { width: 100 },
+						style: { backgroundColor: "powderblue" },
+						tabBarIcon: ({ focused, color, size }) => {
+							let button;
+
+							if (route.name === "Receita") {
+								button = focused
+									? "ios-information-circle"
+									: "ios-information-circle-outline";
+							} else if (route.name === "Settings") {
+								button = focused ? "ios-list-box" : "ios-list";
+							}
+
+							return (
+								<Ionicons
+									name={button}
+									size={size}
+									background-Color={"#2C5282"}
+								/>
+							);
+						},
+					})}
+					tabBarOptions={{
+						activeTintColor: "#2c5282",
+						labelStyle: {
+							fontSize: 12,
+							fontWeight: "bold",
+							fontFamily: "Roboto",
+						},
+						style: { backgroundColor: "white" },
+					}}
+				>
+					<Tab.Screen name="Receita" component={AdicionaReceita} />
+					<Tab.Screen name="Despesa" component={AdicionaDespesa} />
+				</Tab.Navigator>
+			</NavigationContainer>
+		</KeyboardAvoidingView>
+	);
+}
+
+function AdicionaReceita() {
+	return (
+		<View style={[estilos.telaInterior]}>
 			<Text style={[estilos.labelInputPrincipal]}>
 				Quanto você ganhou?
 			</Text>
@@ -87,7 +117,7 @@ function HomeScreen() {
 	);
 }
 
-function SettingsScreen() {
+function AdicionaDespesa() {
 	return (
 		<View
 			style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -149,64 +179,16 @@ function SettingsScreen() {
 	);
 }
 
-export default function MovimentacaoComum() {
-	return (
-		<KeyboardAvoidingView
-			style={[estiloExcecao.container, tailwind("bg-white flex-1")]}
-		>
-			<NavigationContainer>
-				<Tab.Navigator
-					screenOptions={({ route }) => ({
-						labelStyle: { fontSize: 12 },
-						tabStyle: { width: 100 },
-						style: { backgroundColor: "powderblue" },
-						tabBarIcon: ({ focused, color, size }) => {
-							let button;
-
-							// Para personalizar os botões que aparecem na Tab
-							// você pode gerar componentes de botão, como eu fiz
-							// com o botão de adicionar.
-							// Documentação de estilização além disso:
-							// https://reactnavigation.org/docs/tab-based-navigation#customizing-the-appearance
-							if (route.name === "Receita") {
-								button = focused
-									? "ios-information-circle"
-									: "ios-information-circle-outline";
-							} else if (route.name === "Settings") {
-								button = focused ? "ios-list-box" : "ios-list";
-							}
-
-							// You can return any component that you like here!
-							return (
-								<Ionicons
-									name={button}
-									size={size}
-									background-Color={"#2C5282"}
-								/>
-							);
-						},
-					})}
-					tabBarOptions={{
-						activeTintColor: "#2c5282",
-						labelStyle: {
-							fontSize: 12,
-							fontWeight: "bold",
-							fontFamily: "Roboto",
-						},
-						style: { backgroundColor: "white" },
-					}}
-				>
-					<Tab.Screen name="Receita" component={HomeScreen} />
-					<Tab.Screen name="Despesa" component={SettingsScreen} />
-				</Tab.Navigator>
-			</NavigationContainer>
-		</KeyboardAvoidingView>
-	);
-}
+const headerHeight = StatusBar.currentHeight;
+const estiloExcecao = StyleSheet.create({
+	container: {
+		paddingTop: headerHeight,
+	},
+});
 
 const estilos = {
 	tela: tailwind("flex-1 bg-white"),
-	telaInterior: tailwind("flex-1"),
+	telaInterior: tailwind("flex-1 bg-white items-center"),
 	botaoCancelar: tailwind("relative py-2 rounded ml-8 mb-20 mt-12"),
 	inputPrincipal: tailwind(
 		"border border-green-400 rounded font-bold text-4xl py-6 px-20 mb-8 text-gray-700 text base max-w-xs"

@@ -1,5 +1,5 @@
 import * as React from "react";
-import  { useState,useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 import {
 	StatusBar,
@@ -11,12 +11,9 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
-import IconeVolta from "../assets/icons/IconeVolta";
-import IconeReceita from "../assets/icons/IconeReceita";
-import IconeCarteiraReceita from "../assets/icons/IconeCarteiraReceita";
-import IconePesquisa from "../assets/icons/IconePesquisa";
-
-
+import IconeVolta from "../comum/assets/IconeVolta";
+import IconeReceita from "../comum/assets/IconeReceita";
+import IconePesquisa from "../comum/assets/IconePesquisa";
 
 const headerHeight = StatusBar.currentHeight;
 
@@ -38,7 +35,6 @@ const estilos = {
 	movimentacaoTexto: tailwind("text-base flex-grow text-left font-bold"),
 	movimentacaoValor: tailwind("text-base"),
 	movimentacaoData: tailwind("text-gray-500 "),
-
 };
 
 const estiloExcecao = StyleSheet.create({
@@ -50,69 +46,65 @@ const estiloExcecao = StyleSheet.create({
 	},
 });
 
-
-
 export default function VisualizacaoGeral({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [receitas, setReceita] = useState([]);
-	
-	
+
 	//then(setLoading(false))
-	
-	 useEffect(()  => {
-		async function fectchData(){
-		let url = 'http://192.168.0.53:8080/movimentacoes/?tipo=despesa';
-		try{
-		let res =  await fetch(url);
-		let json =  await res.json()
-		setReceita(json)
-		setLoading(false)
-		return await res.json()
-		} catch(error){
-		}
+
+	useEffect(() => {
+		async function fectchData() {
+			let url = "http://192.168.0.53:8080/movimentacoes/?tipo=despesa";
+			try {
+				let res = await fetch(url);
+				let json = await res.json();
+				setReceita(json);
+				setLoading(false);
+				return await res.json();
+			} catch (error) {}
 		}
 		fectchData();
-	 },[]);
-    
+	}, []);
+
 	//finally {
 	//	setLoading(false)
-	//}	
+	//}
 
 	function renderReceita(receitas) {
-		let dados = []; 
-		
+		let dados = [];
 
-    receitas.conteudo.forEach(conteudo => {
-		let d = conteudo.data_lancamento.split('-');
-		console.log(d);
-		dados.push(
+		receitas.conteudo.forEach((conteudo) => {
+			let d = conteudo.data_lancamento.split("-");
+			console.log(d);
+			dados.push(
 				<View style={estilos.movimentacao}>
-				
 					<View style={tailwind("w-8 h-8 mb-1 ")}>
-					<IconeReceita uso="sistema" />
+						<IconeReceita uso="sistema" />
 					</View>
-					<View style={tailwind(
-						"flex-col mx-6 flex-grow"
-					)}>
-					<Text style={estilos.movimentacaoTexto}>{conteudo.descricao}</Text>
-					<Text style={estilos.movimentacaoData}>{conteudo.valor_pago.replace('-','') }</Text>
+					<View style={tailwind("flex-col mx-6 flex-grow")}>
+						<Text style={estilos.movimentacaoTexto}>
+							{conteudo.descricao}
+						</Text>
+						<Text style={estilos.movimentacaoData}>
+							{conteudo.valor_pago.replace("-", "")}
+						</Text>
 					</View>
-					<Text style={estilos.movimentacaoValor}>{d[2]}/{d[1]}/{d[0]}</Text>
-					
+					<Text style={estilos.movimentacaoValor}>
+						{d[2]}/{d[1]}/{d[0]}
+					</Text>
 				</View>
-		);
-	});
-	return dados;
+			);
+		});
+		return dados;
 	}
-	
+
 	return (
-		
-		<View style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}>  
-            <View
+		<View style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}>
+			<View
 				style={tailwind(
 					"p-5  w-full flex flex-row justify-start items-left items-center"
 				)}
-			>   
+			>
 				<TouchableOpacity
 					style={tailwind("w-10 h-10 p-1 bg-gray-200 rounded")}
 					onPress={() => navigation.navigate("VisualizacaoGeral")}
@@ -123,34 +115,25 @@ export default function VisualizacaoGeral({ navigation }) {
 				</TouchableOpacity>
 
 				<Text style={tailwind("text-lg ml-4")}>
-					<Text style={tailwind("text-lg ")}>
-						Receitas
-					</Text>
+					<Text style={tailwind("text-lg ")}>Receitas</Text>
 				</Text>
 			</View>
-			
-			
-			
-			<View style={[tailwind("flex-row bg-white justify-center")]}>
-					
-			</View>
+
+			<View style={[tailwind("flex-row bg-white justify-center")]}></View>
 			<View style={tailwind("justify-between flex-row p-3")}>
-				
-				<TextInput style={tailwind("flex-row mx-2 flex-grow ")}
-				placeholder={
-				"Pesquise por uma entrada de receita"}
-				placeholderTextColor={"#A0AEC0"} /> 
+				<TextInput
+					style={tailwind("flex-row mx-2 flex-grow ")}
+					placeholder={"Pesquise por uma entrada de receita"}
+					placeholderTextColor={"#A0AEC0"}
+				/>
 				<View style={[tailwind("flex-1")]}>
-				<IconePesquisa/>
+					<IconePesquisa />
 				</View>
-				</View>	
-				
-				<View style={tailwind("p-8 flex-col")}>
-				{ isLoading ? <Text>Loading...</Text>: 
-				renderReceita(receitas)}
-				
-                    
-                </View>
+			</View>
+
+			<View style={tailwind("p-8 flex-col")}>
+				{isLoading ? <Text>Loading...</Text> : renderReceita(receitas)}
+			</View>
 		</View>
 	);
 }

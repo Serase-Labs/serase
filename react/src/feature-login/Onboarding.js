@@ -1,25 +1,10 @@
 import React from "react";
 import tailwind from "tailwind-rn";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
-import Animated from "react-native-reanimated";
+
+// Imports internos
 import Botao from "../comum/components/Botao.js";
 import IlustracaoCadastro from "../comum/assets/IlustracaoCadastro.js";
-
-const windowHeight = Dimensions.get("window").height;
-
-const estilos = StyleSheet.create({
-	fundoDinamico: {
-		height: (windowHeight / 100) * 60,
-		borderTopRightRadius: 360,
-		borderTopLeftRadius: 360,
-	},
-	texto: {
-		color: "#0E305B",
-	},
-	ilustracao: {
-		bottom: (windowHeight / 100) * 10,
-	},
-});
 
 export default function Confirmacao() {
 	return (
@@ -64,3 +49,19 @@ export default function Confirmacao() {
 		</View>
 	);
 }
+
+const windowHeight = Dimensions.get("window").height;
+
+const estilos = StyleSheet.create({
+	fundoDinamico: {
+		height: (windowHeight / 100) * 60,
+		borderTopRightRadius: 360,
+		borderTopLeftRadius: 360,
+	},
+	texto: {
+		color: "#0E305B",
+	},
+	ilustracao: {
+		bottom: (windowHeight / 100) * 10,
+	},
+});

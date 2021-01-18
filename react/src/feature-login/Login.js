@@ -15,18 +15,6 @@ import { Input, Error } from "../comum/components/Input";
 // Imports externos
 import { Formik } from "formik";
 
-const estilos = {
-	tela: tailwind("flex-1 bg-white"),
-	telaInterior: tailwind("flex-1"),
-	containerFormulario: tailwind("w-full items-center"),
-	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
-};
-
-const headerHeight = StatusBar.currentHeight;
-const estiloExcecao = StyleSheet.create({
-	container: { paddingTop: headerHeight },
-});
-
 export default function Login({ navigation }) {
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
@@ -143,3 +131,15 @@ export default function Login({ navigation }) {
 		</KeyboardAvoidingView>
 	);
 }
+
+const estilos = {
+	tela: tailwind("flex-1 bg-white"),
+	telaInterior: tailwind("flex-1"),
+	containerFormulario: tailwind("w-full items-center"),
+	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
+};
+
+const headerHeight = StatusBar.currentHeight;
+const estiloExcecao = StyleSheet.create({
+	container: { paddingTop: headerHeight },
+});

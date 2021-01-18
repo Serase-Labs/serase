@@ -17,21 +17,6 @@ import { Input, Error } from "../comum/components/Input";
 import { Formik } from "formik";
 import * as yup from "yup";
 
-const estilos = {
-	tela: tailwind("bg-white flex-1"),
-	telaInterior: tailwind("flex-1"),
-	containerFormulario: tailwind("w-full items-center"),
-	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
-};
-
-const headerHeight = StatusBar.currentHeight;
-
-const estiloExcecao = StyleSheet.create({
-	container: {
-		paddingTop: headerHeight,
-	},
-});
-
 const formatoEmail =
 	"^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+).(.[a-z]{2,3})$";
 
@@ -179,3 +164,18 @@ export default function Cadastro({ navigation }) {
 		</KeyboardAvoidingView>
 	);
 }
+
+const estilos = {
+	tela: tailwind("bg-white flex-1"),
+	telaInterior: tailwind("flex-1"),
+	containerFormulario: tailwind("w-full items-center"),
+	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
+};
+
+const headerHeight = StatusBar.currentHeight;
+
+const estiloExcecao = StyleSheet.create({
+	container: {
+		paddingTop: headerHeight,
+	},
+});
