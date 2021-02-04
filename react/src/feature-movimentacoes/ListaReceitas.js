@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import Constants from "expo-constants";
+import InfiniteScroll from "react-infinite-scroller";
 
 import {
 	StatusBar,
@@ -51,25 +51,30 @@ const estiloExcecao = StyleSheet.create({
 export default function VisualizacaoGeral({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [receitas, setReceita] = useState([]);
-	
-  
-const { manifest } = Constants;
-const servidor_host = manifest.debuggerHost.split(`:`).shift().concat(`:8000`);
+	const [prox, setProx] = useState([]);
+	const [hasMoreItems, setHasMoreItems] = useState(true);
 
+	setProx("/movimentacoes/?tipo=receita");
 	//then(setLoading(false))
+	function carrega() {
+		if (prox != null) {
+			async function fectchData() {
+				let url = "http://192.168.0.53:8080" + prox;
+				try {
+					let res = await fetch(url);
+					let json = await res.json();
+					setReceita(json);
+					setLoading(false);
+					return await res.json();
+				} catch (error) {}
+			}
+			fectchData();
+			setProx(receitas.proxima);
+		}
+	}
 
 	useEffect(() => {
-		async function fectchData() {
-			let url = "http://"+servidor_host+"/movimentacoes/?tipo=receita";
-			try {
-				let res = await fetch(url);
-				let json = await res.json();
-				setReceita(json);
-				setLoading(false);
-				return await res.json();
-			} catch (error) {}
-		}
-		fectchData();
+		carrega();
 	}, []);
 
 	//finally {
@@ -101,6 +106,7 @@ const servidor_host = manifest.debuggerHost.split(`:`).shift().concat(`:8000`);
 				</View>
 			);
 		});
+
 		return dados;
 	}
 
@@ -133,15 +139,17 @@ const servidor_host = manifest.debuggerHost.split(`:`).shift().concat(`:8000`);
 					placeholderTextColor={"#A0AEC0"}
 				/>
 				<View style={[tailwind("flex-1")]}>
-				
 					<IconePesquisa />
-				
 				</View>
 			</View>
 			<ScrollView>
-			<View style={tailwind("p-8 flex-col")}>
-				{isLoading ? <Text>Loading...</Text> : renderReceita(receitas)}
-			</View>
+				<View style={tailwind("p-8 flex-col")}>
+					{isLoading ? (
+						<Text>Loading...</Text>
+					) : (
+						renderReceita(receitas)
+					)}
+				</View>
 			</ScrollView>
 		</View>
 	);
