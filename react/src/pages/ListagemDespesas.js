@@ -11,10 +11,10 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
-import IconeVolta from "../assets/icons/IconeVolta";
-import IconeDespesa from "../assets/icons/IconeDespesaColorido";
-import IconeReceita from "../assets/icons/IconeReceita";
-import IconePesquisa from "../assets/icons/IconePesquisa";
+import IconeVolta from "../comum/assets/IconeVolta";
+import IconeDespesa from "../comum/assets/IconeDespesaColorido";
+import IconeReceita from "../comum/assets/IconeReceita";
+import IconePesquisa from "../comum/assets/IconePesquisa";
 
 const headerHeight = StatusBar.currentHeight;
 
@@ -62,7 +62,6 @@ export default function VisualizacaoGeral({navigation}) {
 	
 	const [isLoading, setLoading] = useState(true);
 	const [despesas, setDespesa] = useState([]);
-	let movimentacoes =  getMovimentacoes();
 	
 	//then(setLoading(false))
 	
@@ -72,7 +71,7 @@ export default function VisualizacaoGeral({navigation}) {
 		try{
 		let res =  await fetch(url);
 		let json =  await res.json()
-		setReceita(json)
+		setDespesa(json)
 		setLoading(false)
 		return await res.json()
 		} catch(error){
@@ -88,12 +87,13 @@ export default function VisualizacaoGeral({navigation}) {
 	
 
     despesas.conteudo.forEach(conteudo => {
+		
 		let d = conteudo.data_lancamento.split('-');
 		dados.push(
 				<View style={estilos.movimentacao}>
 				
 					<View style={tailwind("w-8 h-8 mb-1 ")}>
-					<IconeReceita uso="sistema" />
+					<IconeDespesa uso="sistema" />
 					</View>
 					<View style={tailwind(
 						"flex-col mx-6 flex-grow"
@@ -103,9 +103,10 @@ export default function VisualizacaoGeral({navigation}) {
 					</View>
 					<Text style={estilos.movimentacaoValor}>{d[2]}/{d[1]}/{d[0]}</Text>
 				</View>
+				
 		);
 	});
-	
+	console.log(dados);
 	return dados;
 	}
 

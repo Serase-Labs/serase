@@ -1,5 +1,6 @@
 import * as React from "react";
 import  { useState,useEffect } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import {
 	StatusBar,
@@ -11,10 +12,10 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
-import IconeVolta from "../assets/icons/IconeVolta";
-import IconeReceita from "../assets/icons/IconeReceita";
-import IconeCarteiraReceita from "../assets/icons/IconeCarteiraReceita";
-import IconePesquisa from "../assets/icons/IconePesquisa";
+import IconeVolta from "../comum/assets/IconeVolta";
+import IconeReceita from "../comum/assets/IconeReceitaColorido";
+//import IconeCarteiraReceita from "../comum/assets/icons/IconeCarteiraReceita";
+import IconePesquisa from "../comum/assets/IconePesquisa";
 
 
 
@@ -55,24 +56,34 @@ const estiloExcecao = StyleSheet.create({
 export default function VisualizacaoGeral({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [receitas, setReceita] = useState([]);
+	const [prox, setProx] = useState([]);
+	const [hasMoreItems, setHasMoreItems] = useState(true);
 	
-	
+	setProx('/movimentacoes/?tipo=receita');
 	//then(setLoading(false))
-	
+	function carrega(){
+		if(prox != null){
+			async function fectchData(){
+			let url = 'http://192.168.0.53:8080'+prox;
+			try{
+			let res =  await fetch(url);
+			let json =  await res.json()
+			setReceita(json)
+			setLoading(false)
+			return await res.json()
+			} catch(error){
+			}
+			}
+			fectchData();
+			setProx(receitas.proxima); 
+		 }
+	}
+
 	 useEffect(()  => {
-		async function fectchData(){
-		let url = 'http://192.168.0.53:8080/movimentacoes/?tipo=despesa';
-		try{
-		let res =  await fetch(url);
-		let json =  await res.json()
-		setReceita(json)
-		setLoading(false)
-		return await res.json()
-		} catch(error){
-		}
-		}
-		fectchData();
-	 },[]);
+		carrega(); 
+	}
+	,[]);
+	
     
 	//finally {
 	//	setLoading(false)
@@ -102,6 +113,7 @@ export default function VisualizacaoGeral({ navigation }) {
 				</View>
 		);
 	});
+
 	return dados;
 	}
 	
@@ -146,8 +158,14 @@ export default function VisualizacaoGeral({ navigation }) {
 				</View>	
 				
 				<View style={tailwind("p-8 flex-col")}>
-				{ isLoading ? <Text>Loading...</Text>: 
-				renderReceita(receitas)}
+				<InfiniteScroll
+   					 pageStart={0}
+   					 loadMore={carrega()}
+    				 hasMore={true || false}
+   					 loader={<div className="loader" key={0}>Loading ...</div>}
+				>
+    				{renderReceita(receitas)} 
+				</InfiniteScroll>
 				
                     
                 </View>

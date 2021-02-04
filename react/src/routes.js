@@ -10,6 +10,8 @@ import Confirmacao from "./feature-login/Confirmacao.js";
 import Receitas from "./feature-movimentacoes/Receitas.js";
 import Despesas from "./feature-movimentacoes/Despesas.js";
 import Relatorios from "./feature-relatorios/Relatorios.js";
+import ListagemReceitas from "./pages/ListagemReceitas.js";
+import ListagemDespesas from "./pages/ListagemDespesas.js";
 
 // Não-oficial
 import MovimentacaoComum from "./feature-movimentacoes/MovimentacaoComum.js";
@@ -26,6 +28,9 @@ const Routes = createAppContainer(
 			Receitas,
 			Despesas,
 			Relatorios,
+			ListagemDespesas,
+			ListagemReceitas,
+
 
 			MovimentacaoComum,
 		},
