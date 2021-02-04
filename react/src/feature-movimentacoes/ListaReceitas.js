@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import  { useState,useEffect } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import {
 	StatusBar,
@@ -49,6 +50,7 @@ const estiloExcecao = StyleSheet.create({
 export default function VisualizacaoGeral({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [receitas, setReceita] = useState([]);
+<<<<<<< HEAD:react/src/feature-movimentacoes/ListaReceitas.js
 
 	//then(setLoading(false))
 
@@ -66,6 +68,37 @@ export default function VisualizacaoGeral({ navigation }) {
 		fectchData();
 	}, []);
 
+=======
+	const [prox, setProx] = useState([]);
+	const [hasMoreItems, setHasMoreItems] = useState(true);
+	
+	setProx('/movimentacoes/?tipo=receita');
+	//then(setLoading(false))
+	function carrega(){
+		if(prox != null){
+			async function fectchData(){
+			let url = 'http://192.168.0.53:8080'+prox;
+			try{
+			let res =  await fetch(url);
+			let json =  await res.json()
+			setReceita(json)
+			setLoading(false)
+			return await res.json()
+			} catch(error){
+			}
+			}
+			fectchData();
+			setProx(receitas.proxima); 
+		 }
+	}
+
+	 useEffect(()  => {
+		carrega(); 
+	}
+	,[]);
+	
+    
+>>>>>>> 3b9bc4f... Commit aeee:react/src/pages/ListagemReceitas.js
 	//finally {
 	//	setLoading(false)
 	//}
@@ -93,9 +126,16 @@ export default function VisualizacaoGeral({ navigation }) {
 						{d[2]}/{d[1]}/{d[0]}
 					</Text>
 				</View>
+<<<<<<< HEAD:react/src/feature-movimentacoes/ListaReceitas.js
 			);
 		});
 		return dados;
+=======
+		);
+	});
+
+	return dados;
+>>>>>>> 3b9bc4f... Commit aeee:react/src/pages/ListagemReceitas.js
 	}
 
 	return (
@@ -129,11 +169,28 @@ export default function VisualizacaoGeral({ navigation }) {
 				<View style={[tailwind("flex-1")]}>
 					<IconePesquisa />
 				</View>
+<<<<<<< HEAD:react/src/feature-movimentacoes/ListaReceitas.js
 			</View>
 
 			<View style={tailwind("p-8 flex-col")}>
 				{isLoading ? <Text>Loading...</Text> : renderReceita(receitas)}
 			</View>
+=======
+				</View>	
+				
+				<View style={tailwind("p-8 flex-col")}>
+				<InfiniteScroll
+   					 pageStart={0}
+   					 loadMore={carrega()}
+    				 hasMore={true || false}
+   					 loader={<div className="loader" key={0}>Loading ...</div>}
+				>
+    				{renderReceita(receitas)} 
+				</InfiniteScroll>
+				
+                    
+                </View>
+>>>>>>> 3b9bc4f... Commit aeee:react/src/pages/ListagemReceitas.js
 		</View>
 	);
 }
