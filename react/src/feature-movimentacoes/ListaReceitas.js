@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import Constants from "expo-constants";
 
 import {
 	StatusBar,
@@ -12,8 +13,9 @@ import {
 import tailwind from "tailwind-rn";
 
 import IconeVolta from "../comum/assets/IconeVolta";
-import IconeReceita from "../comum/assets/IconeReceita";
+import IconeReceita from "../comum/assets/IconeReceitaColorido";
 import IconePesquisa from "../comum/assets/IconePesquisa";
+import { ScrollView } from "react-native-gesture-handler";
 
 const headerHeight = StatusBar.currentHeight;
 
@@ -24,9 +26,9 @@ const estilos = {
 	botoesMain: tailwind(
 		"bg-gray-300 h-24 w-24 rounded-lg justify-center items-center"
 	),
-	botaoTerciarioGrande: tailwind("bg-transparent rounded w-15 h-14 my-4"),
+	botaoTerciarioGrande: tailwind("bg-transparent rounded  my-4"),
 	textoBotaoTerciario: tailwind(
-		"text-blue-700 font-bold fontfont-small text-base text-center py-4 px-8"
+		"text-blue-700 font-bold text-base text-center py-4 px-8"
 	),
 	botoesMainText: tailwind("text-blue-800 font-bold"),
 	botoesMainImg: tailwind("w-6 h-6"),
@@ -49,12 +51,16 @@ const estiloExcecao = StyleSheet.create({
 export default function VisualizacaoGeral({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [receitas, setReceita] = useState([]);
+	
+  
+const { manifest } = Constants;
+const servidor_host = manifest.debuggerHost.split(`:`).shift().concat(`:8000`);
 
 	//then(setLoading(false))
 
 	useEffect(() => {
 		async function fectchData() {
-			let url = "http://192.168.0.53:8080/movimentacoes/?tipo=despesa";
+			let url = "http://"+servidor_host+"/movimentacoes/?tipo=receita";
 			try {
 				let res = await fetch(url);
 				let json = await res.json();
@@ -102,14 +108,14 @@ export default function VisualizacaoGeral({ navigation }) {
 		<View style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}>
 			<View
 				style={tailwind(
-					"p-5  w-full flex flex-row justify-start items-left items-center"
+					"p-5  w-full flex flex-row justify-start items-center"
 				)}
 			>
 				<TouchableOpacity
 					style={tailwind("w-10 h-10 p-1 bg-gray-200 rounded")}
 					onPress={() => navigation.navigate("VisualizacaoGeral")}
 				>
-					<View style={tailwind("h-8 w-7")}>
+					<View style={tailwind("h-8")}>
 						<IconeVolta />
 					</View>
 				</TouchableOpacity>
@@ -127,13 +133,16 @@ export default function VisualizacaoGeral({ navigation }) {
 					placeholderTextColor={"#A0AEC0"}
 				/>
 				<View style={[tailwind("flex-1")]}>
+				
 					<IconePesquisa />
+				
 				</View>
 			</View>
-
+			<ScrollView>
 			<View style={tailwind("p-8 flex-col")}>
 				{isLoading ? <Text>Loading...</Text> : renderReceita(receitas)}
 			</View>
+			</ScrollView>
 		</View>
 	);
 }

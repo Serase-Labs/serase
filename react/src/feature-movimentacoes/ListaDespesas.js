@@ -1,5 +1,8 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import Constants from "expo-constants";
+//import moment from 'moment';
+
 import {
 	StatusBar,
 	StyleSheet,
@@ -13,7 +16,6 @@ import tailwind from "tailwind-rn";
 
 import IconeVolta from "../comum/assets/IconeVolta";
 import IconeDespesa from "../comum/assets/IconeDespesaColorido";
-import IconeReceita from "../comum/assets/IconeReceita";
 import IconePesquisa from "../comum/assets/IconePesquisa";
 
 const headerHeight = StatusBar.currentHeight;
@@ -25,9 +27,9 @@ const estilos = {
 	botoesMain: tailwind(
 		"bg-gray-300 h-24 w-24 rounded-lg justify-center items-center "
 	),
-	botaoTerciarioGrande: tailwind("bg-transparent rounded w-15 h-14 my-4"),
+	botaoTerciarioGrande: tailwind("bg-transparent rounded my-4"),
 	textoBotaoTerciario: tailwind(
-		"text-blue-700 font-bold font-small text-base text-center py-4 px-8"
+		"text-blue-700 font-bold text-base text-center py-4 px-8"
 	),
 	botoesMainText: tailwind("text-blue-800 font-bold"),
 	botoesMainImg: tailwind("w-6 h-6"),
@@ -64,24 +66,37 @@ export default function VisualizacaoGeral({ navigation }) {
 
 	const [isLoading, setLoading] = useState(true);
 	const [despesas, setDespesa] = useState([]);
-	let movimentacoes = getMovimentacoes();
+	const [periodo, setPeriodo] = useState('');
+	const { manifest } = Constants;
+	const servidor_host = manifest.debuggerHost.split(`:`).shift().concat(`:8000`);
 
 	//then(setLoading(false))
 
 	useEffect(() => {
 		async function fectchData() {
-			let url = "http://192.168.0.53:8080/movimentacoes/?tipo=despesa";
+			let url = "http://"+servidor_host+"/movimentacoes/?tipo=despesa";
 			try {
 				let res = await fetch(url);
 				let json = await res.json();
-				setReceita(json);
+				setDespesa(json);
 				setLoading(false);
 				return await res.json();
 			} catch (error) {}
 		}
 		fectchData();
 	}, []);
+	/**function essaSemana(){ 
+		var data = new Date();
+		var periodo = moment(data,"YYYY/MM/DD").subtract(7, 'days');
+		resposta = "&data_inicial="+periodo;
+		setPeriodo(periodo);
+		setLoading(true);
 
+	}**/
+	/**function Sempre(){
+		setPeriodo('');
+		setLoading(true);
+	}**/
 	function renderDespesa(despesas) {
 		let dados = [];
 
@@ -92,7 +107,7 @@ export default function VisualizacaoGeral({ navigation }) {
 			dados.push(
 				<View style={estilos.movimentacao}>
 					<View style={tailwind("w-8 h-8 mb-1 ")}>
-						<IconeReceita uso="sistema" />
+						<IconeDespesa uso="sistema" />
 					</View>
 					<View style={tailwind("flex-col mx-6 flex-grow")}>
 						<Text style={estilos.movimentacaoTexto}>
@@ -116,14 +131,14 @@ export default function VisualizacaoGeral({ navigation }) {
 		<View style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}>
 			<View
 				style={tailwind(
-					"p-5  w-full flex flex-row justify-start items-left items-center"
+					"p-5  w-full flex flex-row justify-start items-center"
 				)}
 			>
 				<TouchableOpacity
 					style={tailwind("w-10 h-10 p-1 bg-gray-200 rounded")}
 					onPress={() => navigation.navigate("VisualizacaoGeral")}
 				>
-					<View style={tailwind("h-8 w-7")}>
+					<View style={tailwind("h-8 ")}>
 						<IconeVolta />
 					</View>
 				</TouchableOpacity>
@@ -155,7 +170,7 @@ export default function VisualizacaoGeral({ navigation }) {
 						//onPress={handleSubmit}
 						title="Submit"
 					>
-						<Text style={estilos.botaoDespesaTxt}>Drogas</Text>
+						<Text style={estilos.botaoDespesaTxt}>Remédios</Text>
 						<Text style={estilos.botaoDespesaVlrTxt}>
 							R$ 500.00
 						</Text>
@@ -200,24 +215,24 @@ export default function VisualizacaoGeral({ navigation }) {
 			<View style={[tailwind("flex-row bg-white justify-center")]}>
 				<TouchableOpacity
 					style={estilos.botaoTerciarioGrande}
-					//onPress={handleSubmit}
+					//onPress={essaSemana()}
 					title="Submit"
 				>
 					<Text style={estilos.textoBotaoTerciario}>Essa semana</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={estilos.botaoTerciarioGrande}
-					//onPress={handleSubmit}
+					//onPress={Sempre()}
 					title="Submit"
 				>
-					<Text style={estilos.textoBotaoTerciario}>Sempre</Text>
+					<Text style={estilos.textoBotaoTerciario}>Esse Mês</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={estilos.botaoTerciarioGrande}
-					//onPress={handleSubmit}
+					
 					title="Submit"
 				>
-					<Text style={estilos.textoBotaoTerciario}>Cadastrar</Text>
+					<Text style={estilos.textoBotaoTerciario}>Sempre</Text>
 				</TouchableOpacity>
 			</View>
 			<View style={tailwind("justify-between flex-row p-3")}>
@@ -230,10 +245,11 @@ export default function VisualizacaoGeral({ navigation }) {
 					<IconePesquisa />
 				</View>
 			</View>
-
+			<ScrollView>
 			<View style={tailwind("p-8 flex-col")}>
 				{isLoading ? <Text>Loading...</Text> : renderDespesa(despesas)}
 			</View>
+			</ScrollView>
 		</View>
 	);
 }
