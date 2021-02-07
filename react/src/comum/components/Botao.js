@@ -13,7 +13,7 @@ function ordem(ordemBotao) {
 		case "terciario":
 			return tailwind("bg-transparent");
 		case "erro":
-			return tailwind("bg-red-400");
+			return tailwind("bg-red-600");
 	}
 }
 
