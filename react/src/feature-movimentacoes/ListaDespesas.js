@@ -17,11 +17,12 @@ import ItemMovimentacao from "./componentes/ItemMovimentacao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import IconePesquisa from "../comum/assets/IconePesquisa";
 
+
 export default function ListaDespesas({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [despesas, setDespesa] = useState([]);
 	const { manifest } = Constants;
-	const servidor_host = manifest.debuggerHost.split(`:`).shift().concat(`:8000`);
+	const servidor_host = '192.168.0.53:8000';
 
 
 	useEffect(() => {
@@ -52,6 +53,7 @@ export default function ListaDespesas({ navigation }) {
 	}
 
 	const renderizarMovimentacoes = ({ item }) => {
+		
 		return (
 			<ItemMovimentacao
 				indice={item.id}
@@ -111,12 +113,16 @@ export default function ListaDespesas({ navigation }) {
 					</View>
 				</View>
 
-				<View style={tailwind("flex-col")}>
+				<View style={tailwind(" mb-12 ")}>
+				<View style={tailwind(" mb-24 ")}>
+				<View style={tailwind("flex-col mb-24 ")}>
 					{isLoading ? (
 						<Text>Loading...</Text>
 					) : (
 						renderDespesa(despesas)
 					)}
+				</View>
+				</View>
 				</View>
 			</View>
 		</View>

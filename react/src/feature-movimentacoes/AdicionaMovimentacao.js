@@ -75,7 +75,8 @@ function AdicionaReceita() {
 	const [dataR, setDataR] = React.useState();
 	const [valorR, setValorR] = React.useState();
 	const [categoriaR, setCategoriaR] = React.useState();
-	const aperta = () => enviaMovimentacao(dataR,valorR,categoriaR)
+	const [descricaoR, setDescricaoR] = React.useState();
+	const aperta = () => enviaMovimentacao(dataR,valorR,categoriaR,descricaoR)
 	return (
 		<View style={[estilos.telaInterior]}>
 			<Text style={[estilos.labelInputPrincipal]}>
@@ -108,6 +109,17 @@ function AdicionaReceita() {
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={text => setCategoriaR(text)}
 			></TextInput>
+			
+			<Text style={[estilos.labelInputcategoria]}>
+				Descricao de Receita
+			</Text>
+			<TextInput
+				style={[estilos.input]}
+				placeholder={"Descrição"}
+				placeholderTextColor={"#A0AEC0"}
+				onChangeText={text => setDescricaoR(text)}
+			></TextInput>
+
 			<View style={{ flex: 1, flexDirection: "row" }}>
 				<TouchableOpacity
 					style={estilos.botaoCancelar}
@@ -133,7 +145,8 @@ function AdicionaDespesa() {
 	const [dataD, setDataD] = React.useState([]);
 	const [valorD, setValorD] = React.useState([]);
 	const [categoriaD, setCategoriaD] = React.useState([]);
-	const aperta = () => enviaMovimentacao(dataD,valorD,categoriaD);
+	const [descricaoD, setDescricaoD] = React.useState([]);
+	const aperta = () => enviaMovimentacao(dataD,valorD,categoriaD,descricaoD);
 	return (
 		<View
 			style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -145,7 +158,7 @@ function AdicionaDespesa() {
 				style={[estilos.inputPrincipalVermelho]}
 				placeholder={"R$ 0,00"}
 				keyboardType={"numeric"}
-				onChangeText={text => setValorD(text)}
+				onChangeText={text => setValorD(text*-1)}
 			></TextInput>
 
 			<Text style={[estilos.labelInput]}>Data de Gasto</Text>
@@ -167,7 +180,16 @@ function AdicionaDespesa() {
 				onChangeText={text => setCategoriaD(text)}
 			></TextInput>
 
-			
+
+			<Text style={[estilos.labelInputcategoria]}>
+				Descricao de Despesa
+			</Text>
+			<TextInput
+				style={[estilos.input]}
+				placeholder={"Descricao"}
+				placeholderTextColor={"#A0AEC0"}
+				onChangeText={text => setDescricaoD(text)}
+			></TextInput>
 
 			<View style={{ flex: 1, flexDirection: "row" }}>
 				<TouchableOpacity
@@ -182,7 +204,7 @@ function AdicionaDespesa() {
 
 				<TouchableOpacity
 					style={estilos.botaoAdicionarVermelho}
-					onPress={enviaMovimentacao(dataD,'-'+valorD,categoriaD)}
+					onPress={aperta}
 					title="Submit"
 				>
 					<Text style={estilos.textoBotaoAdicionarVermelho}>
@@ -194,20 +216,17 @@ function AdicionaDespesa() {
 	);
 }
 
-function enviaMovimentacao(data,valor, categoriaM){
+function enviaMovimentacao(data,valor, categoriaM, descricaoM){
 	const { manifest } = Constants;
-	const servidor_host = manifest.debuggerHost.split(`:`).shift().concat(`:8000`);
+	const servidor_host = '192.168.0.53:8000';
 	var data2 = data+'';
 	var dataf = data2.split('/');
-	var valor2 = valor+'';
-	var valorf = valor2.replace(',','.');
-	
 
 	fetch("http://"+servidor_host+"/movimentacao/", {
 	method: "POST",
-	body: JSON.stringify({valor_pago: valorf,data_lancamento: dataf[2]+'-'+dataf[1]+'-'+dataf[0],categoria: 'Lazer',descricao: ''})
+	body: JSON.stringify({valor_pago: valor,data_lancamento: dataf[2]+'-'+dataf[1]+'-'+dataf[0],categoria: 'Outros',descricao: descricaoM})
 	});
-	
+	console.log(categoriaM);
 }
 
 

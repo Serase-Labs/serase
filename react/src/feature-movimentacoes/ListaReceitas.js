@@ -20,7 +20,7 @@ export default function VisualizacaoGeral({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [receitas, setReceita] = useState([]);
 	const { manifest } = Constants;
-	const servidor_host = manifest.debuggerHost.split(`:`).shift().concat(`:8000`);
+	const servidor_host = '192.168.0.53:8000';
 
 	useEffect(() => {
 		async function fetchData() {
@@ -43,7 +43,8 @@ export default function VisualizacaoGeral({ navigation }) {
 					data={receitas.conteudo}
 					extraData={receitas.conteudo}
 					renderItem={renderizarMovimentacoes}
-					keyExtractor={(item) => item.id}
+					keyExtractor={(item) => item.id }
+					
 				></FlatList>
 			</View>
 		);
@@ -79,12 +80,16 @@ export default function VisualizacaoGeral({ navigation }) {
 					</View>
 				</View>
 
-				<View style={tailwind("flex-col")}>
+				<View style={tailwind(" mb-2 ")}>
+				<View style={tailwind(" mb-12 ")}>
+				<View style={tailwind("flex-col mb-24 ")}>
 					{isLoading ? (
 						<Text>Loading...</Text>
 					) : (
 						renderReceita(receitas)
 					)}
+				</View>
+				</View>
 				</View>
 			</View>
 		</View>
