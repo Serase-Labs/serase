@@ -12,6 +12,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Picker } from "@react-native-community/picker";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import Constants from "expo-constants";
 
 // Imports internos
 import Botao from "../comum/components/Botao";
@@ -19,7 +20,10 @@ import Input from "../comum/components/Input";
 
 const Tab = createMaterialTopTabNavigator();
 
+
 export default function AdicionaMovimentacao() {
+	
+
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<NavigationContainer>
@@ -67,6 +71,9 @@ export default function AdicionaMovimentacao() {
 }
 
 function AdicionaReceita() {
+	const [dataR, setDataR] = React.useState('');
+	const [valorR, setValorR] = React.useState('');
+	const [categoriaR, setCategoriaR] = React.useState('');
 	return (
 		<View style={[estilos.telaInterior]}>
 			<Text style={[estilos.labelInputPrincipal]}>
@@ -77,6 +84,7 @@ function AdicionaReceita() {
 				style={[estilos.inputPrincipal]}
 				placeholder={"R$ 0,00"}
 				keyboardType={"numeric"}
+				onChangeText={text => setValorR(text)}
 			></TextInput>
 
 			<Text style={[estilos.labelInput]}>Data da Receita</Text>
@@ -85,7 +93,8 @@ function AdicionaReceita() {
 				style={estilos.input}
 				placeholder={"20/10/2020"}
 				placeholderTextColor={"#A0AEC0"}
-				keyboardType={"numeric"}
+				//keyboardType={"numeric"}
+				onChangeText={text => setDataR(text)}
 			></TextInput>
 
 			<Text style={[estilos.labelInputcategoria]}>
@@ -95,6 +104,7 @@ function AdicionaReceita() {
 				style={[estilos.input]}
 				placeholder={"Salário, Empréstimo, Loteria, Aposta"}
 				placeholderTextColor={"#A0AEC0"}
+				onChangeText={text => setCategoriaR(text)}
 			></TextInput>
 			<View style={{ flex: 1, flexDirection: "row" }}>
 				<TouchableOpacity
@@ -107,7 +117,7 @@ function AdicionaReceita() {
 
 				<TouchableOpacity
 					style={estilos.botaoAdicionar}
-					//onPress={handleSubmit}
+					onPress={enviaMovimentacao(dataR,valorR,categoriaR)}
 					title="Submit"
 				>
 					<Text style={estilos.textoBotaoAdicionar}>Adicionar</Text>
@@ -118,6 +128,9 @@ function AdicionaReceita() {
 }
 
 function AdicionaDespesa() {
+	const [dataD, setDataD] = React.useState('');
+	const [valorD, setValorD] = React.useState('');
+	const [categoriaD, setCategoriaD] = React.useState('');
 	return (
 		<View
 			style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -129,6 +142,7 @@ function AdicionaDespesa() {
 				style={[estilos.inputPrincipalVermelho]}
 				placeholder={"R$ 0,00"}
 				keyboardType={"numeric"}
+				onChangeText={text => setValorD(text)}
 			></TextInput>
 
 			<Text style={[estilos.labelInput]}>Data de Gasto</Text>
@@ -137,6 +151,7 @@ function AdicionaDespesa() {
 				placeholder={"20/10/2020"}
 				placeholderTextColor={"#A0AEC0"}
 				keyboardType={"numeric"}
+				onChangeText={text => setDataD(text)}
 			></TextInput>
 
 			<Text style={[estilos.labelInputcategoria]}>
@@ -146,13 +161,10 @@ function AdicionaDespesa() {
 				style={[estilos.input]}
 				placeholder={"Alimentação, Trasnporte, Saúde"}
 				placeholderTextColor={"#A0AEC0"}
+				onChangeText={text => setCategoriaD(text)}
 			></TextInput>
 
-			<TextInput
-				style={[estilos.input]}
-				placeholder={"Aplicativo de comida, trasnporte"}
-				placeholderTextColor={"#A0AEC0"}
-			></TextInput>
+			
 
 			<View style={{ flex: 1, flexDirection: "row" }}>
 				<TouchableOpacity
@@ -167,7 +179,7 @@ function AdicionaDespesa() {
 
 				<TouchableOpacity
 					style={estilos.botaoAdicionarVermelho}
-					//onPress={handleSubmit}
+					onPress={enviaMovimentacao(dataD,valorD,categoriaD)}
 					title="Submit"
 				>
 					<Text style={estilos.textoBotaoAdicionarVermelho}>
@@ -178,6 +190,16 @@ function AdicionaDespesa() {
 		</View>
 	);
 }
+
+function enviaMovimentacao(data,valor, categoriaM){
+	const { manifest } = Constants;
+	const servidor_host = manifest.debuggerHost.split(`:`).shift().concat(`:8000`);
+	fetch("http://"+servidor_host+"/movimentacao/", {
+	method: "POST",
+	body: JSON.stringify({valor_pago: valor,data_lancamento: data,categoria: categoriaM})
+	});
+}
+
 
 const headerHeight = StatusBar.currentHeight;
 const estiloExcecao = StyleSheet.create({

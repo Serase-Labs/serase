@@ -10,6 +10,7 @@ import {
 	FlatList,
 } from "react-native";
 import tailwind from "tailwind-rn";
+import Constants from "expo-constants";
 
 import ItemMovimentacao from "./componentes/ItemMovimentacao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
@@ -18,10 +19,12 @@ import IconePesquisa from "../comum/assets/IconePesquisa";
 export default function VisualizacaoGeral({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [receitas, setReceita] = useState([]);
+	const { manifest } = Constants;
+	const servidor_host = manifest.debuggerHost.split(`:`).shift().concat(`:8000`);
 
 	useEffect(() => {
 		async function fetchData() {
-			let url = "http://192.168.18.13:8080/movimentacoes/?tipo=receita";
+			let url = "http://"+servidor_host+"/movimentacoes/?tipo=receita";
 			try {
 				let res = await fetch(url);
 				let json = await res.json();
