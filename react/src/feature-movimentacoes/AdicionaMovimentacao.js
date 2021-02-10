@@ -17,6 +17,7 @@ import Constants from "expo-constants";
 // Imports internos
 import Botao from "../comum/components/Botao";
 import Input from "../comum/components/Input";
+import { number } from "yup";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -71,9 +72,10 @@ export default function AdicionaMovimentacao() {
 }
 
 function AdicionaReceita() {
-	const [dataR, setDataR] = React.useState('');
-	const [valorR, setValorR] = React.useState('');
-	const [categoriaR, setCategoriaR] = React.useState('');
+	const [dataR, setDataR] = React.useState();
+	const [valorR, setValorR] = React.useState();
+	const [categoriaR, setCategoriaR] = React.useState();
+	const aperta = () => enviaMovimentacao(dataR,valorR,categoriaR)
 	return (
 		<View style={[estilos.telaInterior]}>
 			<Text style={[estilos.labelInputPrincipal]}>
@@ -117,7 +119,7 @@ function AdicionaReceita() {
 
 				<TouchableOpacity
 					style={estilos.botaoAdicionar}
-					onPress={enviaMovimentacao(dataR,valorR,categoriaR)}
+					onPress={aperta}
 					title="Submit"
 				>
 					<Text style={estilos.textoBotaoAdicionar}>Adicionar</Text>
@@ -128,9 +130,10 @@ function AdicionaReceita() {
 }
 
 function AdicionaDespesa() {
-	const [dataD, setDataD] = React.useState('');
-	const [valorD, setValorD] = React.useState('');
-	const [categoriaD, setCategoriaD] = React.useState('');
+	const [dataD, setDataD] = React.useState([]);
+	const [valorD, setValorD] = React.useState([]);
+	const [categoriaD, setCategoriaD] = React.useState([]);
+	const aperta = () => enviaMovimentacao(dataD,valorD,categoriaD);
 	return (
 		<View
 			style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -150,8 +153,8 @@ function AdicionaDespesa() {
 				style={estilos.input}
 				placeholder={"20/10/2020"}
 				placeholderTextColor={"#A0AEC0"}
-				keyboardType={"numeric"}
-				onChangeText={text => setDataD(text)}
+				//keyboardType={"numeric"}
+				onChangeText={text => setDataD(""+text)}
 			></TextInput>
 
 			<Text style={[estilos.labelInputcategoria]}>
@@ -179,7 +182,7 @@ function AdicionaDespesa() {
 
 				<TouchableOpacity
 					style={estilos.botaoAdicionarVermelho}
-					onPress={enviaMovimentacao(dataD,valorD,categoriaD)}
+					onPress={enviaMovimentacao(dataD,'-'+valorD,categoriaD)}
 					title="Submit"
 				>
 					<Text style={estilos.textoBotaoAdicionarVermelho}>
@@ -194,10 +197,17 @@ function AdicionaDespesa() {
 function enviaMovimentacao(data,valor, categoriaM){
 	const { manifest } = Constants;
 	const servidor_host = manifest.debuggerHost.split(`:`).shift().concat(`:8000`);
+	var data2 = data+'';
+	var dataf = data2.split('/');
+	var valor2 = valor+'';
+	var valorf = valor2.replace(',','.');
+	
+
 	fetch("http://"+servidor_host+"/movimentacao/", {
 	method: "POST",
-	body: JSON.stringify({valor_pago: valor,data_lancamento: data,categoria: categoriaM})
+	body: JSON.stringify({valor_pago: valorf,data_lancamento: dataf[2]+'-'+dataf[1]+'-'+dataf[0],categoria: 'Lazer',descricao: ''})
 	});
+	
 }
 
 
