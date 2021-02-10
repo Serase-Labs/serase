@@ -7,15 +7,26 @@ import {
 	KeyboardAvoidingView,
 	ScrollView,
 	StyleSheet,
+	ToastAndroid,
 } from "react-native";
 import tailwind from "tailwind-rn";
 // Imports internos
 import Botao from "../comum/components/Botao";
 import { Input, Error } from "../comum/components/Input";
+import {useAuth} from "./auth.js";
 // Imports externos
 import { Formik } from "formik";
 
 export default function Login({ navigation }) {
+
+	const {signIn} = useAuth();
+
+	function handleSubmit(values){
+		signIn(values.email, values.senha)
+		.then(()=>navigation.navigate("Homepage"))
+		.catch(()=> ToastAndroid.show("Email ou senha incorretos!", ToastAndroid.SHORT));
+	}
+
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<ScrollView
@@ -37,8 +48,7 @@ export default function Login({ navigation }) {
 					<Formik
 						initialValues={({ email: "" }, { senha: "" })}
 						onSubmit={(values) => {
-							console.log(values);
-							navigation.navigate("VisualizacaoGeral");
+							handleSubmit(values);
 						}}
 						validate={(values) => {
 							const errors = {};
