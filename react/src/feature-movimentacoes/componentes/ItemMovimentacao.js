@@ -61,7 +61,7 @@ export default function ItemMovimentacao(props) {
 				visible={modalVisible}
 				onRequestClose={() => setModalVisible(false)}
 			>
-				<ItemMovimentacaoDetalhado />
+				<ItemMovimentacaoDetalhado indice={props.indice}/>
 			</Modal>
 		</TouchableOpacity>
 	);

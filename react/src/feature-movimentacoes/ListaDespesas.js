@@ -16,18 +16,20 @@ import ItemMovimentacao from "./componentes/ItemMovimentacao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import IconePesquisa from "../comum/assets/IconePesquisa";
 import GLOBAL from "../Global";
+import { useAuth } from "../feature-login/auth.js";
 
 
 export default function ListaDespesas({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [despesas, setDespesa] = useState([]);
+	const {token} = useAuth();
 
 
 	useEffect(() => {
 		async function fetchData() {
 			let url = GLOBAL.BASE_URL+"/movimentacoes/?tipo=despesa";
 			try {
-				let res = await fetch(url);
+				let res = await fetch(url, {headers: {'Authorization': token}});
 				let json = await res.json();
 				setDespesa(json);
 				setLoading(false);

@@ -18,12 +18,12 @@ import Botao from "../comum/components/Botao";
 import Input from "../comum/components/Input";
 import { number } from "yup";
 import GLOBAL from "../Global";
-
+import { useAuth } from "../feature-login/auth.js";
 const Tab = createMaterialTopTabNavigator();
 
 
 export default function AdicionaMovimentacao() {
-	
+	const {token} = useAuth();
 
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
@@ -63,20 +63,20 @@ export default function AdicionaMovimentacao() {
 						style: { backgroundColor: "white" },
 					}}
 				>
-					<Tab.Screen name="Receita" component={AdicionaReceita} />
-					<Tab.Screen name="Despesa" component={AdicionaDespesa} />
+					<Tab.Screen name="Receita" component={()=>AdicionaReceita(token)} />
+					<Tab.Screen name="Despesa" component={()=> AdicionaDespesa(token)} />
 				</Tab.Navigator>
 			</NavigationContainer>
 		</KeyboardAvoidingView>
 	);
 }
 
-function AdicionaReceita() {
+function AdicionaReceita(token) {
 	const [dataR, setDataR] = React.useState();
 	const [valorR, setValorR] = React.useState();
 	const [categoriaR, setCategoriaR] = React.useState();
 	const [descricaoR, setDescricaoR] = React.useState();
-	const aperta = () => enviaMovimentacao(dataR,valorR,categoriaR,descricaoR)
+	const aperta = () => enviaMovimentacao(token, dataR,valorR,categoriaR,descricaoR)
 	return (
 		<View style={[estilos.telaInterior]}>
 			<Text style={[estilos.labelInputPrincipal]}>
@@ -141,12 +141,12 @@ function AdicionaReceita() {
 	);
 }
 
-function AdicionaDespesa() {
+function AdicionaDespesa(token) {
 	const [dataD, setDataD] = React.useState([]);
 	const [valorD, setValorD] = React.useState([]);
 	const [categoriaD, setCategoriaD] = React.useState([]);
 	const [descricaoD, setDescricaoD] = React.useState([]);
-	const aperta = () => enviaMovimentacao(dataD,valorD,categoriaD,descricaoD);
+	const aperta = () => enviaMovimentacao(token, dataD,valorD,categoriaD,descricaoD);
 	return (
 		<View
 			style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -216,13 +216,14 @@ function AdicionaDespesa() {
 	);
 }
 
-function enviaMovimentacao(data,valor, categoriaM, descricaoM){
+function enviaMovimentacao(token, data,valor, categoriaM, descricaoM){
 	const servidor_host = '192.168.0.8:8000';
 	var data2 = data+'';
 	var dataf = data2.split('/');
 
 	fetch(GLOBAL.BASE_URL+"/movimentacao/", {
 	method: "POST",
+	headers: {'Authorization': token},
 	body: JSON.stringify({valor_pago: valor,data_lancamento: dataf[2]+'-'+dataf[1]+'-'+dataf[0],categoria: 'Outros',descricao: descricaoM})
 	});
 	console.log(categoriaM);

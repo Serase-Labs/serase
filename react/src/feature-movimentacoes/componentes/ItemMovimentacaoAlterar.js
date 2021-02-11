@@ -20,6 +20,7 @@ import ItemMovimentacao from "./ItemMovimentacao";
 import { Input } from "../../comum/components/Input";
 import Botao from "../../comum/components/Botao";
 import GLOBAL from "../../Global";
+import { useAuth } from "../../feature-login/auth.js";
 
 function cancelar(){
 
@@ -27,19 +28,21 @@ function cancelar(){
 
 export default function ItemMovimentacaoAlterar(props) {
 	const [tipo, setTipo] = useState("receita");
+	const {token} = useAuth();
 
 	// Hooks para o Date Picker
 	const [date, setDate] = useState(new Date());
 	const [mode, setMode] = useState("date");
 	const [show, setShow] = useState(false);
 
-	async function alterar(values){
+	async function alterar(token, values){
 		console.log("eu")
 		let descricao = values.descricao || props.descricao,
 			data_lancamento = values.prazo || props.data,
 			valor_pago = values.valor || props.valor,
 			categoria = values.categoria || props.categoria;
 
+		
 		data_lancamento = data_lancamento.split('/').reverse().join('-');
 		let body = {descricao, data_lancamento, valor_pago, categoria};
 
@@ -47,6 +50,7 @@ export default function ItemMovimentacaoAlterar(props) {
 		
 		let res = await fetch(url, {
 			method: "put",
+			headers: {'Authorization': token},
 			body: JSON.stringify(body)
 		});
 		
@@ -92,7 +96,7 @@ export default function ItemMovimentacaoAlterar(props) {
 								{ categoria: "" },
 								{ descricao: "" })
 							}
-							onSubmit={alterar}
+							onSubmit={values=> alterar(token, values)}
 						>
 							{({
 								handleChange,

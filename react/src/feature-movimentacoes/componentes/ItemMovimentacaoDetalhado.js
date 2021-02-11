@@ -16,12 +16,14 @@ import tailwind from "tailwind-rn";
 import Botao from "../../comum/components/Botao";
 import ItemMovimentacaoAlterar from "./ItemMovimentacaoAlterar";
 import GLOBAL from "../../Global";
+import { useAuth } from "../../feature-login/auth.js";
 
-async function excluir(indice){
+async function excluir(token, indice){
 	let url = GLOBAL.BASE_URL+"/movimentacao/"+indice+"/";
 		
 	let res = await fetch(url, {
-		method: "delete"
+		method: "delete",
+		headers: {'Authorization': token},
 	});
 		
 	let json = await res.json(),
@@ -31,6 +33,7 @@ async function excluir(indice){
 }
 
 export default function ItemMovimentacaoDetalhado(props) {
+	const {token} = useAuth();
 	const [tipo, setTipo] = useState("receita");
 	const [modalAlteracaoVisible, setModalAlteracaoVisible] = useState(false);
 	const servidor_host = "192.168.0.8:8000";
@@ -44,7 +47,7 @@ export default function ItemMovimentacaoDetalhado(props) {
 		async function fetchData() {
 			let url = GLOBAL.BASE_URL+"/movimentacao/"+props.indice+"/";
 			try {
-				let res = await fetch(url);
+				let res = await fetch(url, {headers: {'Authorization': token}});
 				let json = await res.json();
 				let conteudo = json.conteudo;
 				
@@ -162,7 +165,7 @@ export default function ItemMovimentacaoDetalhado(props) {
 							ordem="erro"
 							tamanho="pequeno"
 							label="Excluir"
-							onPress={() => excluirMovimentacao(tipo, descricao, props.indice)}
+							onPress={() => excluirMovimentacao(token, tipo, descricao, props.indice)}
 						/>
 					</View>
 				</View>
@@ -171,7 +174,7 @@ export default function ItemMovimentacaoDetalhado(props) {
 	);
 }
 
-function excluirMovimentacao(tipo, nome, indice) {
+function excluirMovimentacao(token, tipo, nome, indice) {
 	const titulo = `Excluir ${tipo}`;
 	const descricao = `Tem certeza que deseja excluir a ${tipo} "${nome}"`;
 
@@ -186,7 +189,7 @@ function excluirMovimentacao(tipo, nome, indice) {
 			},
 			{
 				text: "SIM",
-				onPress: () => excluir(indice)
+				onPress: () => excluir(token, indice)
 			},
 		],
 		{ cancelable: true }
