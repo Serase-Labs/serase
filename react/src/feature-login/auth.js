@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import GLOBAL from "../Global";
 
 const AuthContext = createContext({ signed: false, user: {} });
 
@@ -26,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 	}, []);
 
 	async function signIn(email, senha) {
-		let res = await fetch("http://192.168.18.13:8000/login/", {
+		let res = await fetch(GLOBAL.BASE_URL+"/login/", {
 			headers: {
 				Accept: "application/json",
 				"Content-Type": "application/json",

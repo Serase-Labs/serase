@@ -19,7 +19,7 @@ import IconeAdicionar from "../comum/assets/IconeAdicionar";
 import ListaVazia from "../comum/components/ListaVazia.js";
 
 import ItemMovimentacao from "../feature-movimentacoes/componentes/ItemMovimentacao";
-
+import GLOBAL from "../Global";
 import { useAuth } from "./auth";
 
 export default function VisualizacaoGeral({ navigation }) {
@@ -38,7 +38,7 @@ export default function VisualizacaoGeral({ navigation }) {
 
 	useEffect(() => {
 		async function fetchData() {
-			let url = "http://192.168.18.13:8000/movimentacoes/?limite=6";
+			let url = GLOBAL.BASE_URL+"/movimentacoes/?limite=6";
 			try {
 				let res = await fetch(url, {
 					headers: {
@@ -55,7 +55,7 @@ export default function VisualizacaoGeral({ navigation }) {
 		fetchData();
 
 		async function fetchSaldo() {
-			let url = "http://192.168.18.13:8000/saldo/";
+			let url = GLOBAL.BASE_URL+"/saldo/";
 			try {
 				let res = await fetch(url, {
 					headers: {
