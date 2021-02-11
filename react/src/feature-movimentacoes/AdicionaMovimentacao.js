@@ -12,12 +12,12 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Picker } from "@react-native-community/picker";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import Constants from "expo-constants";
 
 // Imports internos
 import Botao from "../comum/components/Botao";
 import Input from "../comum/components/Input";
 import { number } from "yup";
+import {BASE_URL} from "../../Global";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -217,12 +217,11 @@ function AdicionaDespesa() {
 }
 
 function enviaMovimentacao(data,valor, categoriaM, descricaoM){
-	const { manifest } = Constants;
-	const servidor_host = '192.168.0.53:8000';
+	const servidor_host = '192.168.0.8:8000';
 	var data2 = data+'';
 	var dataf = data2.split('/');
 
-	fetch("http://"+servidor_host+"/movimentacao/", {
+	fetch(BASE_URL+"/movimentacao/", {
 	method: "POST",
 	body: JSON.stringify({valor_pago: valor,data_lancamento: dataf[2]+'-'+dataf[1]+'-'+dataf[0],categoria: 'Outros',descricao: descricaoM})
 	});

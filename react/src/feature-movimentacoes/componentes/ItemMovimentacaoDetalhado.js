@@ -15,9 +15,10 @@ import tailwind from "tailwind-rn";
 
 import Botao from "../../comum/components/Botao";
 import ItemMovimentacaoAlterar from "./ItemMovimentacaoAlterar";
+import {BASE_URL} from "../../Global";
 
 async function excluir(indice){
-	let url = "http://192.168.0.8:8000/movimentacao/"+indice+"/";
+	let url = BASE_URL+"/movimentacao/"+indice+"/";
 		
 	let res = await fetch(url, {
 		method: "delete"
@@ -41,7 +42,7 @@ export default function ItemMovimentacaoDetalhado(props) {
 
 	useEffect(() => {
 		async function fetchData() {
-			let url = "http://"+servidor_host+"/movimentacao/"+props.indice+"/";
+			let url = BASE_URL+"/movimentacao/"+props.indice+"/";
 			try {
 				let res = await fetch(url);
 				let json = await res.json();

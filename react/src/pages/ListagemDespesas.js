@@ -15,6 +15,7 @@ import IconeVolta from "../comum/assets/IconeVolta";
 import IconeDespesa from "../comum/assets/IconeDespesaColorido";
 import IconeReceita from "../comum/assets/IconeReceita";
 import IconePesquisa from "../comum/assets/IconePesquisa";
+import {BASE_URL} from "../../Global";
 
 const headerHeight = StatusBar.currentHeight;
 
@@ -67,7 +68,7 @@ export default function VisualizacaoGeral({navigation}) {
 	
 	useEffect(()  => {
 		async function fectchData(){
-		let url = 'http://192.168.0.53:8080/movimentacoes/?tipo=despesa';
+		let url = BASE_URL+'/movimentacoes/?tipo=despesa';
 		try{
 		let res =  await fetch(url);
 		let json =  await res.json()

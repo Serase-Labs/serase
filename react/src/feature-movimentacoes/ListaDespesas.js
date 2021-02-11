@@ -11,23 +11,21 @@ import {
 	FlatList,
 } from "react-native";
 import tailwind from "tailwind-rn";
-import Constants from "expo-constants";
 
 import ItemMovimentacao from "./componentes/ItemMovimentacao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import IconePesquisa from "../comum/assets/IconePesquisa";
+import {BASE_URL} from "../../Global";
 
 
 export default function ListaDespesas({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [despesas, setDespesa] = useState([]);
-	const { manifest } = Constants;
-	const servidor_host = '192.168.0.53:8000';
 
 
 	useEffect(() => {
 		async function fetchData() {
-			let url = "http://"+servidor_host+"/movimentacoes/?tipo=despesa";
+			let url = BASE_URL+"/movimentacoes/?tipo=despesa";
 			try {
 				let res = await fetch(url);
 				let json = await res.json();
