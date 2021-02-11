@@ -1,14 +1,15 @@
 import React from "react";
-//import { YellowBox } from "react-native";
 import Routes from "./src/routes";
-import { AuthProvider } from './src/feature-login/auth';
+import { AuthProvider } from "./src/feature-login/auth";
 import { LogBox } from "react-native";
 
-//YellowBox.ignoreWarnings(["Unrecognized WebSocket"]);
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default function App() {
 	return (
-	<AuthProvider>
-		<Routes />
-	</AuthProvider>);
+		<AuthProvider>
+			<Routes />
+		</AuthProvider>
+	);
 }

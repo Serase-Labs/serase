@@ -38,7 +38,7 @@ export default function VisualizacaoGeral({ navigation }) {
 
 	useEffect(() => {
 		async function fetchData() {
-			let url = GLOBAL.BASE_URL+"/movimentacoes/?limite=6";
+			let url = GLOBAL.BASE_URL + "/movimentacoes/?limite=6";
 			try {
 				let res = await fetch(url, {
 					headers: {
@@ -55,7 +55,7 @@ export default function VisualizacaoGeral({ navigation }) {
 		fetchData();
 
 		async function fetchSaldo() {
-			let url = GLOBAL.BASE_URL+"/saldo/";
+			let url = GLOBAL.BASE_URL + "/saldo/";
 			try {
 				let res = await fetch(url, {
 					headers: {
@@ -226,7 +226,7 @@ export default function VisualizacaoGeral({ navigation }) {
 					tailwind("w-16 h-16 bg-green-300 absolute rounded-full"),
 					{ top: "85%", right: "5%" },
 				]}
-				onPress={() => navigation.navigate("ListaDespesas")}
+				onPress={() => navigation.navigate("AdicionaMovimentacao")}
 			></TouchableOpacity>
 		</ScrollView>
 	);

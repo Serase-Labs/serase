@@ -18,18 +18,18 @@ import IconePesquisa from "../comum/assets/IconePesquisa";
 import GLOBAL from "../Global";
 import { useAuth } from "../feature-login/auth.js";
 
-
 export default function ListaDespesas({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [despesas, setDespesa] = useState([]);
-	const {token} = useAuth();
-
+	const { token } = useAuth();
 
 	useEffect(() => {
 		async function fetchData() {
-			let url = GLOBAL.BASE_URL+"/movimentacoes/?tipo=despesa";
+			let url = GLOBAL.BASE_URL + "/movimentacoes/?tipo=despesa";
 			try {
-				let res = await fetch(url, {headers: {'Authorization': token}});
+				let res = await fetch(url, {
+					headers: { Authorization: token },
+				});
 				let json = await res.json();
 				setDespesa(json);
 				setLoading(false);
@@ -53,7 +53,6 @@ export default function ListaDespesas({ navigation }) {
 	}
 
 	const renderizarMovimentacoes = ({ item }) => {
-		
 		return (
 			<ItemMovimentacao
 				indice={item.id}
@@ -69,7 +68,7 @@ export default function ListaDespesas({ navigation }) {
 			<View style={estilos.telaInterior}>
 				<IndicadorRetorno telaAtual={"Despesas"} />
 
-				<View style={tailwind("px-5")}>
+				{/* 				<View style={tailwind("px-5")}>
 					<Text style={tailwind("text-lg font-bold")}>
 						Movimentações
 					</Text>
@@ -101,7 +100,7 @@ export default function ListaDespesas({ navigation }) {
 							Cadastrar
 						</Text>
 					</TouchableOpacity>
-				</View>
+				</View> */}
 				<View style={tailwind("justify-between flex-row p-3")}>
 					<TextInput
 						style={tailwind("flex-row mx-2 flex-grow")}
@@ -114,15 +113,15 @@ export default function ListaDespesas({ navigation }) {
 				</View>
 
 				<View style={tailwind(" mb-12 ")}>
-				<View style={tailwind(" mb-24 ")}>
-				<View style={tailwind("flex-col mb-24 ")}>
-					{isLoading ? (
-						<Text>Loading...</Text>
-					) : (
-						renderDespesa(despesas)
-					)}
-				</View>
-				</View>
+					<View style={tailwind(" mb-24 ")}>
+						<View style={tailwind("flex-col mb-24 ")}>
+							{isLoading ? (
+								<Text>Loading...</Text>
+							) : (
+								renderDespesa(despesas)
+							)}
+						</View>
+					</View>
 				</View>
 			</View>
 		</View>
