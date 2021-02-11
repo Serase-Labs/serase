@@ -19,7 +19,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ItemMovimentacao from "./ItemMovimentacao";
 import { Input } from "../../comum/components/Input";
 import Botao from "../../comum/components/Botao";
-import {BASE_URL} from "../../Global";
+import GLOBAL from "../../Global";
 
 function cancelar(){
 
@@ -43,7 +43,7 @@ export default function ItemMovimentacaoAlterar(props) {
 		data_lancamento = data_lancamento.split('/').reverse().join('-');
 		let body = {descricao, data_lancamento, valor_pago, categoria};
 
-		let url = BASE_URL+"/movimentacao/"+props.indice+"/";
+		let url = GLOBAL.BASE_URL+"/movimentacao/"+props.indice+"/";
 		
 		let res = await fetch(url, {
 			method: "put",

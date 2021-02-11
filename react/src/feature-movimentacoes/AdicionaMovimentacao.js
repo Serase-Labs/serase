@@ -17,7 +17,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Botao from "../comum/components/Botao";
 import Input from "../comum/components/Input";
 import { number } from "yup";
-import {BASE_URL} from "../../Global";
+import GLOBAL from "../Global";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -221,7 +221,7 @@ function enviaMovimentacao(data,valor, categoriaM, descricaoM){
 	var data2 = data+'';
 	var dataf = data2.split('/');
 
-	fetch(BASE_URL+"/movimentacao/", {
+	fetch(GLOBAL.BASE_URL+"/movimentacao/", {
 	method: "POST",
 	body: JSON.stringify({valor_pago: valor,data_lancamento: dataf[2]+'-'+dataf[1]+'-'+dataf[0],categoria: 'Outros',descricao: descricaoM})
 	});

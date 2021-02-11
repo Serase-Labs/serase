@@ -15,10 +15,10 @@ import tailwind from "tailwind-rn";
 
 import Botao from "../../comum/components/Botao";
 import ItemMovimentacaoAlterar from "./ItemMovimentacaoAlterar";
-import {BASE_URL} from "../../Global";
+import GLOBAL from "../../Global";
 
 async function excluir(indice){
-	let url = BASE_URL+"/movimentacao/"+indice+"/";
+	let url = GLOBAL.BASE_URL+"/movimentacao/"+indice+"/";
 		
 	let res = await fetch(url, {
 		method: "delete"
@@ -42,7 +42,7 @@ export default function ItemMovimentacaoDetalhado(props) {
 
 	useEffect(() => {
 		async function fetchData() {
-			let url = BASE_URL+"/movimentacao/"+props.indice+"/";
+			let url = GLOBAL.BASE_URL+"/movimentacao/"+props.indice+"/";
 			try {
 				let res = await fetch(url);
 				let json = await res.json();

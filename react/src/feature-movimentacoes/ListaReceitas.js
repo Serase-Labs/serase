@@ -14,7 +14,7 @@ import tailwind from "tailwind-rn";
 import ItemMovimentacao from "./componentes/ItemMovimentacao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import IconePesquisa from "../comum/assets/IconePesquisa";
-import {BASE_URL} from "../../Global";
+import GLOBAL from "../Global";
 
 export default function VisualizacaoGeral({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ export default function VisualizacaoGeral({ navigation }) {
 
 	useEffect(() => {
 		async function fetchData() {
-			let url = BASE_URL+"/movimentacoes/?tipo=receita";
+			let url = GLOBAL.BASE_URL+"/movimentacoes/?tipo=receita";
 			try {
 				let res = await fetch(url);
 				let json = await res.json();
