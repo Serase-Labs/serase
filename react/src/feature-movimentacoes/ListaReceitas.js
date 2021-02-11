@@ -20,7 +20,7 @@ export default function VisualizacaoGeral({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [receitas, setReceita] = useState([]);
 	const { manifest } = Constants;
-	const servidor_host = '192.168.0.53:8000';
+	const servidor_host = "192.168.0.8:8000";
 
 	useEffect(() => {
 		async function fetchData() {

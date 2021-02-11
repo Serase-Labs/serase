@@ -16,13 +16,49 @@ import tailwind from "tailwind-rn";
 import Botao from "../../comum/components/Botao";
 import ItemMovimentacaoAlterar from "./ItemMovimentacaoAlterar";
 
-export default function ItemMovimentacaoDetalhado({
-	handleClose,
-	show,
-	children,
-}) {
+async function excluir(indice){
+	let url = "http://192.168.0.8:8000/movimentacao/"+indice+"/";
+		
+	let res = await fetch(url, {
+		method: "delete"
+	});
+		
+	let json = await res.json(),
+		conteudo = json.conteudo;
+
+	console.log(conteudo);
+}
+
+export default function ItemMovimentacaoDetalhado(props) {
 	const [tipo, setTipo] = useState("receita");
 	const [modalAlteracaoVisible, setModalAlteracaoVisible] = useState(false);
+	const servidor_host = "192.168.0.8:8000";
+	const [loading, setLoading] = useState(true);
+	const [descricao, setDescricao] = useState("");
+	const [data, setData] = useState("");
+	const [valor, setValor] = useState(0.0);
+	const [categoria, setCategoria] = useState("");
+
+	useEffect(() => {
+		async function fetchData() {
+			let url = "http://"+servidor_host+"/movimentacao/"+props.indice+"/";
+			try {
+				let res = await fetch(url);
+				let json = await res.json();
+				let conteudo = json.conteudo;
+				
+				setDescricao(conteudo.descricao);
+				let data = conteudo.data_lancamento.split('-'); 
+				setData(data[2]+'/'+data[1]+'/'+data[0]);
+				setValor(conteudo.valor_pago);
+				setCategoria(conteudo.categoria);
+
+				setLoading(false);
+				return await res.json();
+			} catch (error) {}
+		}
+		fetchData();
+	}, []);
 
 	return (
 		<>
@@ -50,7 +86,7 @@ export default function ItemMovimentacaoDetalhado({
 									"text-base font-bold w-48 text-right"
 								)}
 							>
-								R$100,00
+								R$ {valor}
 							</Text>
 						</View>
 
@@ -67,7 +103,7 @@ export default function ItemMovimentacaoDetalhado({
 									"text-base font-bold w-48 text-right"
 								)}
 							>
-								19/10/2020
+								{data}
 							</Text>
 						</View>
 
@@ -84,7 +120,7 @@ export default function ItemMovimentacaoDetalhado({
 									"text-base font-bold w-48 text-right"
 								)}
 							>
-								Aposta
+								{categoria}
 							</Text>
 						</View>
 
@@ -92,16 +128,14 @@ export default function ItemMovimentacaoDetalhado({
 							<Text
 								style={tailwind("text-base text-gray-800 mb-2")}
 							>
-								Valor
+								Descrição
 							</Text>
 							<Text
 								style={tailwind(
 									"text-lg font-bold text-right w-56 self-end"
 								)}
 							>
-								Lorem ipsum dolor sit amet, consectur adipiscing
-								elit. Erat pallentesque mauris bibendum auctor
-								tincidunt dui sed non.
+								{descricao}
 							</Text>
 						</View>
 					</View>
@@ -121,13 +155,13 @@ export default function ItemMovimentacaoDetalhado({
 								setModalAlteracaoVisible(false)
 							}
 						>
-							<ItemMovimentacaoAlterar />
+							<ItemMovimentacaoAlterar descricao={descricao} data={data} valor={valor} categoria={categoria} indice={props.indice}/>
 						</Modal>
 						<Botao
 							ordem="erro"
 							tamanho="pequeno"
 							label="Excluir"
-							onPress={() => excluirMovimentacao(tipo, "Abc")}
+							onPress={() => excluirMovimentacao(tipo, descricao, props.indice)}
 						/>
 					</View>
 				</View>
@@ -136,7 +170,7 @@ export default function ItemMovimentacaoDetalhado({
 	);
 }
 
-function excluirMovimentacao(tipo, nome) {
+function excluirMovimentacao(tipo, nome, indice) {
 	const titulo = `Excluir ${tipo}`;
 	const descricao = `Tem certeza que deseja excluir a ${tipo} "${nome}"`;
 
@@ -151,8 +185,7 @@ function excluirMovimentacao(tipo, nome) {
 			},
 			{
 				text: "SIM",
-				onPress: () =>
-					console.log("Requerir cancelamento de requisição"),
+				onPress: () => excluir(indice)
 			},
 		],
 		{ cancelable: true }
