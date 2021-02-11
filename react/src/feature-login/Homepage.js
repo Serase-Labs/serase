@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
 	StatusBar,
 	StyleSheet,
@@ -7,6 +7,7 @@ import {
 	View,
 	TouchableOpacity,
 	ScrollView,
+	FlatList,
 } from "react-native";
 import tailwind from "tailwind-rn";
 // Imports internos
@@ -16,10 +17,16 @@ import IconeReceita from "../comum/assets/IconeReceita";
 import IconeRelatorio from "../comum/assets/IconeRelatorio";
 import ListaVazia from "../comum/components/ListaVazia.js";
 
+import ItemMovimentacao from "../feature-movimentacoes/componentes/ItemMovimentacao";
+
+import { useAuth } from "./auth";
+
 export default function VisualizacaoGeral({ navigation }) {
-	// Hook implementado pra teste do componente ListaVazia
-	// Deve ser retirado quando a conexão com o BD for implementada
-	const [populada, setPopulada] = useState(false);
+	const { user, token } = useAuth();
+
+	const [movimentacoes, setMovimentacoes] = useState();
+	const [isLoading, setLoading] = useState(true);
+	const [despesas, setDespesa] = useState([]);
 
 	const balanca_valores = [
 		["R$500", "NA BALANÇA ATUAL"],
@@ -27,13 +34,50 @@ export default function VisualizacaoGeral({ navigation }) {
 		["52%", "DE DÍVIDA PAGA"],
 	];
 
-	const movimentacoes = [
-		[true, "Salário", "1234,50"],
-		[true, "Salário", "1234,50"],
-		[false, "Mercado", "500,00"],
-		[false, "Ukulele", "200,00"],
-		[true, "Mega Sena", "1.000.000"],
-	];
+	useEffect(() => {
+		async function fetchData() {
+			let url = "http://192.168.18.13:8000/movimentacoes/?limite=10";
+
+			try {
+				let res = await fetch(url, {
+					headers: {
+						Authorization: token,
+					},
+				});
+				let json = await res.json();
+				setMovimentacoes(json);
+				setLoading(false);
+				console.log(json);
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		fetchData();
+	}, []);
+
+	function renderMovimentacoes(movimentacoes) {
+		return (
+			<View>
+				<FlatList
+					data={movimentacoes.conteudo}
+					extraData={movimentacoes.conteudo}
+					renderItem={renderizarMovimentacoes}
+					keyExtractor={(item) => item.id}
+				></FlatList>
+			</View>
+		);
+	}
+
+	const renderizarMovimentacoes = ({ item }) => {
+		return (
+			<ItemMovimentacao
+				indice={item.id}
+				descricao={item.descricao}
+				valorPago={item.valor_pago}
+				dataLancamento={item.data_lancamento}
+			/>
+		);
+	};
 
 	return (
 		<ScrollView
@@ -166,13 +210,10 @@ export default function VisualizacaoGeral({ navigation }) {
 				</Text>
 
 				<View style={tailwind("opacity-25")}>
-					{populada == false ? (
-						<ListaVazia
-							mensagem="Você ainda não adicionou nenhuma movimentação, assim que o fizer
-				elas aparecerão aqui."
-						/>
+					{isLoading ? (
+						<Text>Loading...</Text>
 					) : (
-						<Text>AAAA</Text>
+						console.log(movimentacoes)
 					)}
 				</View>
 			</View>
