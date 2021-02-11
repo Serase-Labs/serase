@@ -14,6 +14,7 @@ import {
 import tailwind from "tailwind-rn";
 
 import IconeDespesa from "../../comum/assets/IconeDespesa";
+import IconeReceita from "../../comum/assets/IconeReceita";
 import ItemMovimentacaoDetalhado from "./ItemMovimentacaoDetalhado";
 
 export default function ItemMovimentacao(props) {
@@ -30,7 +31,11 @@ export default function ItemMovimentacao(props) {
 			onPress={() => setModalVisible(true)}
 		>
 			<View style={tailwind("w-6 h-6 flex")}>
-				<IconeDespesa uso="sistema" />
+				{props.valorPago > 0 ? (
+					<IconeReceita uso="nao" />
+				) : (
+					<IconeDespesa uso="nao" />
+				)}
 			</View>
 			<View style={tailwind("flex-col mx-6 flex-grow")}>
 				<Text

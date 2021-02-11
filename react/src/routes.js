@@ -27,7 +27,7 @@ const Routes = createAppContainer(
 		},
 		{
 			headerMode: "none",
-			initialRouteName: "Temp",
+			initialRouteName: "Login",
 		}
 	)
 );
