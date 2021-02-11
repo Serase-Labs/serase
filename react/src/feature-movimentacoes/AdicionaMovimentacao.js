@@ -16,10 +16,15 @@ import { NavigationContainer } from "@react-navigation/native";
 // Imports internos
 import Botao from "../comum/components/Botao";
 import Input from "../comum/components/Input";
+import { number } from "yup";
+import GLOBAL from "../Global";
 
 const Tab = createMaterialTopTabNavigator();
 
+
 export default function AdicionaMovimentacao() {
+	
+
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<NavigationContainer>
@@ -67,6 +72,11 @@ export default function AdicionaMovimentacao() {
 }
 
 function AdicionaReceita() {
+	const [dataR, setDataR] = React.useState();
+	const [valorR, setValorR] = React.useState();
+	const [categoriaR, setCategoriaR] = React.useState();
+	const [descricaoR, setDescricaoR] = React.useState();
+	const aperta = () => enviaMovimentacao(dataR,valorR,categoriaR,descricaoR)
 	return (
 		<View style={[estilos.telaInterior]}>
 			<Text style={[estilos.labelInputPrincipal]}>
@@ -77,6 +87,7 @@ function AdicionaReceita() {
 				style={[estilos.inputPrincipal]}
 				placeholder={"R$ 0,00"}
 				keyboardType={"numeric"}
+				onChangeText={text => setValorR(text)}
 			></TextInput>
 
 			<Text style={[estilos.labelInput]}>Data da Receita</Text>
@@ -85,7 +96,8 @@ function AdicionaReceita() {
 				style={estilos.input}
 				placeholder={"20/10/2020"}
 				placeholderTextColor={"#A0AEC0"}
-				keyboardType={"numeric"}
+				//keyboardType={"numeric"}
+				onChangeText={text => setDataR(text)}
 			></TextInput>
 
 			<Text style={[estilos.labelInputcategoria]}>
@@ -95,7 +107,19 @@ function AdicionaReceita() {
 				style={[estilos.input]}
 				placeholder={"Salário, Empréstimo, Loteria, Aposta"}
 				placeholderTextColor={"#A0AEC0"}
+				onChangeText={text => setCategoriaR(text)}
 			></TextInput>
+			
+			<Text style={[estilos.labelInputcategoria]}>
+				Descricao de Receita
+			</Text>
+			<TextInput
+				style={[estilos.input]}
+				placeholder={"Descrição"}
+				placeholderTextColor={"#A0AEC0"}
+				onChangeText={text => setDescricaoR(text)}
+			></TextInput>
+
 			<View style={{ flex: 1, flexDirection: "row" }}>
 				<TouchableOpacity
 					style={estilos.botaoCancelar}
@@ -107,7 +131,7 @@ function AdicionaReceita() {
 
 				<TouchableOpacity
 					style={estilos.botaoAdicionar}
-					//onPress={handleSubmit}
+					onPress={aperta}
 					title="Submit"
 				>
 					<Text style={estilos.textoBotaoAdicionar}>Adicionar</Text>
@@ -118,6 +142,11 @@ function AdicionaReceita() {
 }
 
 function AdicionaDespesa() {
+	const [dataD, setDataD] = React.useState([]);
+	const [valorD, setValorD] = React.useState([]);
+	const [categoriaD, setCategoriaD] = React.useState([]);
+	const [descricaoD, setDescricaoD] = React.useState([]);
+	const aperta = () => enviaMovimentacao(dataD,valorD,categoriaD,descricaoD);
 	return (
 		<View
 			style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -129,6 +158,7 @@ function AdicionaDespesa() {
 				style={[estilos.inputPrincipalVermelho]}
 				placeholder={"R$ 0,00"}
 				keyboardType={"numeric"}
+				onChangeText={text => setValorD(text*-1)}
 			></TextInput>
 
 			<Text style={[estilos.labelInput]}>Data de Gasto</Text>
@@ -136,7 +166,8 @@ function AdicionaDespesa() {
 				style={estilos.input}
 				placeholder={"20/10/2020"}
 				placeholderTextColor={"#A0AEC0"}
-				keyboardType={"numeric"}
+				//keyboardType={"numeric"}
+				onChangeText={text => setDataD(""+text)}
 			></TextInput>
 
 			<Text style={[estilos.labelInputcategoria]}>
@@ -146,12 +177,18 @@ function AdicionaDespesa() {
 				style={[estilos.input]}
 				placeholder={"Alimentação, Trasnporte, Saúde"}
 				placeholderTextColor={"#A0AEC0"}
+				onChangeText={text => setCategoriaD(text)}
 			></TextInput>
 
+
+			<Text style={[estilos.labelInputcategoria]}>
+				Descricao de Despesa
+			</Text>
 			<TextInput
 				style={[estilos.input]}
-				placeholder={"Aplicativo de comida, trasnporte"}
+				placeholder={"Descricao"}
 				placeholderTextColor={"#A0AEC0"}
+				onChangeText={text => setDescricaoD(text)}
 			></TextInput>
 
 			<View style={{ flex: 1, flexDirection: "row" }}>
@@ -167,7 +204,7 @@ function AdicionaDespesa() {
 
 				<TouchableOpacity
 					style={estilos.botaoAdicionarVermelho}
-					//onPress={handleSubmit}
+					onPress={aperta}
 					title="Submit"
 				>
 					<Text style={estilos.textoBotaoAdicionarVermelho}>
@@ -178,6 +215,19 @@ function AdicionaDespesa() {
 		</View>
 	);
 }
+
+function enviaMovimentacao(data,valor, categoriaM, descricaoM){
+	const servidor_host = '192.168.0.8:8000';
+	var data2 = data+'';
+	var dataf = data2.split('/');
+
+	fetch(GLOBAL.BASE_URL+"/movimentacao/", {
+	method: "POST",
+	body: JSON.stringify({valor_pago: valor,data_lancamento: dataf[2]+'-'+dataf[1]+'-'+dataf[0],categoria: 'Outros',descricao: descricaoM})
+	});
+	console.log(categoriaM);
+}
+
 
 const headerHeight = StatusBar.currentHeight;
 const estiloExcecao = StyleSheet.create({

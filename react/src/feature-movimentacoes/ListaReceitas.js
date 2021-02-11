@@ -5,9 +5,8 @@ import {
 	StyleSheet,
 	Text,
 	View,
-	TouchableOpacity,
 	TextInput,
-	ScrollView,
+	TouchableOpacity,
 	FlatList,
 } from "react-native";
 import tailwind from "tailwind-rn";
@@ -17,19 +16,17 @@ import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import IconePesquisa from "../comum/assets/IconePesquisa";
 import GLOBAL from "../Global";
 
-
-export default function ListaDespesas({ navigation }) {
+export default function VisualizacaoGeral({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
-	const [despesas, setDespesa] = useState([]);
-
+	const [receitas, setReceita] = useState([]);
 
 	useEffect(() => {
 		async function fetchData() {
-			let url = GLOBAL.BASE_URL+"/movimentacoes/?tipo=despesa";
+			let url = GLOBAL.BASE_URL+"/movimentacoes/?tipo=receita";
 			try {
 				let res = await fetch(url);
 				let json = await res.json();
-				setDespesa(json);
+				setReceita(json);
 				setLoading(false);
 				return await res.json();
 			} catch (error) {}
@@ -37,21 +34,21 @@ export default function ListaDespesas({ navigation }) {
 		fetchData();
 	}, []);
 
-	function renderDespesa(despesas) {
+	function renderReceita(receitas) {
 		return (
 			<View>
 				<FlatList
-					data={despesas.conteudo}
-					extraData={despesas.conteudo}
+					data={receitas.conteudo}
+					extraData={receitas.conteudo}
 					renderItem={renderizarMovimentacoes}
-					keyExtractor={(item) => item.id}
+					keyExtractor={(item) => item.id }
+					
 				></FlatList>
 			</View>
 		);
 	}
 
 	const renderizarMovimentacoes = ({ item }) => {
-		
 		return (
 			<ItemMovimentacao
 				indice={item.id}
@@ -65,41 +62,11 @@ export default function ListaDespesas({ navigation }) {
 	return (
 		<View style={[estilos.tela, estiloExcecao.container]}>
 			<View style={estilos.telaInterior}>
-				<IndicadorRetorno telaAtual={"Despesas"} />
+				<IndicadorRetorno telaAtual={"Receitas"} />
 
-				<View style={tailwind("px-5")}>
-					<Text style={tailwind("text-lg font-bold")}>
-						Movimentações
-					</Text>
-				</View>
-
-				<View style={[tailwind("flex-row bg-white justify-center")]}>
-					<TouchableOpacity
-						style={estilos.botaoTerciarioGrande}
-						//onPress={handleSubmit}
-						title="Submit"
-					>
-						<Text style={estilos.textoBotaoTerciario}>
-							Essa semana
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={estilos.botaoTerciarioGrande}
-						//onPress={handleSubmit}
-						title="Submit"
-					>
-						<Text style={estilos.textoBotaoTerciario}>Sempre</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={estilos.botaoTerciarioGrande}
-						//onPress={handleSubmit}
-						title="Submit"
-					>
-						<Text style={estilos.textoBotaoTerciario}>
-							Cadastrar
-						</Text>
-					</TouchableOpacity>
-				</View>
+				<View
+					style={[tailwind("flex-row bg-white justify-center")]}
+				></View>
 				<View style={tailwind("justify-between flex-row p-3")}>
 					<TextInput
 						style={tailwind("flex-row mx-2 flex-grow")}
@@ -111,13 +78,13 @@ export default function ListaDespesas({ navigation }) {
 					</View>
 				</View>
 
+				<View style={tailwind(" mb-2 ")}>
 				<View style={tailwind(" mb-12 ")}>
-				<View style={tailwind(" mb-24 ")}>
 				<View style={tailwind("flex-col mb-24 ")}>
 					{isLoading ? (
 						<Text>Loading...</Text>
 					) : (
-						renderDespesa(despesas)
+						renderReceita(receitas)
 					)}
 				</View>
 				</View>
@@ -144,19 +111,11 @@ const estilos = {
 	),
 	botoesMainText: tailwind("text-blue-800 font-bold"),
 	botoesMainImg: tailwind("w-6 h-6"),
-	movimentacao: tailwind("flex-row mb-4"),
+	movimentacao: tailwind("flex-row mb-4 justify-between"),
 	movimentacaoImg: tailwind("w-6 h-6"),
 	movimentacaoTexto: tailwind("text-base flex-grow text-left font-bold"),
 	movimentacaoValor: tailwind("text-base"),
 	movimentacaoData: tailwind("text-gray-500"),
-	botaoDespesa: tailwind("bg-blue-700 rounded-lg w-24 h-24 m-2 mt-6 mb-6"),
-	botaoDespesaTxt: tailwind(
-		"text-white text-left px-2 mt-6 text-xs font-thin text-opacity-75"
-	),
-	botaoDespesaVlrTxt: tailwind("text-white text-left text-sm px-2 font-bold"),
-	botaoDespesaVlrTotal: tailwind(
-		"rounded-lg w-24 h-24 m-2 mt-6 mb-6 bg-blue-700"
-	),
 };
 
 const estiloExcecao = StyleSheet.create({

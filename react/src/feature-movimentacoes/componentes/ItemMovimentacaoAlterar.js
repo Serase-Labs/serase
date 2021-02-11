@@ -19,8 +19,13 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ItemMovimentacao from "./ItemMovimentacao";
 import { Input } from "../../comum/components/Input";
 import Botao from "../../comum/components/Botao";
+import GLOBAL from "../../Global";
 
-export default function ItemMovimentacaoAlterar() {
+function cancelar(){
+
+}
+
+export default function ItemMovimentacaoAlterar(props) {
 	const [tipo, setTipo] = useState("receita");
 
 	// Hooks para o Date Picker
@@ -28,10 +33,36 @@ export default function ItemMovimentacaoAlterar() {
 	const [mode, setMode] = useState("date");
 	const [show, setShow] = useState(false);
 
+	async function alterar(values){
+		console.log("eu")
+		let descricao = values.descricao || props.descricao,
+			data_lancamento = values.prazo || props.data,
+			valor_pago = values.valor || props.valor,
+			categoria = values.categoria || props.categoria;
+
+		data_lancamento = data_lancamento.split('/').reverse().join('-');
+		let body = {descricao, data_lancamento, valor_pago, categoria};
+
+		let url = GLOBAL.BASE_URL+"/movimentacao/"+props.indice+"/";
+		
+		let res = await fetch(url, {
+			method: "put",
+			body: JSON.stringify(body)
+		});
+		
+		let json = await res.json(),
+			conteudo = json.conteudo;
+
+		console.log(conteudo);
+	}	
+
 	const showDatePicker = () => {
 		setShow(true);
 		setMode("date");
 	};
+
+	let data = props.data.split('/');
+	data = data[2]+'-'+data[1]+'-'+data[0];
 
 	return (
 		<>
@@ -47,9 +78,9 @@ export default function ItemMovimentacaoAlterar() {
 				<View style={tailwind("bg-white w-full rounded-md py-12")}>
 					<View style={tailwind("mb-6")}>
 						<ItemMovimentacao
-							descricao="Salário"
-							valorPago="1.234,50"
-							dataLancamento="04-11-2020"
+							descricao={props.descricao}
+							valorPago={props.valor}
+							dataLancamento={data}
 						/>
 					</View>
 
@@ -61,13 +92,14 @@ export default function ItemMovimentacaoAlterar() {
 								{ categoria: "" },
 								{ descricao: "" })
 							}
-							onSubmit={(values) => console.log(values)}
+							onSubmit={alterar}
 						>
 							{({
 								handleChange,
 								handleBlur,
 								handleSubmit,
 								values,
+								setFieldValue,
 							}) => (
 								<View style={tailwind("w-full")}>
 									<View
@@ -81,7 +113,7 @@ export default function ItemMovimentacaoAlterar() {
 											onBlur={handleBlur("valor")}
 											value={values.valor}
 											keyboard={"numeric"}
-											placeholder={"100,00"}
+											placeholder={props.valor}
 											textContentType={"number"}
 											espacamento={true}
 										></Input>
@@ -103,7 +135,7 @@ export default function ItemMovimentacaoAlterar() {
 												editable={false}
 												value={values.prazo}
 												placeholder={
-													"Selecione a data."
+													props.data
 												}
 												placeholderTextColor={"#A0AEC0"}
 											/>
@@ -118,7 +150,7 @@ export default function ItemMovimentacaoAlterar() {
 														selectedDate
 													) => {
 														setShow(false);
-														const currentDate = selectedDate.toString();
+														const currentDate = selectedDate.toISOString().split('T')[0].split('-').reverse().join('/');
 														setFieldValue(
 															"prazo",
 															currentDate
@@ -136,9 +168,9 @@ export default function ItemMovimentacaoAlterar() {
 												"categoria"
 											)}
 											onBlur={handleBlur("categoria")}
-											value={values.valor}
+											value={values.categoria}
 											keyboard={"numeric"}
-											placeholder={"100,00"}
+											placeholder={props.categoria}
 											textContentType={"number"}
 											espacamento={true}
 										></Input>
@@ -150,9 +182,7 @@ export default function ItemMovimentacaoAlterar() {
 											onBlur={handleBlur("descricao")}
 											value={values.descricao}
 											keyboard={"default"}
-											placeholder={
-												"Lorem Impsum dolor sit amet"
-											}
+											placeholder={props.descricao}
 											textContentType={"text"}
 											espacamento={true}
 										></Input>
@@ -167,11 +197,13 @@ export default function ItemMovimentacaoAlterar() {
 											ordem="terciario"
 											tamanho="pequeno"
 											label="Cancelar"
+											onPress={cancelar}
 										/>
 										<Botao
 											ordem="primario"
 											tamanho="pequeno"
 											label="Alterar"
+											onPress={handleSubmit}
 										/>
 									</View>
 								</View>
