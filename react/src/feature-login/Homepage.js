@@ -27,7 +27,8 @@ export default function VisualizacaoGeral({ navigation }) {
 
 	const [saldo, setSaldo] = useState();
 	const [movimentacoes, setMovimentacoes] = useState();
-	const [isLoading, setLoading] = useState(true);
+	const [isLoadingSaldo, setLoadingSaldo] = useState(true);
+	const [isLoadingData, setLoadingData] = useState(true);
 	const [despesas, setDespesa] = useState([]);
 
 	const balanca_valores = [
@@ -47,7 +48,7 @@ export default function VisualizacaoGeral({ navigation }) {
 				});
 				let json = await res.json();
 				setMovimentacoes(json);
-				setLoading(false);
+				setLoadingData(false);
 			} catch (error) {
 				console.log(error);
 			}
@@ -64,7 +65,7 @@ export default function VisualizacaoGeral({ navigation }) {
 				});
 				let json = await res.json();
 				setSaldo(json.conteudo.total);
-				setLoading(false);
+				setLoadingSaldo(false);
 			} catch (error) {
 				console.log(error);
 			}
@@ -210,7 +211,7 @@ export default function VisualizacaoGeral({ navigation }) {
 					Movimentações Recentes
 				</Text>
 
-				{isLoading ? (
+				{isLoadingData ? (
 					<View style={tailwind("opacity-25")}>
 						<Text>Loading...</Text>
 					</View>
