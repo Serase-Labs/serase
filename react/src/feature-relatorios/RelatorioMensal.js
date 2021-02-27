@@ -42,7 +42,8 @@ export default function RelatorioMensal() {
 
 	useEffect(() => {
 		async function fetchRelatorioMensal() {
-			let url = GLOBAL.BASE_URL + "/relatorio/";
+			let url = GLOBAL.BASE_URL + "/relatorio/mensal/";
+			console.log(url);
 			try {
 				let res = await fetch(url, {
 					headers: {
@@ -52,6 +53,7 @@ export default function RelatorioMensal() {
 				let json = await res.json();
 				setCategoria(json);
 				setLoadingRelatorio(false);
+				console.log("IRRAAAAAA");
 			} catch (error) {
 				console.log(error);
 			}
@@ -59,7 +61,8 @@ export default function RelatorioMensal() {
 		fetchRelatorioMensal();
 
 		async function fetchCategoria() {
-			let url = GLOBAL.BASE_URL + "analise/categoria/mensal/";
+			let url = GLOBAL.BASE_URL + "/analise/categoria/mensal/";
+			console.log(url);
 			try {
 				let res = await fetch(url, {
 					headers: {
@@ -83,7 +86,7 @@ export default function RelatorioMensal() {
 		return (
 			<BotaoInformacao
 				titulo={categoria.titulo}
-				conteudo={categoria.valor}
+				valor={categoria.valor}
 				onPress={() => console.log(categoria.titulo)}
 			/>
 		);
