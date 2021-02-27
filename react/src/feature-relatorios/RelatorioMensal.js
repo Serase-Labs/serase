@@ -20,6 +20,9 @@ import TabDescricao from "../comum/components/TabDescricao";
 import GraficoDespesaCategoria from "./components/GraficoDespesaCategoria";
 import GraficoDespesaPadrao from "./components/GraficoDespesaPadrao";
 import GraficoDespesaFrequencia from "./components/GraficoDespesaFrequencia";
+import GLOBAL from "../Global";
+import { useAuth } from "../feature-login/auth.js";
+import {useState, useEffect} from "react";
 
 //////// Dados falsos utilizados para testes de gráficos
 //////// Serão substituídos por chamadas para os arquivos json
@@ -30,15 +33,58 @@ const DATA = [
 	{ titulo: "Maior Economia", valor: "Saúde" },
 ];
 
-/////////
+export default function RelatorioMensal() {
+	const { user, token } = useAuth();
 
-export default function RelatorioSemanal() {
-	const renderizarAnalises = ({ item }) => {
+	const [categoria, setCategoria] = useState();
+	const [isLoadingCategoria, setLoadingCategoria] = useState(true);
+	const [isLoadingRelatorio, setLoadingRelatorio] = useState(true);
+
+	useEffect(() => {
+		async function fetchRelatorioMensal() {
+			let url = GLOBAL.BASE_URL + "/relatorio/";
+			try {
+				let res = await fetch(url, {
+					headers: {
+						Authorization: token,
+					},
+				});
+				let json = await res.json();
+				setCategoria(json);
+				setLoadingRelatorio(false);
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		fetchRelatorioMensal();
+
+		async function fetchCategoria() {
+			let url = GLOBAL.BASE_URL + "analise/categoria/mensal/";
+			try {
+				let res = await fetch(url, {
+					headers: {
+						Authorization: token,
+					},
+				});
+				let json = await res.json();
+				setCategoria(json.conteudo.total);
+				setLoadingCategoria(false);
+				console.log("IRIRIRIRI");
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		fetchCategoria();
+		
+	}, []);
+
+
+	const renderizarAnalises = ({categoria}) => {
 		return (
 			<BotaoInformacao
-				titulo={item.titulo}
-				conteudo={item.valor}
-				onPress={() => console.log(item.titulo)}
+				titulo={categoria.titulo}
+				conteudo={categoria.valor}
+				onPress={() => console.log(categoria.titulo)}
 			/>
 		);
 	};
@@ -47,9 +93,15 @@ export default function RelatorioSemanal() {
 		<View style={tailwind("bg-white flex-1")}>
 			{/* Blocos de informações estáticos */}
 			<View style={tailwind("flex flex-row justify-between mx-5 mb-5")}>
-				<BlocoInformacao titulo="Gasto Total" conteudo="R$1200" />
-				<BlocoInformacao titulo="Receita Total" conteudo="R$2000" />
-				<BlocoInformacao titulo="Fluxo Total" conteudo="+R$800" />
+			{isLoadingCategoria ? (
+					<View style={tailwind("opacity-25")}>
+						<Text>Loading...</Text>
+					</View>
+				) : (
+					<View style={tailwind("py-4")}>
+						{renderizarAnalises(categoria)}
+					</View>
+				)}
 			</View>
 
 			{/* Blocos de informações clicáveis */}
@@ -66,10 +118,10 @@ export default function RelatorioSemanal() {
 
 				<FlatList
 					style={tailwind("ml-4")}
-					data={DATA}
+					data = {categoria}
 					renderItem={renderizarAnalises}
 					horizontal={true}
-					keyExtractor={(item) => item.titulo}
+					keyExtractor={(categoria) => categoria.titulo}
 				/>
 			</View>
 
