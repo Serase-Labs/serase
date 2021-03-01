@@ -2,6 +2,7 @@
 // de componentes necessários para toda a
 // funcionalidade de relatórios mensais.
 import * as React from "react";
+import { useState, useEffect } from "react";
 import {
 	Text,
 	View,
@@ -21,6 +22,9 @@ import GraficoSaldoAnual from "./components/GraficoSaldoAnual";
 import GraficoDespesaCategoria from "./components/GraficoDespesaCategoria";
 import GraficoDespesaPadrao from "./components/GraficoDespesaPadrao";
 
+import GLOBAL from "../Global";
+import { useAuth } from "../feature-login/auth";
+
 // Componentes Externos
 
 //////// Dados falsos utilizados para testes de gráficos
@@ -36,6 +40,48 @@ const DATA = [
 ////////
 
 export default function RelatorioAnual() {
+	const { user, token } = useAuth();
+	const [relatorio, setRelatorio] = useState({});
+	const [isLoadingRel, setLoadingRel] = useState(true);
+
+	const converteDespesa = (informacoes)=>{
+		let itens = [];
+
+		for(let titulo in informacoes){
+			let despesas = informacoes[titulo],
+				media = 0.0;
+
+			for(let {mes, valor} of despesas)
+				media+=Number(valor);
+
+			media = media/(despesas.length);
+			itens.push({titulo, valor: media.toFixed(2)});
+		}
+
+		return itens;
+	}
+
+	useEffect(() => {
+		async function fetchRelatorio() {
+			let url = GLOBAL.BASE_URL + "/relatorio/anual";
+
+			try {
+				let res = await fetch(url, {
+					headers: {
+						Authorization: token,
+					},
+				});
+				let json = await res.json();
+				setRelatorio(json.conteudo);
+				setLoadingRel(false);
+			} catch (error) {
+				console.error(error);
+			}
+		}
+		fetchRelatorio();
+	}, []);
+
+
 	const renderizarAnalises = ({ item }) => {
 		return (
 			<BotaoInformacao
@@ -46,13 +92,22 @@ export default function RelatorioAnual() {
 		);
 	};
 
+	if(isLoadingRel){
+		// Caso o relatório não tenha carregado
+		return (
+			<View style={tailwind("opacity-25")}>
+				<Text>Loading...</Text>
+			</View>
+		);
+	} else
 	return (
 		<View style={tailwind("bg-white flex-1")}>
 			{/* Blocos de informações estáticos */}
+			
 			<View style={tailwind("flex flex-row justify-between mx-5 mb-5")}>
-				<BlocoInformacao titulo="Gasto Total" conteudo="R$1200" />
-				<BlocoInformacao titulo="Receita Total" conteudo="R$2000" />
-				<BlocoInformacao titulo="Fluxo Total" conteudo="+R$800" />
+				<BlocoInformacao titulo="Gasto Total" conteudo={"R$"+(relatorio.resumo.gasto_total*-1)} />
+				<BlocoInformacao titulo="Receita Total" conteudo={"R$"+(relatorio.resumo.receita_total)} />
+				<BlocoInformacao titulo="Fluxo Total" conteudo={(relatorio.resumo.fluxo_total>0? "+":"-")+"R$"+(relatorio.resumo.fluxo_total)} />
 			</View>
 
 			{/* Gráfico de despesa semanal */}
@@ -68,7 +123,7 @@ export default function RelatorioAnual() {
 					</Text>
 				</View>
 
-				<GraficoSaldoAnual />
+				<GraficoSaldoAnual grafico={relatorio.grafico_saldo}/>
 			</View>
 
 			{/* Seção de despesas fixas clicáveis */}
@@ -86,7 +141,7 @@ export default function RelatorioAnual() {
 
 				<FlatList
 					style={tailwind("ml-4")}
-					data={DATA}
+					data={converteDespesa(relatorio.grafico_despesa_fixa)}
 					renderItem={renderizarAnalises}
 					horizontal={true}
 					keyExtractor={(item) => item.titulo}
@@ -115,6 +170,7 @@ export default function RelatorioAnual() {
 					<GraficoDespesaPadrao />
 				</TabDescricao>
 			</View>
+		
 		</View>
 	);
 }

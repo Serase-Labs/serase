@@ -42,11 +42,21 @@ const data = {
 	],
 };
 
-export default function GraficoDespesaSemanal() {
+export default function GraficoDespesaSemanal({grafico}) {
 	// Atualizam a legenda interativa do gráfico
 	const [index, setIndex] = useState(null);
 	const [value, setValue] = useState(null);
 
+	let grafico_data = [];
+	for(let i=0; i<12; i++){
+		grafico_data.push(0.0);	
+	}
+
+	for(let {mes, saldo} of grafico)
+		grafico_data[Number(mes)-1] = Number(saldo);
+	
+	data.datasets[0].data = grafico_data;
+	
 	return (
 		<View>
 			<ScrollView horizontal={true}>
