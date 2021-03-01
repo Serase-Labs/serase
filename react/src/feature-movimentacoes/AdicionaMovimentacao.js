@@ -77,12 +77,44 @@ export default function AdicionaMovimentacao() {
 }
 
 function AdicionaReceita(token) {
-	const [dataR, setDataR] = React.useState();
-	const [valorR, setValorR] = React.useState();
-	const [categoriaR, setCategoriaR] = React.useState();
-	const [descricaoR, setDescricaoR] = React.useState();
+	const [dataR, setDataR] = React.useState('');
+	const [valorR, setValorR] = React.useState('');
+	const [categoriaR, setCategoriaR] = React.useState('');
+	const [descricaoR, setDescricaoR] = React.useState('');
+	const [temErro, setErro] = useState(false);
+	const [resultado, setResultado] = useState(null);
+
 	const aperta = () =>
 		enviaMovimentacao(token, dataR, valorR, categoriaR, descricaoR);
+	
+			function enviaMovimentacao(token, data, valor, categoriaM, descricaoM) {
+				var data2 = data + "";
+				var dataf = data2.split("/");
+			
+				async function fetchData() {
+					let res = await fetch(GLOBAL.BASE_URL + "/movimentacao/", {
+						method: "POST",
+						headers: { Authorization: token },
+						body: JSON.stringify({
+							valor_pago: valor,
+							data_lancamento: dataf[2] + "-" + dataf[1] + "-" + dataf[0],
+							categoria: categoriaM,
+							descricao: descricaoM,
+						}),
+					});
+					let json = await res.json();
+			
+					if(!res.ok){
+						setResultado(json.mensagem);
+						setErro(true);
+					}else{
+						setResultado("Inserido com sucesso!");
+						setErro(false);
+					}
+				}
+				fetchData();
+				console.log(categoriaM);
+			}
 	return (
 		<View style={[estilos.telaInterior]}>
 			<Text style={[estilos.labelInputPrincipal]}>
@@ -119,13 +151,18 @@ function AdicionaReceita(token) {
 				style={[estilos.input]}
 				placeholder={"Descrição"}
 				placeholderTextColor={"#A0AEC0"}
-				onChangeText={(text) => setDescricaoR(text)}
+				//onChangeText={(text) => setDescricaoR(text)}
 			></TextInput>
-
+			{temErro ? (
+				renderErro(resultado)
+			) : (
+				
+				renderSucesso(resultado)
+			)}
 			<View style={{ flex: 1, flexDirection: "row" }}>
 				<TouchableOpacity
 					style={estilos.botaoCancelar}
-					//onPress={handleSubmit}
+					//onPress={() => navigation.navigate("Homepage")}
 					title="Submit"
 				>
 					<Text style={estilos.textoBotaoCancelar}>Cancelar</Text>
@@ -148,8 +185,41 @@ function AdicionaDespesa(token) {
 	const [valorD, setValorD] = React.useState([]);
 	const [categoriaD, setCategoriaD] = React.useState([]);
 	const [descricaoD, setDescricaoD] = React.useState([]);
+	const [temErro, setErro] = useState(false);
+	const [resultado, setResultado] = useState(null);
+
 	const aperta = () =>
 		enviaMovimentacao(token, dataD, valorD, categoriaD, descricaoD);
+
+		function enviaMovimentacao(token, data, valor, categoriaM, descricaoM) {
+			var data2 = data + "";
+			var dataf = data2.split("/");
+		
+			async function fetchData() {
+				let res = await fetch(GLOBAL.BASE_URL + "/movimentacao/", {
+					method: "POST",
+					headers: { Authorization: token },
+					body: JSON.stringify({
+						valor_pago: valor,
+						data_lancamento: dataf[2] + "-" + dataf[1] + "-" + dataf[0],
+						categoria: categoriaM,
+						descricao: descricaoM,
+					}),
+				});
+				let json = await res.json();
+		
+				if(!res.ok){
+					setResultado(json.mensagem);
+					setErro(true);
+				}else{
+					setResultado("Inserido com sucesso!");
+					setErro(false);
+				}
+			}
+			fetchData();
+			console.log(categoriaM);
+		}
+	
 	return (
 		<View style={[estilos.telaInterior]}>
 			<Text style={[estilos.labelInputPrincipal]}>
@@ -186,11 +256,16 @@ function AdicionaDespesa(token) {
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setDescricaoD(text)}
 			></TextInput>
-
+			{temErro ? (
+				renderErro(resultado)
+			) : (
+				
+				renderSucesso(resultado)
+			)}
 			<View style={{ flex: 1, flexDirection: "row" }}>
 				<TouchableOpacity
 					style={estilos.botaoCancelar}
-					//onPress={handleSubmit}
+					//onPress={() => navigation.navigate("Homepage")}
 					title="Submit"
 				>
 					<Text style={estilos.textoBotaoCancelar}>Cancelar</Text>
@@ -201,6 +276,7 @@ function AdicionaDespesa(token) {
 					onPress={aperta}
 					title="Submit"
 				>
+					
 					<Text style={estilos.textoBotaoAdicionar}>Adicionar</Text>
 				</TouchableOpacity>
 			</View>
@@ -208,22 +284,22 @@ function AdicionaDespesa(token) {
 	);
 }
 
-function enviaMovimentacao(token, data, valor, categoriaM, descricaoM) {
-	const servidor_host = "192.168.0.8:8000";
-	var data2 = data + "";
-	var dataf = data2.split("/");
 
-	fetch(GLOBAL.BASE_URL + "/movimentacao/", {
-		method: "POST",
-		headers: { Authorization: token },
-		body: JSON.stringify({
-			valor_pago: valor,
-			data_lancamento: dataf[2] + "-" + dataf[1] + "-" + dataf[0],
-			categoria: "Outros",
-			descricao: descricaoM,
-		}),
-	});
-	console.log(categoriaM);
+
+function renderErro(resultado) {
+	return (
+		<View >
+			<Text style= {[estilos.textoErro]}>{resultado}</Text>
+		</View>
+	);
+}
+
+function renderSucesso(resultado) {
+	return (
+		<View >
+			<Text style= {[estilos.textoSucesso]}>{resultado}</Text>
+		</View>
+	);
 }
 
 const headerHeight = StatusBar.currentHeight;
@@ -252,6 +328,12 @@ const estilos = {
 
 	botaoAdicionar: tailwind(
 		"bg-green-400 py-2 rounded w-32 mb-8 mr-1 mt-12 ml-16 py-2 px-4"
+	),
+	textoErro: tailwind(
+		"text-red-700 text-base font-bold text-center"
+	),
+	textoSucesso: tailwind(
+		"text-green-700 text-base font-bold text-center"
 	),
 	textoBotaoAdicionar: tailwind("text-white font-medium text-lg text-center"),
 	botaoCancelar: tailwind("py-2 rounded ml-8 mb-20 mt-12 mr-0 "),

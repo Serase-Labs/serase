@@ -34,6 +34,8 @@ export default function ItemMovimentacaoAlterar(props) {
 	const [date, setDate] = useState(new Date());
 	const [mode, setMode] = useState("date");
 	const [show, setShow] = useState(false);
+	const [temErro, setErro] = useState(false);
+	const [resultado, setResultado] = useState(null);
 
 	async function alterar(token, values){
 		console.log("eu")
@@ -56,7 +58,13 @@ export default function ItemMovimentacaoAlterar(props) {
 		
 		let json = await res.json(),
 			conteudo = json.conteudo;
-
+		if(!res.ok){
+			setResultado(json.mensagem);
+			setErro(true);
+		}else{
+			setResultado("Inserido com sucesso!");
+			setErro(false);
+		}
 		console.log(conteudo);
 	}	
 
@@ -197,6 +205,12 @@ export default function ItemMovimentacaoAlterar(props) {
 											"flex flex-row justify-end px-6"
 										)}
 									>
+									{temErro ? (
+										renderErro(resultado)
+									) : (
+										
+										renderSucesso(resultado)
+									)}
 										<Botao
 											ordem="terciario"
 											tamanho="pequeno"
@@ -217,5 +231,20 @@ export default function ItemMovimentacaoAlterar(props) {
 				</View>
 			</View>
 		</>
+	);
+}
+function renderErro(resultado) {
+	return (
+		<View >
+			<Text >{resultado}</Text>
+		</View>
+	);
+}
+
+function renderSucesso(resultado) {
+	return (
+		<View >
+			<Text >{resultado}</Text>
+		</View>
 	);
 }
