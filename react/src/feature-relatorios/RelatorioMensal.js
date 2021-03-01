@@ -53,7 +53,7 @@ export default function RelatorioMensal() {
 				let json = await res.json();
 				setCategoria(json);
 				setLoadingRelatorio(false);
-				console.log("IRRAAAAAA");
+				console.log("BATATA");
 			} catch (error) {
 				console.log(error);
 			}
@@ -70,7 +70,7 @@ export default function RelatorioMensal() {
 					},
 				});
 				let json = await res.json();
-				setCategoria(json.conteudo.total);
+				setCategoria(json);
 				setLoadingCategoria(false);
 				console.log("IRIRIRIRI");
 			} catch (error) {
@@ -85,9 +85,9 @@ export default function RelatorioMensal() {
 	const renderizarAnalises = ({categoria}) => {
 		return (
 			<BotaoInformacao
-				titulo={categoria.titulo}
-				valor={categoria.valor}
-				onPress={() => console.log(categoria.titulo)}
+				titulo={categoria}
+				valor={categoria}
+				onPress={() => console.log(categoria)}
 			/>
 		);
 	};
