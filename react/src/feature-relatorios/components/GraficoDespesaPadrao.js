@@ -1,37 +1,68 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { View, Dimensions, Text } from "react-native";
 import tailwind from "tailwind-rn";
+
+import GLOBAL from "../../Global";
+import { useAuth } from "../../feature-login/auth";
 
 //////// Dados falsos utilizados para testes de gráficos
 //////// Serão substituídos por chamadas para os arquivos json
 //////// e, posteriormente, para chamadas do servidor+bd
 
-const tipoDespesaData = [
-	{
-		name: "Fixas",
-		population: 40,
-		color: "#2C7FB8",
-	},
-	{
-		name: "Variáveis",
-		population: 50,
-		color: "#C7E9B4",
-	},
-	{
-		name: "Outros",
-		population: 10,
-		color: "#FFFFCC",
-	},
-];
+const CORES_GRAFICO = ["#2C7FB8", "#C7E9B4", "#FFFFCC"];
 
 // Componentes externos
 import { PieChart } from "react-native-chart-kit";
 
 export default function GraficoDespesaPadrao({ periodo }) {
+	const { user, token } = useAuth();
+	const [grafico, setGrafico] = useState({});
+	const [isLoadingGraf, setLoadingGraf] = useState(true);
+
+	if(!periodo) console.error("O props 'periodo' deve ser definido para o componente 'GraficoDespesaPadrao'!");
+
+	const converteGrafico = (dados)=>{
+		let novos_dados = dados.map((dado,i)=> {
+			return {name: dado.nome, population: dado.porcentagem, color: CORES_GRAFICO[i]}
+		});
+
+		console.log(novos_dados);
+		return novos_dados;
+	}
+
+	useEffect(() => {
+		async function fetchGrafico() {
+			let url = GLOBAL.BASE_URL + "/grafico/padrao/"+periodo;
+
+			try {
+				let res = await fetch(url, {
+					headers: {
+						Authorization: token,
+					},
+				});
+				let json = await res.json();
+				setGrafico(converteGrafico(json.conteudo));
+				setLoadingGraf(false);
+			} catch (error) {
+				console.error(error);
+			}
+		}
+		fetchGrafico();
+	}, []);
+
+	if(isLoadingGraf){
+		// Caso o relatório não tenha carregado
+		return (
+			<View style={tailwind("opacity-25")}>
+				<Text>Loading...</Text>
+			</View>
+		);
+	} else
 	return (
 		<View style={tailwind("flex items-center pt-6")}>
 			<PieChart
-				data={tipoDespesaData}
+				data={grafico}
 				width={(Dimensions.get("window").width / 100) * 100}
 				height={220}
 				chartConfig={{
@@ -52,7 +83,7 @@ export default function GraficoDespesaPadrao({ periodo }) {
 					"flex flex-row items-center justify-center my-2 flex-wrap"
 				)}
 			>
-				{tipoDespesaData.map((value, index) => {
+				{grafico.map((value, index) => {
 					console.log(value);
 					return (
 						<View

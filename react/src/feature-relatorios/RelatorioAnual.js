@@ -167,7 +167,7 @@ export default function RelatorioAnual() {
 					conteudo="Despesas por padrão"
 					descricao="Sua proporção de gasto em tipos de despesa."
 				>
-					<GraficoDespesaPadrao />
+					<GraficoDespesaPadrao periodo="anual"/>
 				</TabDescricao>
 			</View>
 		
