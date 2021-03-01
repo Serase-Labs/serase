@@ -160,7 +160,7 @@ export default function RelatorioAnual() {
 					conteudo="Despesas por categoria"
 					descricao="Suas categorias de maior gasto neste ano."
 				>
-					<GraficoDespesaCategoria />
+					<GraficoDespesaCategoria periodo="anual"/>
 				</TabDescricao>
 
 				<TabDescricao
