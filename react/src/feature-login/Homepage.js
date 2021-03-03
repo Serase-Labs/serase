@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
 	StatusBar,
 	StyleSheet,
@@ -7,6 +7,7 @@ import {
 	View,
 	TouchableOpacity,
 	ScrollView,
+	FlatList,
 } from "react-native";
 import tailwind from "tailwind-rn";
 // Imports internos
@@ -14,12 +15,21 @@ import IconeMenu from "../comum/assets/IconeMenu";
 import IconeDespesa from "../comum/assets/IconeDespesa";
 import IconeReceita from "../comum/assets/IconeReceita";
 import IconeRelatorio from "../comum/assets/IconeRelatorio";
+import IconeAdicionar from "../comum/assets/IconeAdicionar";
 import ListaVazia from "../comum/components/ListaVazia.js";
 
+import ItemMovimentacao from "../feature-movimentacoes/componentes/ItemMovimentacao";
+import GLOBAL from "../Global";
+import { useAuth } from "./auth";
+
 export default function VisualizacaoGeral({ navigation }) {
-	// Hook implementado pra teste do componente ListaVazia
-	// Deve ser retirado quando a conexão com o BD for implementada
-	const [populada, setPopulada] = useState(false);
+	const { user, token } = useAuth();
+
+	const [saldo, setSaldo] = useState();
+	const [movimentacoes, setMovimentacoes] = useState();
+	const [isLoadingSaldo, setLoadingSaldo] = useState(true);
+	const [isLoadingData, setLoadingData] = useState(true);
+	const [despesas, setDespesa] = useState([]);
 
 	const balanca_valores = [
 		["R$500", "NA BALANÇA ATUAL"],
@@ -27,13 +37,65 @@ export default function VisualizacaoGeral({ navigation }) {
 		["52%", "DE DÍVIDA PAGA"],
 	];
 
-	const movimentacoes = [
-		[true, "Salário", "1234,50"],
-		[true, "Salário", "1234,50"],
-		[false, "Mercado", "500,00"],
-		[false, "Ukulele", "200,00"],
-		[true, "Mega Sena", "1.000.000"],
-	];
+	useEffect(() => {
+		async function fetchData() {
+			let url = GLOBAL.BASE_URL + "/movimentacoes/?limite=6";
+			try {
+				let res = await fetch(url, {
+					headers: {
+						Authorization: token,
+					},
+				});
+				let json = await res.json();
+				setMovimentacoes(json);
+				setLoadingData(false);
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		fetchData();
+
+		async function fetchSaldo() {
+			let url = GLOBAL.BASE_URL + "/saldo/";
+			try {
+				let res = await fetch(url, {
+					headers: {
+						Authorization: token,
+					},
+				});
+				let json = await res.json();
+				setSaldo(json.conteudo.total);
+				setLoadingSaldo(false);
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		fetchSaldo();
+	}, []);
+
+	function renderMovimentacoes(movimentacoes) {
+		return (
+			<View>
+				<FlatList
+					data={movimentacoes.conteudo}
+					extraData={movimentacoes.conteudo}
+					renderItem={renderizarMovimentacoes}
+					keyExtractor={(item) => item.id}
+				></FlatList>
+			</View>
+		);
+	}
+
+	const renderizarMovimentacoes = ({ item }) => {
+		return (
+			<ItemMovimentacao
+				indice={item.id}
+				descricao={item.descricao}
+				valorPago={item.valor_pago}
+				dataLancamento={item.data_lancamento}
+			/>
+		);
+	};
 
 	return (
 		<ScrollView
@@ -41,68 +103,50 @@ export default function VisualizacaoGeral({ navigation }) {
 			showsVerticalScrollIndicator={false}
 			style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}
 		>
-			<View
-				style={tailwind(
-					"p-5 w-full flex flex-row justify-between items-center"
-				)}
-			>
-				<Text style={tailwind("text-lg")}>
-					Olá,{" "}
-					<Text style={[tailwind("text-xl font-bold")]}>
-						Peter Parker
-					</Text>
-				</Text>
-
-				<TouchableOpacity
-					style={tailwind("w-10 h-10 p-1 bg-gray-200 rounded")}
+			<View style={tailwind("bg-gray-100 p-5")}>
+				<View
+					style={tailwind(
+						"w-full flex flex-row justify-between items-center"
+					)}
 				>
-					<View style={tailwind("h-8 w-8")}>
-						<IconeMenu />
-					</View>
-				</TouchableOpacity>
-			</View>
+					<Text style={tailwind("text-lg")}>
+						Olá,{" "}
+						<Text style={[tailwind("text-xl font-bold")]}>
+							{user.nome}
+						</Text>
+					</Text>
 
-			<View
-				style={[
-					tailwind(
-						"mx-5 p-5 bg-blue-700 flex flex-row justify-between rounded-md"
-					),
-				]}
-			>
-				<View>
-					<Text style={tailwind("text-white")}>Saldo{"\n"}Atual</Text>
-					<Text style={tailwind("text-white text-xl font-bold")}>
-						R$500
-					</Text>
+					<TouchableOpacity
+						style={tailwind("w-10 h-10 p-1 bg-gray-200 rounded")}
+					>
+						<View style={tailwind("h-8 w-8")}>
+							<IconeMenu />
+						</View>
+					</TouchableOpacity>
 				</View>
-
-				<View>
-					<Text style={tailwind("text-white")}>
-						Ganho{"\n"}Recente
+				<View style={tailwind("py-4")}>
+					<Text style={tailwind("text-gray-800 py-2")}>
+						Saldo Atual
 					</Text>
-					<Text style={tailwind("text-white text-xl font-bold")}>
-						R$500
-					</Text>
-				</View>
-				<View>
-					<Text style={tailwind("text-white")}>
-						Despesa{"\n"}Recente
-					</Text>
-					<Text style={tailwind("text-white text-xl font-bold")}>
-						R$500
+					<Text
+						style={tailwind(
+							"text-gray-800 text-xl font-bold text-3xl"
+						)}
+					>
+						R$ {saldo}
 					</Text>
 				</View>
 			</View>
 
-			<View style={tailwind("flex-row m-5 justify-between")}>
+			<View style={[tailwind("flex-row m-5 justify-between")]}>
 				<TouchableOpacity
 					style={[
 						tailwind(
 							"w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md"
 						),
-						{ elevation: 2 },
+						{ elevation: 1 },
 					]}
-					onPress={() => navigation.navigate("Receitas")}
+					onPress={() => navigation.navigate("ListaReceitas")}
 				>
 					<View style={tailwind("w-8 h-8 mb-1")}>
 						<IconeReceita uso="sistema" />
@@ -123,7 +167,7 @@ export default function VisualizacaoGeral({ navigation }) {
 						),
 						{ elevation: 1 },
 					]}
-					onPress={() => navigation.navigate("Despesas")}
+					onPress={() => navigation.navigate("ListaDespesas")}
 				>
 					<View style={tailwind("w-8 h-8 mb-1")}>
 						<IconeDespesa uso="sistema" />
@@ -160,22 +204,31 @@ export default function VisualizacaoGeral({ navigation }) {
 				</TouchableOpacity>
 			</View>
 
-			<View style={tailwind("px-5")}>
-				<Text style={[tailwind("text-lg font-bold text-gray-800")]}>
+			<View style={tailwind("py-4")}>
+				<Text
+					style={[tailwind("px-5 text-lg font-bold text-gray-800")]}
+				>
 					Movimentações Recentes
 				</Text>
 
-				<View style={tailwind("opacity-25")}>
-					{populada == false ? (
-						<ListaVazia
-							mensagem="Você ainda não adicionou nenhuma movimentação, assim que o fizer
-				elas aparecerão aqui."
-						/>
-					) : (
-						<Text>AAAA</Text>
-					)}
-				</View>
+				{isLoadingData ? (
+					<View style={tailwind("opacity-25")}>
+						<Text>Loading...</Text>
+					</View>
+				) : (
+					<View style={tailwind("py-4")}>
+						{renderMovimentacoes(movimentacoes)}
+					</View>
+				)}
 			</View>
+
+			<TouchableOpacity
+				style={[
+					tailwind("w-16 h-16 bg-green-300 absolute rounded-full"),
+					{ top: "85%", right: "5%" },
+				]}
+				onPress={() => navigation.navigate("AdicionaMovimentacao")}
+			></TouchableOpacity>
 		</ScrollView>
 	);
 }

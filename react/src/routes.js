@@ -8,8 +8,8 @@ import Cadastro from "./feature-login/Cadastro";
 import Homepage from "./feature-login/Homepage";
 import Onboarding from "./feature-login/Onboarding.js";
 
-import ListaReceitas from "./feature-movimentacoes/ListaReceitas.js";
 import ListaDespesas from "./feature-movimentacoes/ListaDespesas.js";
+import ListaReceitas from "./feature-movimentacoes/ListaReceitas.js";
 import AdicionaMovimentacao from "./feature-movimentacoes/AdicionaMovimentacao.js";
 
 import Relatorios from "./feature-relatorios/Relatorios.js";
@@ -22,14 +22,14 @@ const Routes = createAppContainer(
 			Cadastro,
 			Onboarding,
 			Homepage,
-			ListaReceitas,
 			ListaDespesas,
+			ListaReceitas,
 			Relatorios,
 			AdicionaMovimentacao,
 		},
 		{
 			headerMode: "none",
-			initialRouteName: "Temp",
+			initialRouteName: "Login",
 		}
 	)
 );

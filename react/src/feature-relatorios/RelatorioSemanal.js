@@ -3,6 +3,7 @@
 // de relatórios semanais.
 
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, FlatList } from "react-native";
 import tailwind from "tailwind-rn";
 
@@ -13,21 +14,54 @@ import BotaoInformacao from "../comum/components/BotaoInformacao";
 import BlocoInformacao from "../comum/components/BlocoInformacao";
 import GraficoDespesaSemanal from "./components/GraficoDespesaSemanal";
 
+import GLOBAL from "../Global";
+import { useAuth } from "../feature-login/auth";
+
 // Componentes Externos
 import { StackedBarChart } from "react-native-chart-kit";
 
-//////// Dados falsos utilizados para testes de gráficos
-//////// Serão substituídos por chamadas para os arquivos json
-//////// e, posteriormente, para chamadas do servidor+bd
-const DATA = [
-	{ titulo: "Maior Despesa", valor: "Lazer" },
-	{ titulo: "Maior Salto", valor: "Alimentação" },
-	{ titulo: "Maior Economia", valor: "Saúde" },
-];
+const DICIONARIO = {
+	"maior_despesa": "Maior Despesa",
+    "maior_salto": "Maior Salto",
+    "maior_economia": "Maior Economia"
+}
 
 /////////
 
 export default function RelatorioSemanal() {
+	const { user, token } = useAuth();
+	const [relatorio, setRelatorio] = useState({});
+	const [isLoadingRel, setLoadingRel] = useState(true);
+
+	const converteAnalise = analises =>{
+		return Object.entries(analises).map(([titulo, valor])=>{
+			return {
+				titulo: (titulo in DICIONARIO)? DICIONARIO[titulo] : titulo, 
+				valor
+			}
+		});
+	}
+
+	useEffect(() => {
+		async function fetchRelatorio() {
+			let url = GLOBAL.BASE_URL + "/relatorio/semanal";
+
+			try {
+				let res = await fetch(url, {
+					headers: {
+						Authorization: token,
+					},
+				});
+				let json = await res.json();
+				setRelatorio(json.conteudo);
+				setLoadingRel(false);
+			} catch (error) {
+				console.error(error);
+			}
+		}
+		fetchRelatorio();
+	}, []);
+
 	const renderizarAnalises = ({ item }) => {
 		return (
 			<BotaoInformacao
@@ -38,13 +72,21 @@ export default function RelatorioSemanal() {
 		);
 	};
 
+	if(isLoadingRel){
+		// Caso o relatório não tenha carregado
+		return (
+			<View style={tailwind("opacity-25")}>
+				<Text>Loading...</Text>
+			</View>
+		);
+	} else
 	return (
 		<View style={tailwind("bg-white flex-1")}>
 			{/* Blocos de informações estáticos */}
 			<View style={tailwind("flex flex-row justify-between mx-5 mb-5")}>
-				<BlocoInformacao titulo="Gasto Total" conteudo="R$1200" />
-				<BlocoInformacao titulo="Receita Total" conteudo="R$2000" />
-				<BlocoInformacao titulo="Fluxo Total" conteudo="+R$800" />
+				<BlocoInformacao titulo="Gasto Total" conteudo={"R$"+(relatorio.resumo.gasto_total*-1)} />
+				<BlocoInformacao titulo="Receita Total" conteudo={"R$"+(relatorio.resumo.receita_total)} />
+				<BlocoInformacao titulo="Fluxo Total" conteudo={(relatorio.resumo.fluxo_total>0? "+":"-")+"R$"+(relatorio.resumo.fluxo_total)} />
 			</View>
 
 			{/* Blocos de informações clicáveis */}
@@ -61,7 +103,7 @@ export default function RelatorioSemanal() {
 
 				<FlatList
 					style={tailwind("ml-4")}
-					data={DATA}
+					data={converteAnalise(relatorio.analises)}
 					renderItem={renderizarAnalises}
 					horizontal={true}
 					keyExtractor={(item) => item.titulo}
@@ -79,7 +121,7 @@ export default function RelatorioSemanal() {
 					</Text>
 				</View>
 
-				<GraficoDespesaSemanal />
+				<GraficoDespesaSemanal grafico={relatorio.grafico_semanal}/>
 			</View>
 
 			{/* Seção de redirecionamento1*/}

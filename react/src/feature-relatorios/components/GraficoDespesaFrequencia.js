@@ -21,12 +21,14 @@ const commitsData = [
 	{ date: "2020-10-30", count: 4 },
 ];
 
+
+
 // Componentes Internos
 
 // Componentes Externos
 import { ContributionGraph } from "react-native-chart-kit";
 
-export default function GraficoDespesaFrequencia() {
+export default function GraficoDespesaFrequencia({grafico}) {
 	// Atualizam a legenda interativa do gráfico
 	const [data, setData] = useState(null);
 	const [count, setCount] = useState(null);

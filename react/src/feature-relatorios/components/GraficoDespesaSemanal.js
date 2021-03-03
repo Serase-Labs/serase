@@ -20,19 +20,16 @@ import { StackedBarChart } from "react-native-chart-kit";
 const chartData = {
 	labels: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
 	legend: [],
-	data: [
-		[60, 60],
-		[30, 30],
-		[60, 60],
-		[30, 30],
-		[10, 20],
-		[30, 30],
-		[10, 20],
-	],
+	data: [],
 	barColors: ["#C7E9B4", "#2C7FB8"],
 };
 
-export default function GraficoDespesaSemanal() {
+export default function GraficoDespesaSemanal({grafico}) {
+
+	if(!grafico) console.error("O props 'grafico' deve ser definido para o componente 'GraficoDespesaSemanal'!");
+	
+	chartData.data = grafico.map(({receita,despesa})=> [receita,Math.abs(despesa)]);
+
 	return (
 		<View>
 			<View style={tailwind("")}>

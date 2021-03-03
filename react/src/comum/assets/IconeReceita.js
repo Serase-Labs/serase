@@ -13,7 +13,7 @@ export default class IconeReceita extends React.Component {
 		return (
 			<View style={[StyleSheet.absoluteFill]}>
 				<Svg
-					strokeWidth="1.5"
+					strokeWidth="0.5"
 					height="100%"
 					width="100%"
 					viewBox="0 0 24 24"
@@ -23,8 +23,9 @@ export default class IconeReceita extends React.Component {
 						stroke="currentColor"
 						strokeLinejoin="round"
 						strokeLinecap="round"
-						d="M8 17a5 5 0 01-.916-9.916 5.002 5.002 0 019.832 0A5.002 5.002 0 0116 17m-7-5l3-3m0 0l3 3m-3-3v12"
-					></Path>
+						fill={this.color}
+						d="M8.707.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L7 3.414V20s.76-.175 1.207-.372c.248-.11.518-.327.611-.481.078-.129.127-.265.154-.413.018-.075.028-.153.028-.234V3.414l5.293 5.293a1 1 0 101.414-1.414l-7-7z"
+					/>
 				</Svg>
 			</View>
 		);
