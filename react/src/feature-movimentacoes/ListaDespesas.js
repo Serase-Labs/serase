@@ -21,7 +21,38 @@ import { useAuth } from "../feature-login/auth.js";
 export default function ListaDespesas({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [despesas, setDespesa] = useState([]);
+	const[filtro, setFiltro] = useState('');
+	const[data, setData] = useState(9000);
 	const { token } = useAuth();
+
+	const carrega = () => {
+		async function fetchData() {
+			
+
+			 // Days you want to subtract
+			var days = data;
+			var date = new Date();
+			var last = new Date(date.getTime() - (days * 24 * 60 * 60 * 1000));
+			var day =last.getDate();
+			var month=last.getMonth()+1;
+			var year=last.getFullYear();
+
+			let url = GLOBAL.BASE_URL + "/movimentacoes/?tipo=despesa&data_inicial="+year+"-"+month+"-"+day+"&filtro="+filtro;
+			
+			
+			try {
+				let res = await fetch(url, {
+					headers: { Authorization: token },
+				});
+				let json = await res.json();
+				setDespesa(json);
+				setLoading(false);
+				return await res.json();
+			} catch (error) {}
+		}
+		fetchData();
+	}
+
 
 	useEffect(() => {
 		async function fetchData() {
@@ -68,7 +99,7 @@ export default function ListaDespesas({ navigation }) {
 			<View style={estilos.telaInterior}>
 				<IndicadorRetorno telaAtual={"Despesas"} />
 
-				{/* 				<View style={tailwind("px-5")}>
+				<View style={tailwind("px-5")}>
 					<Text style={tailwind("text-lg font-bold")}>
 						Movimentações
 					</Text>
@@ -77,7 +108,8 @@ export default function ListaDespesas({ navigation }) {
 				<View style={[tailwind("flex-row bg-white justify-center")]}>
 					<TouchableOpacity
 						style={estilos.botaoTerciarioGrande}
-						//onPress={handleSubmit}
+						
+						onPress={()=>{setData(7);carrega();}}
 						title="Submit"
 					>
 						<Text style={estilos.textoBotaoTerciario}>
@@ -86,35 +118,45 @@ export default function ListaDespesas({ navigation }) {
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={estilos.botaoTerciarioGrande}
-						//onPress={handleSubmit}
+						//onPress={setData('Sempre')}
+						onPress={()=>{setData(9000);carrega();}}
 						title="Submit"
 					>
 						<Text style={estilos.textoBotaoTerciario}>Sempre</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={estilos.botaoTerciarioGrande}
-						//onPress={handleSubmit}
+
+						                               
+						onPress={()=>{setData(30);carrega();}}
 						title="Submit"
 					>
 						<Text style={estilos.textoBotaoTerciario}>
-							Cadastrar
+							Mês
 						</Text>
 					</TouchableOpacity>
-				</View> */}
+				</View>
 				<View style={tailwind("justify-between flex-row p-3")}>
 					<TextInput
 						style={tailwind("flex-row mx-2 flex-grow")}
 						placeholder={"Pesquise por uma entrada de receita"}
 						placeholderTextColor={"#A0AEC0"}
+						onChangeText={text => setFiltro(text)}
 					/>
 					<View style={[tailwind("flex-1")]}>
+					<TouchableOpacity 
+						style={tailwind("bg-gray-300 h-10 w-10 rounded-lg justify-center items-center")}
+						title="Submit"
+						onPress={carrega}
+					>
 						<IconePesquisa />
+					</TouchableOpacity>
 					</View>
 				</View>
 
-				<View style={tailwind(" mb-12 ")}>
-					<View style={tailwind(" mb-24 ")}>
-						<View style={tailwind("flex-col mb-24 ")}>
+				<View style={tailwind("mb-12")}>
+					<View style={tailwind("mb-24")}>
+						<View style={tailwind("flex-col mb-24")}>
 							{isLoading ? (
 								<Text>Loading...</Text>
 							) : (

@@ -22,6 +22,27 @@ export default function VisualizacaoGeral({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [receitas, setReceita] = useState([]);
 	const {token} = useAuth();
+	const[filtro, setFiltro] = useState('');
+
+	const carrega = () => {
+		async function fetchData() {
+			
+			let url = GLOBAL.BASE_URL + "/movimentacoes/?tipo=receita&filtro="+filtro;
+			
+			
+			try {
+				let res = await fetch(url, {
+					headers: { Authorization: token },
+				});
+				let json = await res.json();
+				setReceita(json);
+				setLoading(false);
+				return await res.json();
+			} catch (error) {}
+		}
+		fetchData();
+	}
+
 
 	useEffect(() => {
 		async function fetchData() {
@@ -74,16 +95,23 @@ export default function VisualizacaoGeral({ navigation }) {
 					<TextInput
 						style={tailwind("flex-row mx-2 flex-grow")}
 						placeholder={"Pesquise por uma entrada de receita"}
+						onChangeText={text => setFiltro(text)}
 						placeholderTextColor={"#A0AEC0"}
 					/>
 					<View style={[tailwind("flex-1")]}>
+					<TouchableOpacity 
+						style={tailwind("bg-gray-300 h-10 w-10 rounded-lg justify-center items-center")}
+						title="Submit"
+						onPress={carrega}
+					>
 						<IconePesquisa />
+					</TouchableOpacity>
 					</View>
 				</View>
 
-				<View style={tailwind(" mb-2 ")}>
-				<View style={tailwind(" mb-12 ")}>
-				<View style={tailwind("flex-col mb-24 ")}>
+				<View style={tailwind("mb-2")}>
+				<View style={tailwind("mb-12")}>
+				<View style={tailwind("flex-col mb-24")}>
 					{isLoading ? (
 						<Text>Loading...</Text>
 					) : (
