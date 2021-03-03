@@ -118,7 +118,7 @@ export default function RelatorioMensal() {
 					data={converteAnalise(categoria.analises)}
 					renderItem={renderizarAnalises}
 					horizontal={true}
-					keyExtractor={(item) => item.id}
+					keyExtractor={(item) => item.titulo}
 				/>
 				</View>
 
@@ -147,7 +147,7 @@ export default function RelatorioMensal() {
 						conteudo="Frequência de despesas"
 						descricao="Distribuição dos seus gastos pelo mês."
 					>
-						<GraficoDespesaFrequencia />
+						<GraficoDespesaFrequencia grafico={categoria.grafico_mensal_despesa}/>
 					</TabDescricao>
 				</View>
 
