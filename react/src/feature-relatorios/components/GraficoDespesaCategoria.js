@@ -55,6 +55,8 @@ export default function GraficoCategoriaMensal({ periodo }) {
 	const [grafico, setGrafico] = useState({});
 	const [isLoadingGraf, setLoadingGraf] = useState(true);
 
+	if(!periodo) console.error("O props 'periodo' deve ser definido para o componente 'GraficoDespesaCategoria'!");
+
 	const converteGrafico = (dados)=>{
 		let novos_dados = [];
 
