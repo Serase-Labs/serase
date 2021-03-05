@@ -2,42 +2,36 @@ import * as React from "react";
 import { useState } from "react";
 import { View, Dimensions, Text } from "react-native";
 import tailwind from "tailwind-rn";
+import { ContributionGraph } from "react-native-chart-kit";
+
+
 
 //////// Dados falsos utilizados para testes de gráficos
 //////// Serão substituídos por chamadas para os arquivos json
 //////// e, posteriormente, para chamadas do servidor+bd
 
-const commitsData = [
-	{ date: "2020-10-02", count: 1 },
-	{ date: "2020-10-03", count: 2 },
-	{ date: "2020-10-04", count: 3 },
-	{ date: "2020-10-05", count: 4 },
-	{ date: "2020-10-06", count: 5 },
-	{ date: "2020-10-30", count: 2 },
-	{ date: "2020-10-31", count: 3 },
-	{ date: "2020-10-01", count: 2 },
-	{ date: "2020-10-02", count: 4 },
-	{ date: "2020-10-05", count: 2 },
-	{ date: "2020-10-30", count: 4 },
-];
-
+const commitsData = {	
+	date: [],
+	count: []
+};
 
 
 // Componentes Internos
 
 // Componentes Externos
-import { ContributionGraph } from "react-native-chart-kit";
+
 
 export default function GraficoDespesaFrequencia({grafico}) {
-	// Atualizam a legenda interativa do gráfico
-	const [data, setData] = useState(null);
-	const [count, setCount] = useState(null);
+	
+	if(!grafico) console.log("O props 'grafico' deve ser definido para o componente 'GraficoDespesaFrequencia'!");
 
+	commitsData.date = grafico.map(({data_lancamento,quantidade})=> [data_lancamento,Math.abs(quantidade)]);
+	
 	return (
 		<View style={tailwind("flex items-center pt-6")}>
 			<ContributionGraph
 				values={commitsData}
-				endDate={new Date("2020-10-30")}
+				endDate={new Date("2021-02-28")}
 				numDays={30}
 				gutterSize={5}
 				squareSize={20}
@@ -56,18 +50,18 @@ export default function GraficoDespesaFrequencia({grafico}) {
 					style: {},
 				}}
 			/>
-			{/* <View
+			{/*<View
 				style={tailwind(
 					"bg-gray-100 mx-5 rounded flex flex-col items-center py-4 my-4 w-full"
 				)}
 			>
 				<Text style={tailwind("text-base text-gray-900")}>
-					Data: {data}
+					Data: {date}
 				</Text>
 				<Text style={tailwind("text-base text-gray-900")}>
 					{count} Movimentações
 				</Text>
-			</View> */}
+				</View>*/}
 		</View>
 	);
 }
