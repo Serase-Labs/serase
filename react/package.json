@@ -34,7 +34,7 @@
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.4.3",
     "react-navigation-stack": "^2.10.0",
-    "tailwind-rn": "^1.1.0",
+    "tailwind-rn": "^1.1.1",
     "yup": "^0.29.2"
   },
   "devDependencies": {

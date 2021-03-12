@@ -12,11 +12,15 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
+
 import ItemMovimentacao from "./componentes/ItemMovimentacao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import IconePesquisa from "../comum/assets/IconePesquisa";
 import GLOBAL from "../Global";
 import { useAuth } from "../feature-login/auth.js";
+
+// Padroes de Movimentação
+import PreviewPadrao from "../feature-padroes/components/PreviewPadrao";
 
 export default function ListaDespesas({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
@@ -27,8 +31,6 @@ export default function ListaDespesas({ navigation }) {
 
 	const carrega = () => {
 		async function fetchData() {
-			
-
 			 // Days you want to subtract
 			var days = data;
 			var date = new Date();
@@ -38,7 +40,6 @@ export default function ListaDespesas({ navigation }) {
 			var year=last.getFullYear();
 
 			let url = GLOBAL.BASE_URL + "/movimentacoes/?tipo=despesa&data_inicial="+year+"-"+month+"-"+day+"&filtro="+filtro;
-			
 			
 			try {
 				let res = await fetch(url, {
@@ -53,7 +54,6 @@ export default function ListaDespesas({ navigation }) {
 		fetchData();
 	}
 
-
 	useEffect(() => {
 		async function fetchData() {
 			let url = GLOBAL.BASE_URL + "/movimentacoes/?tipo=despesa";
@@ -63,6 +63,7 @@ export default function ListaDespesas({ navigation }) {
 				});
 				let json = await res.json();
 				setDespesa(json);
+				console.log(json);
 				setLoading(false);
 				return await res.json();
 			} catch (error) {}
@@ -99,21 +100,40 @@ export default function ListaDespesas({ navigation }) {
 			<View style={estilos.telaInterior}>
 				<IndicadorRetorno telaAtual={"Despesas"} />
 
+				<View style={tailwind("px-5 flex flex-row justify-between")}>
+					<Text style={tailwind("text-lg font-bold")}>
+						Despesas Fixas
+					</Text>
+					<Text style={tailwind("text-lg font-bold text-blue-700")}>
+						Ver todas
+					</Text>
+				</View>
+
+				<PreviewPadrao/>
+
 				<View style={tailwind("px-5")}>
 					<Text style={tailwind("text-lg font-bold")}>
 						Movimentações
 					</Text>
 				</View>
 
-				<View style={[tailwind("flex-row bg-white justify-center")]}>
+				<View style={[tailwind("flex-row bg-white justify-between")]}>
 					<TouchableOpacity
 						style={estilos.botaoTerciarioGrande}
-						
 						onPress={()=>{setData(7);carrega();}}
 						title="Submit"
 					>
 						<Text style={estilos.textoBotaoTerciario}>
 							Essa semana
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={estilos.botaoTerciarioGrande}              
+						onPress={()=>{setData(30);carrega();}}
+						title="Submit"
+					>
+						<Text style={estilos.textoBotaoTerciario}>
+							Esse Mês
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
@@ -124,28 +144,17 @@ export default function ListaDespesas({ navigation }) {
 					>
 						<Text style={estilos.textoBotaoTerciario}>Sempre</Text>
 					</TouchableOpacity>
-					<TouchableOpacity
-						style={estilos.botaoTerciarioGrande}
-
-						                               
-						onPress={()=>{setData(30);carrega();}}
-						title="Submit"
-					>
-						<Text style={estilos.textoBotaoTerciario}>
-							Mês
-						</Text>
-					</TouchableOpacity>
 				</View>
-				<View style={tailwind("justify-between flex-row p-3")}>
+				<View style={tailwind("flex-row justify-between mx-5 mb-4")}>
 					<TextInput
-						style={tailwind("flex-row mx-2 flex-grow")}
+						style={tailwind("flex-row flex-grow")}
 						placeholder={"Pesquise por uma entrada de receita"}
 						placeholderTextColor={"#A0AEC0"}
 						onChangeText={text => setFiltro(text)}
 					/>
-					<View style={[tailwind("flex-1")]}>
+					<View style={tailwind("flex")}>
 					<TouchableOpacity 
-						style={tailwind("bg-gray-300 h-10 w-10 rounded-lg justify-center items-center")}
+						style={tailwind("h-10 w-10 rounded-lg justify-center items-center")}
 						title="Submit"
 						onPress={carrega}
 					>
@@ -181,7 +190,7 @@ const estilos = {
 	botoesMain: tailwind(
 		"bg-gray-300 h-24 w-24 rounded-lg justify-center items-center"
 	),
-	botaoTerciarioGrande: tailwind("bg-transparent rounded my-4"),
+	botaoTerciarioGrande: tailwind("bg-transparent rounded my-2"),
 	textoBotaoTerciario: tailwind(
 		"text-blue-700 font-bold text-base text-center py-4 px-8"
 	),
