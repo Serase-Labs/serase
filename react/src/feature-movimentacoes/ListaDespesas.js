@@ -109,7 +109,7 @@ export default function ListaDespesas({ navigation }) {
 					</Text>
 				</View>
 
-				<PreviewPadrao/>
+				<PreviewPadrao navigation={navigation}/>
 
 				<View style={tailwind("px-5")}>
 					<Text style={tailwind("text-lg font-bold")}>
@@ -163,7 +163,8 @@ export default function ListaDespesas({ navigation }) {
 					</View>
 				</View>
 
-				<View style={tailwind("mb-12")}>
+				<View style={tailwind("mb-24")}>
+				<View style={tailwind("mb-24")}>
 					<View style={tailwind("mb-24")}>
 						<View style={tailwind("flex-col mb-24")}>
 							{isLoading ? (
@@ -173,6 +174,7 @@ export default function ListaDespesas({ navigation }) {
 							)}
 						</View>
 					</View>
+				</View>
 				</View>
 			</View>
 		</View>
