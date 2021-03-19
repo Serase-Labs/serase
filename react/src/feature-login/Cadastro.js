@@ -37,6 +37,18 @@ const validationsCadastro = yup.object().shape({
 });
 
 export default function Cadastro({ navigation }) {
+
+	function handleSubmit(values) {
+		signIn(values.nome,values.email, values.senha, values.senhaConfirmacao)
+			.then(() => navigation.navigate("Homepage")) /* Encaminhar pra página de confirmação de cadastro*/
+			.catch(
+				console.log(
+					"Erro!"
+				) /* ()=> ToastAndroid.show("Email ou senha incorretos!", ToastAndroid.SHORT) */
+			);
+	}
+
+
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
 			<IndicadorNavegacao tela="Cadastro" />
@@ -58,7 +70,8 @@ export default function Cadastro({ navigation }) {
 						}
 						onSubmit={(values) => {
 							console.log(values);
-							navigation.navigate("PerfilDeUso");
+							navigation.navigate("ConfirmaCadastro");
+							
 						}}
 						validationSchema={validationsCadastro}
 					>
