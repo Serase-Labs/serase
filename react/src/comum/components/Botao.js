@@ -1,11 +1,14 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, Dimensions } from "react-native";
 import tailwind from "tailwind-rn";
 
 function ordem(ordemBotao) {
+	const windowWidth = Dimensions.get('window').width;
+
 	// Determina a cor dos botões a partir da sua importância
 	// Possíveis valores: primário, secundário, terciário e erro
 	switch (ordemBotao) {
+
 		case "primario":
 			return tailwind("bg-green-400");
 		case "secundario":
@@ -18,15 +21,17 @@ function ordem(ordemBotao) {
 }
 
 function tamanho(tamanhoBotao) {
+	const windowWidth = Dimensions.get('window').width;
+
 	// Determina o tamanho dos botões de acordo com o espaçamento necessário
 	// Possíveis valores: grande, medio, pequeno
 	switch (tamanhoBotao) {
 		case "grande":
-			return tailwind("w-64");
+			return { width: windowWidth/100*80};
 		case "medio":
-			return tailwind("w-48");
+			return { width: windowWidth/100*45};
 		case "pequeno":
-			return tailwind("w-24");
+			return { width: windowWidth/100*30};
 	}
 }
 
@@ -37,6 +42,7 @@ export default function Botao(props) {
 	// onPress = a função do botão (por exemplo, para qual tela ele direciona)
 	// label = texto a ser exibido dentro do botão
 	// espacamento = distancia a ser delimitada abaixo do botao
+
 	return (
 		<TouchableOpacity
 			style={[

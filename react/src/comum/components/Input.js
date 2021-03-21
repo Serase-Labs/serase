@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, Dimensions } from "react-native";
 import tailwind from "tailwind-rn";
 
 function Error() {
@@ -7,6 +7,7 @@ function Error() {
 }
 
 function Input(props) {
+	const windowWidth = Dimensions.get('window').width;
 	return (
 		<View style={tailwind("w-64 mb-2")}>
 			<Text style={tailwind("text-gray-800 text-sm font-bold mb-3")}>
@@ -15,8 +16,9 @@ function Input(props) {
 			<TextInput
 				style={[
 					tailwind(
-						"bg-gray-100 rounded-lg w-full py-2 px-3 text-gray-700 text-base"
-					),
+						"bg-gray-100 rounded-lg py-2 px-3 text-gray-700 text-base"
+					), 
+					{ width: windowWidth/100*80},
 					props.espacamento === true
 						? tailwind("mb-4")
 						: tailwind("mb-0"),
