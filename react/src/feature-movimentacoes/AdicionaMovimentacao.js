@@ -9,14 +9,10 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Picker } from "@react-native-community/picker";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 
 // Imports internos
-import Botao from "../comum/components/Botao";
-import Input from "../comum/components/Input";
-import { number } from "yup";
 import GLOBAL from "../Global";
 import { useAuth } from "../feature-login/auth.js";
 const Tab = createMaterialTopTabNavigator();
@@ -196,11 +192,13 @@ function AdicionaReceita(token) {
 		enviaMovimentacao(token, dataR, valorR, categoriaR, descricaoR);
 	
 			function enviaMovimentacao(token, data, valor, categoriaM, descricaoM) {
+				
 				var data2 = data + "";
 				var dataf = data2.split("/");
 			
 				async function fetchData() {
 					let res = await fetch(GLOBAL.BASE_URL + "/movimentacao/", {
+
 						method: "POST",
 						headers: { Authorization: token },
 						body: JSON.stringify({
@@ -208,6 +206,7 @@ function AdicionaReceita(token) {
 							data_lancamento: dataf[2] + "-" + dataf[1] + "-" + dataf[0],
 							categoria: categoriaM,
 							descricao: descricaoM,
+
 						}),
 					});
 					let json = await res.json();
@@ -339,7 +338,7 @@ function AdicionaPadrao(token) {
 							data_fim: dataF[2] + "-" + dataF[1] + "-" + dataF[0],
 							categoria: categoriaP,
 							descricao: descricaoP,
-							tipo: tipo,
+							tipo: tipo.toLowerCase(),
 							periodo: 15,
 						}),
 					});
@@ -376,7 +375,7 @@ function AdicionaPadrao(token) {
 				onChangeText={(text) => setCategoriaP(text)}
 			></TextInput>
 
-			<Text style={[estilos.labelInput]}>Descricao de Receita</Text>
+			<Text style={[estilos.labelInput]}>Descricao do Padrão: </Text>
 			<TextInput
 				style={[estilos.input]}
 				placeholder={"Descrição"}

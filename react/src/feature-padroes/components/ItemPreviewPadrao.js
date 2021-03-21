@@ -28,9 +28,9 @@ export default function ItemPreviewPadrao(props) {
       descricao={props.descricao}
       valor={props.valor}
 
-      dataI ={props.dia_cobranca}
-      dataF ={props.data_fim}
-      dataC = {props.dia_cobranca}
+      dataI ={props.dataI}
+      dataF ={props.dataF}
+      dataC = {props.dataC}
 
       valor = {props.valor}
       categoria ={props.categoria}

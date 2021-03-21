@@ -30,12 +30,19 @@ export default function ItemPadraoDetalhado(props) {
 	const [tipo, setTipo] = useState("padrao");
 	const [loading, setLoading] = useState(true);
 	const [descricao, setDescricao] = useState("");
-	const [dataI, setDataI] = useState("");
-	const [dataF, setDataF] = useState("");
-	const [dataC, setDataC] = useState("");
 	const [valor, setValor] = useState(0.0);
 	const [categoria, setCategoria] = useState("");
 	const [periodo, setPeriodo] = useState("");
+
+	
+	var data = props.dataC+'';
+	var dataC = data;
+	data = props.dataF+'';
+	data = data.split('-');
+	var dataF = data[2]+'/'+data[1]+'/'+data[0];
+	data = props.dataI+'';
+	data = data.split('-');
+	var dataI = data[2]+'/'+data[1]+'/'+data[0];
 
 	return (
 		<>
@@ -80,7 +87,7 @@ export default function ItemPadraoDetalhado(props) {
 									"text-base font-bold w-48 text-right"
 								)}
 							>
-								{props.dataC}
+								{dataC}
 							</Text>
 						</View>
 
@@ -97,7 +104,7 @@ export default function ItemPadraoDetalhado(props) {
 									"text-base font-bold w-48 text-right"
 								)}
 							>
-								{props.dataI}
+								{!dataI.match('null') ? (dataI):('Indefinido') }
 							</Text>
 						</View>
 						
@@ -114,7 +121,7 @@ export default function ItemPadraoDetalhado(props) {
 									"text-base font-bold w-48 text-right"
 								)}
 							>
-								{props.dataF}
+							{!dataF.match('null') ? (dataF):('Indefinido') }
 							</Text>
 						</View>
 						

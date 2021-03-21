@@ -139,7 +139,7 @@ export default function ListaDespesas({ navigation }) {
 					<TouchableOpacity
 						style={estilos.botaoTerciarioGrande}
 						//onPress={setData('Sempre')}
-						onPress={()=>{setData(9000);carrega();}}
+						onPress={()=>{setData(900000);carrega();}}
 						title="Submit"
 					>
 						<Text style={estilos.textoBotaoTerciario}>Sempre</Text>
