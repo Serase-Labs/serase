@@ -1,4 +1,5 @@
 import React from "react";
+import {useState, useEffect} from 'react';
 import {
 	Text,
 	View,
@@ -11,11 +12,28 @@ import {
 import tailwind from "tailwind-rn";
 // Imports internos
 import IndicadorNavegacao from "../comum/components/IndicadorNavegacao";
+import GLOBAL from "../Global";
 import Botao from "../comum/components/Botao";
 import { Input, Error } from "../comum/components/Input";
+import { useAuth } from "../feature-login/auth.js";
 // Imports externos
 import { Formik } from "formik";
 import * as yup from "yup";
+
+const estilos = {
+	tela: tailwind("bg-white flex-1"),
+	telaInterior: tailwind("flex-1"),
+	containerFormulario: tailwind("w-full items-center"),
+	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
+};
+
+const headerHeight = StatusBar.currentHeight;
+
+const estiloExcecao = StyleSheet.create({
+	container: {
+		paddingTop: headerHeight,
+	},
+});
 
 const formatoEmail =
 	"^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+).(.[a-z]{2,3})$";
@@ -37,17 +55,38 @@ const validationsCadastro = yup.object().shape({
 });
 
 export default function Cadastro({ navigation }) {
+	const [temErro, setErro] = useState(false);
+	const [resultado, setResultado] = useState(null);
+	const { token } = useAuth();
 
-	function handleSubmit(values) {
-		signIn(values.nome,values.email, values.senha, values.senhaConfirmacao)
-			.then(() => navigation.navigate("Homepage")) /* Encaminhar pra página de confirmação de cadastro*/
-			.catch(
-				console.log(
-					"Erro!"
-				) /* ()=> ToastAndroid.show("Email ou senha incorretos!", ToastAndroid.SHORT) */
-			);
-	}
+	const carrega = () =>
+		CadastrarUsuarioView(navigation, values.username, values.email, values.password);
 
+		function CadastrarUsuarioView(navigation, username, email, password ){
+			//var data2 = data + "";
+
+			async function fetchData(){
+				let res = await fetch(GLOBAL.BASE_URL + "/Cadastro/", {
+					method: "POST",
+					headers: {Authorazion: navigation},
+					body: JSON.stringify({
+						nome: username,
+						email: email,
+						senha: password,
+					}), 
+				});
+			let json =  await res.json();
+
+			if(!res.ok){
+				setResultado(json.mensagem);
+				setErro(true);
+			}else{
+				setResultado("Requisição feita com sucesso!");
+				setErro(false);
+				}
+			}
+			fectchData();
+		 }
 
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
@@ -70,8 +109,7 @@ export default function Cadastro({ navigation }) {
 						}
 						onSubmit={(values) => {
 							console.log(values);
-							navigation.navigate("ConfirmaCadastro");
-							
+							navigation.navigate("PerfilDeUso");
 						}}
 						validationSchema={validationsCadastro}
 					>
@@ -154,7 +192,7 @@ export default function Cadastro({ navigation }) {
 								<Botao
 									ordem="primario"
 									tamanho="grande"
-									onPress={handleSubmit}
+									onPress={carrega()}
 									label="Cadastrar"
 									espacamento={true}
 								></Botao>
@@ -177,18 +215,3 @@ export default function Cadastro({ navigation }) {
 		</KeyboardAvoidingView>
 	);
 }
-
-const estilos = {
-	tela: tailwind("bg-white flex-1"),
-	telaInterior: tailwind("flex-1"),
-	containerFormulario: tailwind("w-full items-center"),
-	textoTerciario: tailwind("text-base text-gray-900 text-center mb-2"),
-};
-
-const headerHeight = StatusBar.currentHeight;
-
-const estiloExcecao = StyleSheet.create({
-	container: {
-		paddingTop: headerHeight,
-	},
-});
