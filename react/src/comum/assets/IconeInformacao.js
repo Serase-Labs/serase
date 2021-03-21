@@ -14,10 +14,10 @@ export default class IconeInformacao extends React.Component {
 			>
 				<Svg
 					strokeWidth="1.5"
-					height={"100%"}
+					height="100%"
 					width="100%"
 					viewBox="0 0 24 24"
-					color="#718096"
+					color="#999999"
 				>
 					<Path
 						stroke="currentColor"
