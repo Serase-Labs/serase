@@ -10,6 +10,8 @@ import {
 	FlatList,
 } from "react-native";
 import tailwind from "tailwind-rn";
+import { LinearGradient } from "expo-linear-gradient";
+
 // Imports internos
 import IconeMenu from "../comum/assets/IconeMenu";
 import IconeDespesa from "../comum/assets/IconeDespesa";
@@ -103,7 +105,7 @@ export default function VisualizacaoGeral({ navigation }) {
 			showsVerticalScrollIndicator={false}
 			style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}
 		>
-			<View style={tailwind("bg-gray-100 p-5")}>
+			<View style={tailwind("px-5 py-4")}>
 				<View
 					style={tailwind(
 						"w-full flex flex-row justify-between items-center"
@@ -124,19 +126,27 @@ export default function VisualizacaoGeral({ navigation }) {
 						</View>
 					</TouchableOpacity>
 				</View>
-				<View style={tailwind("py-4")}>
-					<Text style={tailwind("text-gray-800 py-2")}>
+			</View>
+
+			
+				<LinearGradient
+        // Button Linear Gradient
+        colors={['#48639C', '#2AF598']}
+				style={tailwind("mx-5 my-4 p-6 rounded-md")}
+        >
+        <View style={tailwind("")}>
+					<Text style={tailwind("text-white py-2")}>
 						Saldo Atual
 					</Text>
 					<Text
 						style={tailwind(
-							"text-gray-800 text-xl font-bold text-3xl"
+							"text-white text-xl font-bold text-3xl"
 						)}
 					>
 						R$ {saldo}
 					</Text>
 				</View>
-			</View>
+      	</LinearGradient>
 
 			<View style={[tailwind("flex-row m-5 justify-between")]}>
 				<TouchableOpacity
@@ -199,7 +209,7 @@ export default function VisualizacaoGeral({ navigation }) {
 							{ fontWeight: "bold" },
 						]}
 					>
-						Receitas
+						Relatórios
 					</Text>
 				</TouchableOpacity>
 			</View>
