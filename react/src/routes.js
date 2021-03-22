@@ -7,7 +7,7 @@ import Login from "./feature-login/Login";
 import Cadastro from "./feature-login/Cadastro";
 import Homepage from "./feature-login/Homepage";
 import Onboarding from "./feature-login/Onboarding.js";
-import ConfirmaCadastro from "./feature-login/ConfirmaCadastro.js";
+import OnboardingMovimentacao from "./feature-login/OnboardingMovimentacao.js";
 
 import ListaDespesas from "./feature-movimentacoes/ListaDespesas.js";
 import ListaReceitas from "./feature-movimentacoes/ListaReceitas.js";
@@ -27,7 +27,7 @@ const Routes = createAppContainer(
 			ListaReceitas,
 			Relatorios,
 			AdicionaMovimentacao,
-			ConfirmaCadastro,
+			OnboardingMovimentacao,
 		},
 		{
 			headerMode: "none",

@@ -57,22 +57,31 @@ const validationsCadastro = yup.object().shape({
 export default function Cadastro({ navigation }) {
 	const [temErro, setErro] = useState(false);
 	const [resultado, setResultado] = useState(null);
-	const { token } = useAuth();
+	const [values, setValues] = useState({
+		username: '',
+		email: '',
+		password: '',
+		senhaConfirmacao: '',
+	});
+	
+	//const { token } = useAuth();
 
 	const carrega = () =>
-		CadastrarUsuarioView(navigation, values.username, values.email, values.password);
+		CadastrarUsuarioView(navigation, values.username, values.email, values.password, values.senhaConfirmacao);
+		
 
 		function CadastrarUsuarioView(navigation, username, email, password ){
-			//var data2 = data + "";
+			
 
-			async function fetchData(){
+			async function fetch(){
 				let res = await fetch(GLOBAL.BASE_URL + "/Cadastro/", {
 					method: "POST",
-					headers: {Authorazion: navigation},
+					headers: {Authorazion: navigation}, 
 					body: JSON.stringify({
 						nome: username,
 						email: email,
 						senha: password,
+						senhaConfirmacao: password,
 					}), 
 				});
 			let json =  await res.json();
@@ -85,7 +94,7 @@ export default function Cadastro({ navigation }) {
 				setErro(false);
 				}
 			}
-			fectchData();
+			fetch();
 		 }
 
 	return (
@@ -192,7 +201,7 @@ export default function Cadastro({ navigation }) {
 								<Botao
 									ordem="primario"
 									tamanho="grande"
-									onPress={carrega()}
+									onPress={carrega(), () => navigation.navigate("Onboarding")}
 									label="Cadastrar"
 									espacamento={true}
 								></Botao>
