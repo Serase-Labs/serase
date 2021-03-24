@@ -120,6 +120,7 @@ export default function VisualizacaoGeral({ navigation }) {
 
 					<TouchableOpacity
 						style={tailwind("w-10 h-10 p-1 bg-gray-200 rounded")}
+						onPress={() => navigation.navigate("ListaDividas")}
 					>
 						<View style={tailwind("h-8 w-8")}>
 							<IconeMenu />
