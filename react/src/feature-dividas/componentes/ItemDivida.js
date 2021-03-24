@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 import Botao from "../../comum/components/Botao";
+import BarraProgresso from "../../comum/components/BarraProgresso";
 
 
 
@@ -15,10 +16,12 @@ export default function ItemDivida(props) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [isPressed, setPressed] = useState(false);
 
+    let porcentagem = (Number(props.valor_pago)/Number(props.valor_divida)*100).toFixed(2);
+
 	return (
 		<TouchableOpacity
 			style={tailwind(
-				"flex flex-col mb-4 ml-5 mr-5 py-6 px-4 items-center rounded-md bg-gray-100"
+				"flex flex-col mb-4 ml-5 mr-5 py-4 px-4 items-center rounded-md bg-gray-100"
 			)}
 			onPress={() => setModalVisible(true)}
 		>
@@ -32,7 +35,7 @@ export default function ItemDivida(props) {
                         {props.credor}
                     </Text>
                     <Text style={estilos.dividaDetails}>
-                        Progresso: {(Number(props.valor_pago)/Number(props.valor_divida)*100).toFixed(2)}%
+                        Progresso: {porcentagem}%
                     </Text>
                 </View>
                 <View style={tailwind("flex-col")}>
@@ -47,7 +50,7 @@ export default function ItemDivida(props) {
 
 			<Botao ordem="terciario" tamanho="pequeno" label="Ver mais" espacamento={true} onPress={() =>{/* Tela de detalhes */}}/>
 
-            {/* Barra de progresso aqui*/}
+            <BarraProgresso porcentagem={porcentagem} espacamento={true}/>
 
             <Botao ordem="terciario" tamanho="grande" label="Registrar Pagamento" onPress={() =>{/* Tela de inserir pagamento */}}/>
 
@@ -64,5 +67,5 @@ export default function ItemDivida(props) {
 }
 
 const estilos = {
-    dividaDetails: tailwind("text-sm font-light text-gray-600")
+    dividaDetails: tailwind("text-sm font-light text-gray-500")
 }
