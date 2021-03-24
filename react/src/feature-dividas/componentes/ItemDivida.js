@@ -10,10 +10,12 @@ import tailwind from "tailwind-rn";
 import Botao from "../../comum/components/Botao";
 import BarraProgresso from "../../comum/components/BarraProgresso";
 
+import ItemDividaPagamento from "./ItemDividaPagamento";
 
 
 export default function ItemDivida(props) {
 	const [modalVisible, setModalVisible] = useState(false);
+	const [modalPagamentoVisible, setModalPagamentoVisible] = useState(false);
 	const [isPressed, setPressed] = useState(false);
 
     let porcentagem = (Number(props.valor_pago)/Number(props.valor_divida)*100).toFixed(2);
@@ -52,7 +54,7 @@ export default function ItemDivida(props) {
 
             <BarraProgresso porcentagem={porcentagem} espacamento={true}/>
 
-            <Botao ordem="terciario" tamanho="grande" label="Registrar Pagamento" onPress={() =>{/* Tela de inserir pagamento */}}/>
+            <Botao ordem="terciario" tamanho="grande" label="Registrar Pagamento" onPress={() =>{setModalPagamentoVisible(true)}}/>
 
 			<Modal
 				animationType="slide"
@@ -61,6 +63,15 @@ export default function ItemDivida(props) {
 				onRequestClose={() => setModalVisible(false)}
 			>
 				{/*<ItemMovimentacaoDetalhado indice={props.indice}/>*/}
+			</Modal>
+
+            <Modal
+				animationType="slide"
+				transparent={true}
+				visible={modalPagamentoVisible}
+				onRequestClose={() => setModalPagamentoVisible(false)}
+			>
+				<ItemDividaPagamento {...props}/>
 			</Modal>
 		</TouchableOpacity>
 	);
