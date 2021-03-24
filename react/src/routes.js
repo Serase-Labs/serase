@@ -14,6 +14,8 @@ import AdicionaMovimentacao from "./feature-movimentacoes/AdicionaMovimentacao.j
 
 import Relatorios from "./feature-relatorios/Relatorios.js";
 
+import ListaDividas from "./feature-dividas/ListaDividas.js";
+
 const Routes = createAppContainer(
 	createStackNavigator(
 		{
@@ -26,6 +28,7 @@ const Routes = createAppContainer(
 			ListaReceitas,
 			Relatorios,
 			AdicionaMovimentacao,
+			ListaDividas,
 		},
 		{
 			headerMode: "none",
