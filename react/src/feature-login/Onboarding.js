@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import Botao from "../comum/components/Botao.js";
 import IlustracaoCadastro from "../comum/assets/IlustracaoCadastro.js";
 
-export default function Confirmacao() {
+export default function Confirmacao({navigation}) {
 	return (
 		<View
 			style={tailwind(
@@ -42,7 +42,7 @@ export default function Confirmacao() {
 				<Botao
 					ordem="primario"
 					tamanho="medio"
-					onPress={() => console.log("comecei")}
+					onPress={() => navigation.navigate("OnboardingMovimentacao")}
 					label="Começar"
 				></Botao>
 			</View>

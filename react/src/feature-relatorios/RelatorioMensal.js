@@ -147,7 +147,7 @@ export default function RelatorioMensal() {
 						conteudo="Frequência de despesas"
 						descricao="Distribuição dos seus gastos pelo mês."
 					>
-						<GraficoDespesaFrequencia grafico={categoria.grafico_mensal_despesa}/>
+						<GraficoDespesaFrequencia/>
 					</TabDescricao>
 				</View>
 
