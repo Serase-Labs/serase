@@ -55,6 +55,37 @@ export const AuthProvider = ({ children }) => {
 		await AsyncStorage.setItem("@RNAuth:token", token);
 	}
 
+	async function signUp(nome, email, senha, senhaConfirmacao) {
+		let res = await fetch(GLOBAL.BASE_URL+"/cadastro/", {
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+			method: "post",
+			body: JSON.stringify({
+				nome: nome,
+				email: email,
+				senha: senha,
+				senhaConfirmacao: senhaConfirmacao,
+			}),
+		});
+
+		if (!res.ok) throw res.status;
+
+		console.log(res);
+		let json = await res.json();
+		console.log(json);
+
+		let token = json.conteudo.token,
+			user = { nome: json.conteudo.nome, email: json.conteudo.email };
+
+		setUser(user);
+		setToken(token);
+
+		await AsyncStorage.setItem("@RNAuth:user", JSON.stringify(user));
+		await AsyncStorage.setItem("@RNAuth:token", token);
+	}
+
 	function signOut() {
 		AsyncStorage.clear().then(() => {
 			setUser(null);
@@ -64,7 +95,7 @@ export const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ signed: !!user, user, token, signIn, signOut, loading }}
+			value={{ signed: !!user, user, token, signIn, signUp, signOut, loading }}
 		>
 			{children}
 		</AuthContext.Provider>

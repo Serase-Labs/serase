@@ -63,10 +63,18 @@ export default function Cadastro({ navigation }) {
 		password: '',
 		senhaConfirmacao: '',
 	});
+
+	const { signUp } = useAuth();
+
+	function handleSubmit(values) {
+		signUp(values.nome, values.email, values.senha, values.senhaConfirmacao)
+			.then(() => console.log("good"))
+			.catch( console.log("Deu Ruim"));
+	}
 	
 	//const { token } = useAuth();
 
-	const carrega = () =>
+	/* const carrega = () =>
 		CadastrarUsuarioView(navigation, values.username, values.email, values.password, values.senhaConfirmacao);
 		
 
@@ -95,7 +103,7 @@ export default function Cadastro({ navigation }) {
 				}
 			}
 			fetch();
-		 }
+		 } */
 
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
@@ -117,8 +125,7 @@ export default function Cadastro({ navigation }) {
 							{ senhaConfirmacao: "" })
 						}
 						onSubmit={(values) => {
-							console.log(values);
-							navigation.navigate("PerfilDeUso");
+							handleSubmit(values);
 						}}
 						validationSchema={validationsCadastro}
 					>
@@ -201,7 +208,7 @@ export default function Cadastro({ navigation }) {
 								<Botao
 									ordem="primario"
 									tamanho="grande"
-									onPress={carrega(), () => navigation.navigate("Onboarding")}
+									onPress={handleSubmit}
 									label="Cadastrar"
 									espacamento={true}
 								></Botao>
