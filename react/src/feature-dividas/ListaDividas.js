@@ -27,6 +27,7 @@ export default function ListaDividas({ navigation }) {
 	useEffect(() => {
 		async function fetchData() {
 			let url = GLOBAL.BASE_URL + "/dividas/";
+		console.log(url);
 			try {
 				let res = await fetch(url, {
 					headers: { Authorization: token },
