@@ -11,10 +11,12 @@ import Botao from "../../comum/components/Botao";
 import BarraProgresso from "../../comum/components/BarraProgresso";
 
 import ItemDividaPagamento from "./ItemDividaPagamento";
+import ItemDividaDetalhada from "./ItemDividaDetalhada";
 
 
 export default function ItemDivida(props) {
 	const [modalVisible, setModalVisible] = useState(false);
+	const [modalDetalhadaVisible,setModalDetalhadaVisible]= useState(false);
 	const [modalPagamentoVisible, setModalPagamentoVisible] = useState(false);
 	const [isPressed, setPressed] = useState(false);
 
@@ -25,7 +27,7 @@ export default function ItemDivida(props) {
 			style={tailwind(
 				"flex flex-col mb-4 ml-5 mr-5 py-4 px-4 items-center rounded-md bg-gray-100"
 			)}
-			onPress={() => setModalVisible(true)}
+			onPress={() => setModalDetalhadaVisible(true)}
 		>
             <View style={tailwind("flex-grow flex-row justify-between w-full mb-4")}>
                 <View style={tailwind("flex-col")}>
@@ -50,7 +52,7 @@ export default function ItemDivida(props) {
                 </View>
             </View>
 
-			<Botao ordem="terciario" tamanho="pequeno" label="Ver mais" espacamento={true} onPress={() =>{/* Tela de detalhes */}}/>
+			<Botao ordem="terciario" tamanho="pequeno" label="Ver mais" espacamento={true} onPress={() =>{setModalDetalhadaVisible(true)}}/>
 
             <BarraProgresso porcentagem={porcentagem} espacamento={true}/>
 
@@ -59,10 +61,10 @@ export default function ItemDivida(props) {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={modalVisible}
-				onRequestClose={() => setModalVisible(false)}
+				visible={modalDetalhadaVisible}
+				onRequestClose={() => setModalDetalhadaVisible(false)}
 			>
-				{/*<ItemMovimentacaoDetalhado indice={props.indice}/>*/}
+				<ItemDividaDetalhada {...props} />
 			</Modal>
 
             <Modal
