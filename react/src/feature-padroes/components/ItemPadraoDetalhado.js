@@ -44,6 +44,10 @@ export default function ItemPadraoDetalhado(props) {
 	data = data.split('-');
 	var dataI = data[2]+'/'+data[1]+'/'+data[0];
 
+	function capitalize (str) {
+		return str.charAt(0).toUpperCase() + str.slice(1);
+		}
+
 	return (
 		<>
 			<View
@@ -104,7 +108,7 @@ export default function ItemPadraoDetalhado(props) {
 									"text-base font-bold w-48 text-right"
 								)}
 							>
-								{!dataI.match('null') ? (dataI):('Indefinido') }
+								{!dataI.match('n')? (dataI):('Indefinido') }
 							</Text>
 						</View>
 						
@@ -121,7 +125,7 @@ export default function ItemPadraoDetalhado(props) {
 									"text-base font-bold w-48 text-right"
 								)}
 							>
-							{!dataF.match('null') ? (dataF):('Indefinido') }
+							{!dataF.match('n') || !dataF.match('undefined')? (dataF):('Indefinido') }
 							</Text>
 						</View>
 						
@@ -138,7 +142,7 @@ export default function ItemPadraoDetalhado(props) {
 									"text-base font-bold w-48 text-right"
 								)}
 							>
-								{props.periodo}
+								{capitalize(props.periodo)}
 							</Text>
 						</View>
 

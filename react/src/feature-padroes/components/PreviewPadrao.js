@@ -68,7 +68,7 @@ export default function PreviewPadrao({ navigation }) {
         dataF ={item.data_fim}
         dataC = {item.dia_cobranca}
 
-        valor = {item.valor_padrao}
+        valor = {item.valor}
         categoria ={item.categoria}
         periodo = {item.periodo}
       />
@@ -79,7 +79,7 @@ export default function PreviewPadrao({ navigation }) {
     return (
       <TouchableOpacity 
       style={tailwind("bg-blue-700 rounded-md px-4 py-5 h-24 w-24 mr-2 flex justify-between")}
-      onPress={() => navigation.navigate("AdicionaMovimentacao")}>  
+      onPress={() => navigation.navigate("AdicionaMovimentacao",{screen: 'Padrao'})}>  
       
       <Text style={tailwind("text-4xl text-center font-bold text-white")}>+</Text>
     </TouchableOpacity>

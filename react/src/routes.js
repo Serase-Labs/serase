@@ -10,6 +10,7 @@ import Onboarding from "./feature-login/Onboarding.js";
 
 import ListaDespesas from "./feature-movimentacoes/ListaDespesas.js";
 import ListaReceitas from "./feature-movimentacoes/ListaReceitas.js";
+import ListaPadroes from "./feature-padroes/ListaPadroes.js";
 import AdicionaMovimentacao from "./feature-movimentacoes/AdicionaMovimentacao.js";
 
 import Relatorios from "./feature-relatorios/Relatorios.js";
@@ -23,6 +24,7 @@ const Routes = createAppContainer(
 			Onboarding,
 			Homepage,
 			ListaDespesas,
+			ListaPadroes,
 			ListaReceitas,
 			Relatorios,
 			AdicionaMovimentacao,
