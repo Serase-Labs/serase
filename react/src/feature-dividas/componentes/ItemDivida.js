@@ -73,7 +73,7 @@ export default function ItemDivida(props) {
 				visible={modalPagamentoVisible}
 				onRequestClose={() => setModalPagamentoVisible(false)}
 			>
-				<ItemDividaPagamento {...props}/>
+				<ItemDividaPagamento divida={props} setModal={setModalPagamentoVisible}/>
 			</Modal>
 		</TouchableOpacity>
 	);
