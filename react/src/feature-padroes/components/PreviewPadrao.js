@@ -49,6 +49,7 @@ export default function PreviewPadrao({ navigation }) {
           style={tailwind("py-4 ml-5")}
           data={padroes.conteudo}
           extraData={padroes.conteudo}
+          ListHeaderComponent={header}
           renderItem={renderizarPreviewPadroes}
           keyExtractor={(item) => item.id}
         ></FlatList>
@@ -57,11 +58,31 @@ export default function PreviewPadrao({ navigation }) {
   }
 
   const renderizarPreviewPadroes = ({ item }) => {
+    
     return (
+      
       <ItemPreviewPadrao
         descricao={item.descricao}
-        valor={item.valor_padrao}
+
+        dataI ={item.data_inicio}
+        dataF ={item.data_fim}
+        dataC = {item.dia_cobranca}
+
+        valor = {item.valor}
+        categoria ={item.categoria}
+        periodo = {item.periodo}
       />
+    );
+  };
+  const header = () => {
+    
+    return (
+      <TouchableOpacity 
+      style={tailwind("bg-blue-700 rounded-md px-4 py-5 h-24 w-24 mr-2 flex justify-between")}
+      onPress={() => navigation.navigate("AdicionaMovimentacao",{screen: 'Padrao'})}>  
+      
+      <Text style={tailwind("text-4xl text-center font-bold text-white")}>+</Text>
+    </TouchableOpacity>
     );
   };
 

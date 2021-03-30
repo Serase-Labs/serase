@@ -12,41 +12,39 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
-
-import ItemMovimentacao from "./componentes/ItemMovimentacao";
+import IlustracaoDespesaFixa from "../comum/assets/IlustracaoDespesaFixa";
+import ItemPadrao from "../feature-padroes/components/ItemPadrao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import IconePesquisa from "../comum/assets/IconePesquisa";
 import GLOBAL from "../Global";
 import { useAuth } from "../feature-login/auth.js";
 
 // Padroes de Movimentação
-import PreviewPadrao from "../feature-padroes/components/PreviewPadrao";
+import PreviewPadrao from "./components/PreviewPadrao";
 
-export default function ListaDespesas({ navigation }) {
+export default function ListaPadroes({navigation}) {
 	const [isLoading, setLoading] = useState(true);
-	const [despesas, setDespesa] = useState([]);
+	const [padroes, setPadrao] = useState([]);
 	const[filtro, setFiltro] = useState('');
+	const[id,setId] = useState('');
 	const[data, setData] = useState(9000);
 	const { token } = useAuth();
 
 	const carrega = () => {
 		async function fetchData() {
-			 // Days you want to subtract
-			var days = data;
-			var date = new Date();
-			var last = new Date(date.getTime() - (days * 24 * 60 * 60 * 1000));
-			var day =last.getDate();
-			var month=last.getMonth()+1;
-			var year=last.getFullYear();
-
-			let url = GLOBAL.BASE_URL + "/movimentacoes/?tipo=despesa&data_inicial="+year+"-"+month+"-"+day+"&filtro="+filtro;
+			 
+			let url = GLOBAL.BASE_URL + "/cobrancas/?situacao="+filtro+"&tipo=despesa";
+			if(filtro==''){
+				url = GLOBAL.BASE_URL + "/cobrancas/";
+			}
+			
 			
 			try {
 				let res = await fetch(url, {
 					headers: { Authorization: token },
 				});
 				let json = await res.json();
-				setDespesa(json);
+				setPadrao(json);
 				setLoading(false);
 				return await res.json();
 			} catch (error) {}
@@ -54,15 +52,16 @@ export default function ListaDespesas({ navigation }) {
 		fetchData();
 	}
 
+
 	useEffect(() => {
 		async function fetchData() {
-			let url = GLOBAL.BASE_URL + "/movimentacoes/?tipo=despesa";
+			let url = GLOBAL.BASE_URL + "/cobrancas/";
 			try {
 				let res = await fetch(url, {
 					headers: { Authorization: token },
 				});
 				let json = await res.json();
-				setDespesa(json);
+				setPadrao(json);
 				console.log(json);
 				setLoading(false);
 				return await res.json();
@@ -71,12 +70,12 @@ export default function ListaDespesas({ navigation }) {
 		fetchData();
 	}, []);
 
-	function renderDespesa(despesas) {
+	function renderDespesa(padroes) {
 		return (
 			<View>
 				<FlatList
-					data={despesas.conteudo}
-					extraData={despesas.conteudo}
+					data={padroes.conteudo}
+					extraData={padroes.conteudo}
 					renderItem={renderizarMovimentacoes}
 					keyExtractor={(item) => item.id}
 				></FlatList>
@@ -86,66 +85,53 @@ export default function ListaDespesas({ navigation }) {
 
 	const renderizarMovimentacoes = ({ item }) => {
 		return (
-			<ItemMovimentacao
+			<ItemPadrao
 				indice={item.id}
+				situacao={item.situacao}
+				cod_padrao={item.cod_padrao}
+
 				descricao={item.descricao}
-				valorPago={item.valor_pago}
-				dataLancamento={item.data_lancamento}
+
+        		valor = {item.valor_esperado}
+        		categoria ={item.categoria}
 			/>
 		);
 	};
 
-
 	return (
 		<View style={[estilos.tela, estiloExcecao.container]}>
 			<View style={estilos.telaInterior}>
-				<IndicadorRetorno telaAtual={"Despesas"} />
-
-				<View style={tailwind("px-5 flex flex-row justify-between")}>
-					<Text style={tailwind("text-lg font-bold")}>
-						Despesas Fixas
-					</Text>
-					<TouchableOpacity onPress={() =>{navigation.navigate('ListaPadroes')}}>
-					<Text style={tailwind("text-lg font-bold text-blue-700")}>
-						Ver todas
-					</Text>
-					</TouchableOpacity>
-				</View>
-
-				<PreviewPadrao navigation={navigation}/>
-
-				<View style={tailwind("px-5")}>
-					<Text style={tailwind("text-lg font-bold")}>
-						Movimentações
-					</Text>
-				</View>
-
+				<IndicadorRetorno telaAtual={"Lista Padrao"} />
+				
+				<View style={tailwind("h-32")}>
+							<IlustracaoDespesaFixa />
+						</View>
 				<View style={[tailwind("flex-row bg-white justify-between")]}>
 					<TouchableOpacity
 						style={estilos.botaoTerciarioGrande}
-						onPress={()=>{setData(7);carrega();}}
+						onPress={()=>{setFiltro('');carrega();}}
 						title="Submit"
 					>
 						<Text style={estilos.textoBotaoTerciario}>
-							Essa semana
+							Todas
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={estilos.botaoTerciarioGrande}              
-						onPress={()=>{setData(30);carrega();}}
+						onPress={()=>{setFiltro('pendente');carrega();}}
 						title="Submit"
 					>
 						<Text style={estilos.textoBotaoTerciario}>
-							Esse Mês
+							Pendentes
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={estilos.botaoTerciarioGrande}
 						//onPress={setData('Sempre')}
-						onPress={()=>{setData(900000);carrega();}}
+						onPress={()=>{setFiltro('paga');carrega();}}
 						title="Submit"
 					>
-						<Text style={estilos.textoBotaoTerciario}>Sempre</Text>
+						<Text style={estilos.textoBotaoTerciario}>Pagas</Text>
 					</TouchableOpacity>
 				</View>
 				<View style={tailwind("flex-row justify-between mx-5 mb-4")}>
@@ -166,14 +152,14 @@ export default function ListaDespesas({ navigation }) {
 					</View>
 				</View>
 
-				<View style={tailwind("mb-24")}>
+				<View style={tailwind("mb-16")}>
 				<View style={tailwind("mb-24")}>
 					<View style={tailwind("mb-24")}>
 						<View style={tailwind("flex-col mb-24")}>
 							{isLoading ? (
 								<Text>Loading...</Text>
 							) : (
-								renderDespesa(despesas)
+								renderDespesa(padroes)
 							)}
 						</View>
 					</View>
