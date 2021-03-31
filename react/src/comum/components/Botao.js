@@ -17,6 +17,8 @@ function ordem(ordemBotao) {
 			return tailwind("bg-transparent");
 		case "erro":
 			return tailwind("bg-red-600");
+		case "extra":
+			return tailwind("bg-transparent text-green-600");
 	}
 }
 
@@ -59,6 +61,9 @@ export default function Botao(props) {
 					props.ordem === "terciario"
 						? tailwind("text-blue-700")
 						: tailwind("text-white"),
+					props.ordem === "extra"
+						? tailwind("text-green-600")
+						: tailwind("text-white")
 				]}
 			>
 				{props.label}
