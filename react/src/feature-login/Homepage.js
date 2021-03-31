@@ -18,6 +18,7 @@ import IconeLogout from "../comum/assets/IconeLogout";
 import IconeDespesa from "../comum/assets/IconeDespesa";
 import IconeReceita from "../comum/assets/IconeReceita";
 import IconeRelatorio from "../comum/assets/IconeRelatorio";
+import IconeDivida from "../comum/assets/IconeDivida";
 import IconeAdicionar from "../comum/assets/IconeAdicionar";
 import ListaVazia from "../comum/components/ListaVazia.js";
 
@@ -150,39 +151,48 @@ export default function VisualizacaoGeral({ navigation }) {
 				</View>
       	</LinearGradient>
 
-			<View style={[tailwind("flex-row m-5 justify-between")]}>
+			<ScrollView horizontal style={[tailwind("m-5")]}>
+
 				<TouchableOpacity
-					style={[
-						tailwind(
-							"w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md"
-						),
-						{ elevation: 1 },
-					]}
+					style={[tailwind("w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md mr-4")]}
+					onPress={() => navigation.navigate("AdicionaMovimentacao")}
+				>
+					<View style={tailwind("w-12 h-12 mb-1 rounded-full bg-gray-100 flex justify-center items-center")}>
+						<View style={tailwind("w-8 h-8")}>
+							<IconeAdicionar/>
+						</View>
+					</View>
+				</TouchableOpacity>
+				
+				<TouchableOpacity
+					style={[tailwind("w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md mr-4")]}
 					onPress={() => navigation.navigate("ListaReceitas")}
 				>
-					<View style={tailwind("w-8 h-8 mb-1")}>
-						<IconeReceita uso="sistema" />
+					<View style={tailwind("w-12 h-12 mb-1 rounded-full bg-gray-100 flex justify-center items-center")}>
+						<View style={tailwind("w-8 h-8")}>
+							<IconeReceita uso="sistema" />
+						</View>
 					</View>
 					<Text
-						style={[
-							tailwind("text-base text-blue-900"),
-							{ fontWeight: "bold" },
-						]}
+						style={[tailwind("text-base text-blue-900 font-bold")]}
 					>
 						Receitas
 					</Text>
 				</TouchableOpacity>
+
 				<TouchableOpacity
 					style={[
 						tailwind(
-							"w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md"
+							"w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md mr-4"
 						),
 						{ elevation: 1 },
 					]}
 					onPress={() => navigation.navigate("ListaDespesas")}
 				>
-					<View style={tailwind("w-8 h-8 mb-1")}>
-						<IconeDespesa uso="sistema" />
+					<View style={tailwind("w-12 h-12 mb-1 rounded-full bg-gray-100 flex justify-center items-center")}>
+						<View style={tailwind("w-8 h-8")}>
+							<IconeDespesa uso="sistema" />
+						</View>
 					</View>
 					<Text
 						style={[
@@ -193,17 +203,20 @@ export default function VisualizacaoGeral({ navigation }) {
 						Despesas
 					</Text>
 				</TouchableOpacity>
+
 				<TouchableOpacity
 					style={[
 						tailwind(
-							"w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md"
+							"w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md mr-4"
 						),
 						{ elevation: 1 },
 					]}
 					onPress={() => navigation.navigate("Relatorios")}
 				>
-					<View style={tailwind("w-8 h-8 mb-1")}>
-						<IconeRelatorio />
+					<View style={tailwind("w-12 h-12 mb-1 rounded-full bg-gray-100 flex justify-center items-center")}>
+						<View style={tailwind("w-8 h-8")}>
+							<IconeRelatorio />
+						</View>
 					</View>
 					<Text
 						style={[
@@ -214,7 +227,31 @@ export default function VisualizacaoGeral({ navigation }) {
 						Relatórios
 					</Text>
 				</TouchableOpacity>
-			</View>
+
+				<TouchableOpacity
+					style={[
+						tailwind(
+							"w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md mr-4"
+						),
+						{ elevation: 1 },
+					]}
+					onPress={() => navigation.navigate("Relatorios")}
+				>
+					<View style={tailwind("w-12 h-12 mb-1 rounded-full bg-gray-100 flex justify-center items-center")}>
+						<View style={tailwind("w-8 h-8")}>
+							<IconeDivida />
+						</View>
+					</View>
+					<Text
+						style={[
+							tailwind("text-base text-blue-900"),
+							{ fontWeight: "bold" },
+						]}
+					>
+						Dívida
+					</Text>
+				</TouchableOpacity>
+			</ScrollView>
 
 			<View style={tailwind("py-4")}>
 				<Text
@@ -233,14 +270,6 @@ export default function VisualizacaoGeral({ navigation }) {
 					</View>
 				)}
 			</View>
-
-			<TouchableOpacity
-				style={[
-					tailwind("w-16 h-16 bg-green-300 absolute rounded-full"),
-					{ top: "85%", right: "5%" },
-				]}
-				onPress={() => navigation.navigate("AdicionaMovimentacao")}
-			></TouchableOpacity>
 		</ScrollView>
 	);
 }
