@@ -6,6 +6,7 @@ import Temp from "./pages/Temp";
 import Login from "./feature-login/Login";
 import Cadastro from "./feature-login/Cadastro";
 import Homepage from "./feature-login/Homepage";
+import Central from "./feature-notificacoes/Central";
 import Onboarding from "./feature-login/Onboarding.js";
 import OnboardingMovimentacao from "./feature-login/OnboardingMovimentacao.js";
 
@@ -33,6 +34,7 @@ const Routes = createAppContainer(
 			AdicionaMovimentacao,
 			ListaDividas,
 			OnboardingMovimentacao,
+			Central,
 		},
 		{
 			headerMode: "none",

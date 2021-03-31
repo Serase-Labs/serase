@@ -15,6 +15,7 @@ import { LinearGradient } from "expo-linear-gradient";
 // Imports internos
 import IconeMenu from "../comum/assets/IconeMenu";
 import IconeLogout from "../comum/assets/IconeLogout";
+import IconeNotificacao from "../comum/assets/IconeNotificacao";
 import IconeDespesa from "../comum/assets/IconeDespesa";
 import IconeReceita from "../comum/assets/IconeReceita";
 import IconeRelatorio from "../comum/assets/IconeRelatorio";
@@ -120,14 +121,27 @@ export default function VisualizacaoGeral({ navigation }) {
 						</Text>
 					</Text>
 
-					<TouchableOpacity
-						style={tailwind("w-10 h-10 p-1 bg-gray-200 rounded flex items-center justify-center")}
-						onPress={() => {navigation.navigate("Login"); signOut()}}
-					>
-						<View style={tailwind("h-6 w-6")}>
-							<IconeLogout />
-						</View>
-					</TouchableOpacity>
+					<View style={tailwind("flex flex-row justify-end items-end")}>
+
+						<TouchableOpacity
+							style={tailwind("w-10 h-10 p-1 bg-gray-200 rounded flex items-center justify-center mr-6")}
+							onPress={() => {navigation.navigate("Login"); signOut()}}
+						>
+							<View style={tailwind("h-6 w-6")}>
+								<IconeLogout />
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={tailwind("w-10 h-10 p-1 bg-gray-200 rounded flex items-center justify-center")}
+							onPress={() => {navigation.navigate("Central");}}
+						>
+							<View style={tailwind("w-8 h-8 rounded-full bg-gray-100 flex justify-center items-center")}>
+								<View style={tailwind("w-6 h-6")}>
+									<IconeNotificacao/>
+								</View>
+							</View>
+						</TouchableOpacity>
+					</View>
 				</View>
 			</View>
 
@@ -151,7 +165,7 @@ export default function VisualizacaoGeral({ navigation }) {
 				</View>
       	</LinearGradient>
 
-			<ScrollView horizontal style={[tailwind("m-5")]}>
+			<ScrollView horizontal style={[tailwind("ml-5 my-5")]}>
 
 				<TouchableOpacity
 					style={[tailwind("w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md mr-4")]}
