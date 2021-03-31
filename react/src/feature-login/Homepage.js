@@ -235,7 +235,7 @@ export default function VisualizacaoGeral({ navigation }) {
 						),
 						{ elevation: 1 },
 					]}
-					onPress={() => navigation.navigate("Relatorios")}
+					onPress={() => navigation.navigate("ListaDividas")}
 				>
 					<View style={tailwind("w-12 h-12 mb-1 rounded-full bg-gray-100 flex justify-center items-center")}>
 						<View style={tailwind("w-8 h-8")}>
