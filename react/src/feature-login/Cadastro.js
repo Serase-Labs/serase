@@ -68,42 +68,9 @@ export default function Cadastro({ navigation }) {
 
 	function handleSubmit(values) {
 		signUp(values.nome, values.email, values.senha, values.senhaConfirmacao)
-			.then(() => console.log("good"))
+			.then(() => navigation.navigate("OnboardingMovimentacao"))
 			.catch( console.log("Deu Ruim"));
 	}
-	
-	//const { token } = useAuth();
-
-	/* const carrega = () =>
-		CadastrarUsuarioView(navigation, values.username, values.email, values.password, values.senhaConfirmacao);
-		
-
-		function CadastrarUsuarioView(navigation, username, email, password ){
-			
-
-			async function fetch(){
-				let res = await fetch(GLOBAL.BASE_URL + "/Cadastro/", {
-					method: "POST",
-					headers: {Authorazion: navigation}, 
-					body: JSON.stringify({
-						nome: username,
-						email: email,
-						senha: password,
-						senhaConfirmacao: password,
-					}), 
-				});
-			let json =  await res.json();
-
-			if(!res.ok){
-				setResultado(json.mensagem);
-				setErro(true);
-			}else{
-				setResultado("Requisição feita com sucesso!");
-				setErro(false);
-				}
-			}
-			fetch();
-		 } */
 
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
@@ -199,7 +166,7 @@ export default function Cadastro({ navigation }) {
 									espacamento={true}
 								>
 									{errors.senhaConfirmacao && (
-										<Text style={estilos.errorInput}>
+										<Text style={Error()}>
 											{errors.senhaConfirmacao}
 										</Text>
 									)}

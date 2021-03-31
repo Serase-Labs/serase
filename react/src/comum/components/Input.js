@@ -3,7 +3,8 @@ import { View, Text, TextInput, Dimensions } from "react-native";
 import tailwind from "tailwind-rn";
 
 function Error() {
-	return tailwind("bg-red-100 text-red-700 px-4 py-2 mt-2 rounded relative");
+	const windowWidth = Dimensions.get('window').width;
+	return [tailwind("bg-red-100 text-red-700 px-4 py-2 mt-2 rounded relative w-full"), { width: windowWidth/100*80 }];
 }
 
 function Input(props) {

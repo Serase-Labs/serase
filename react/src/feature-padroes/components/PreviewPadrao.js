@@ -15,7 +15,7 @@ import tailwind from "tailwind-rn";
 import GLOBAL from "../../Global";
 import { useAuth } from "../../feature-login/auth";
 
-import IlustracaoLoading from "../../comum/assets/IlustracaoLoading";
+import IconeAdicionar from "../../comum/assets/IconeAdicionar";
 import ItemPreviewPadrao from "./ItemPreviewPadrao";
 
 export default function PreviewPadrao({ navigation }) {
@@ -78,12 +78,15 @@ export default function PreviewPadrao({ navigation }) {
   const header = () => {
     
     return (
-      <TouchableOpacity 
-      style={tailwind("bg-blue-700 rounded-md px-4 py-5 h-24 w-24 mr-2 flex justify-between")}
-      onPress={() => navigation.navigate("AdicionaMovimentacao",{screen: 'Padrao'})}>  
-      
-      <Text style={tailwind("text-4xl text-center font-bold text-white")}>+</Text>
-    </TouchableOpacity>
+      <TouchableOpacity
+					style={[tailwind("w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md mr-4")]}
+					onPress={() => navigation.navigate("AdicionaMovimentacao",{screen: 'Padrao'})}>  
+					<View style={tailwind("w-12 h-12 mb-1 rounded-full bg-gray-100 flex justify-center items-center")}>
+						<View style={tailwind("w-8 h-8")}>
+							<IconeAdicionar/>
+						</View>
+					</View>
+				</TouchableOpacity>
     );
   };
 

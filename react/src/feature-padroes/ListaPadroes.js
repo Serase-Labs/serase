@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
+import IlustracaoLoading from "../comum/assets/IlustracaoLoading";
+import ListaVazia from "../comum/components/ListaVazia";
 import IlustracaoDespesaFixa from "../comum/assets/IlustracaoDespesaFixa";
 import ItemPadrao from "../feature-padroes/components/ItemPadrao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
@@ -136,12 +138,11 @@ export default function ListaPadroes({navigation}) {
 				</View>
 				<View style={tailwind("flex-row justify-between mx-5 mb-4")}>
 					<TextInput
-						style={tailwind("flex-row flex-grow")}
+						style={tailwind("flex-row  flex-grow")}
 						placeholder={"Pesquise por uma entrada de receita"}
 						placeholderTextColor={"#A0AEC0"}
 						onChangeText={text => setFiltro(text)}
 					/>
-					<View style={tailwind("flex")}>
 					<TouchableOpacity 
 						style={tailwind("h-10 w-10 rounded-lg justify-center items-center")}
 						title="Submit"
@@ -149,22 +150,23 @@ export default function ListaPadroes({navigation}) {
 					>
 						<IconePesquisa />
 					</TouchableOpacity>
-					</View>
 				</View>
 
-				<View style={tailwind("mb-16")}>
-				<View style={tailwind("mb-24")}>
-					<View style={tailwind("mb-24")}>
-						<View style={tailwind("flex-col mb-24")}>
-							{isLoading ? (
-								<Text>Loading...</Text>
+				{isLoading ? (
+								<IlustracaoLoading/>
 							) : (
-								renderDespesa(padroes)
-							)}
-						</View>
-					</View>
-				</View>
-				</View>
+										<View>
+											{ padroes.conteudo.length === 0 ? 
+												<View style={tailwind("py-4")}>
+														<ListaVazia mensagem="Você ainda não registrou nenhuma despesa fixa. Assim que o fizer, ela aparecerá aqui."/> 
+												</View>
+												: 
+												<View style={tailwind("mb-12")}>
+													{renderDespesa(padroes)}
+												</View>
+											}
+										</View>
+				)}
 			</View>
 		</View>
 	);

@@ -15,6 +15,7 @@ import IlustracaoLoading from '../comum/assets/IlustracaoLoading';
 import ItemMovimentacao from "./componentes/ItemMovimentacao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import IconePesquisa from "../comum/assets/IconePesquisa";
+import ListaVazia from "../comum/components/ListaVazia";
 import GLOBAL from "../Global";
 import { useAuth } from "../feature-login/auth.js";
 
@@ -92,35 +93,37 @@ export default function VisualizacaoGeral({ navigation }) {
 				<View
 					style={[tailwind("flex-row bg-white justify-center")]}
 				></View>
-				<View style={tailwind("justify-between flex-row p-3")}>
+				<View style={tailwind("justify-between flex-row mx-5 my-4")}>
 					<TextInput
 						style={tailwind("flex-row mx-2 flex-grow")}
 						placeholder={"Pesquise por uma entrada de receita"}
 						onChangeText={text => setFiltro(text)}
 						placeholderTextColor={"#A0AEC0"}
 					/>
-					<View style={[tailwind("flex-1")]}>
-					<TouchableOpacity 
-						style={tailwind("bg-gray-300 h-10 w-10 rounded-lg justify-center items-center")}
-						title="Submit"
-						onPress={carrega}
-					>
-						<IconePesquisa />
-					</TouchableOpacity>
-					</View>
+						<TouchableOpacity 
+							style={tailwind("bg-gray-300 h-10 w-10 rounded-lg justify-center items-center")}
+							title="Submit"
+							onPress={carrega}
+						>
+							<IconePesquisa />
+						</TouchableOpacity>
 				</View>
 
 				{isLoading ? (
 								<IlustracaoLoading/>
 							) : (
-								<View style={tailwind("mb-2")}>
-									<View style={tailwind("mb-12")}>
-										<View style={tailwind("flex-col mb-24")}>
-										{renderReceita(receitas)}
-									</View>
-								</View>
-				</View>
-							)}
+										<View>
+											{ receitas.conteudo.length === 0 ? 
+												<View style={tailwind("py-4")}>
+														<ListaVazia mensagem="Você ainda não relatou nenhuma receita. Assim que o fizer, ela aparecerá aqui."/> 
+												</View>
+												: 
+												<View style={tailwind("mb-12")}>
+													{renderReceitas(receitas)}
+												</View>
+											}
+										</View>
+				)}
 			</View>
 		</View>
 	);

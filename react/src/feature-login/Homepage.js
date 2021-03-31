@@ -21,6 +21,7 @@ import IconeReceita from "../comum/assets/IconeReceita";
 import IconeRelatorio from "../comum/assets/IconeRelatorio";
 import IconeDivida from "../comum/assets/IconeDivida";
 import IconeAdicionar from "../comum/assets/IconeAdicionar";
+import IlustracaoLoading from "../comum/assets/IlustracaoLoading";
 import ListaVazia from "../comum/components/ListaVazia.js";
 
 import ItemMovimentacao from "../feature-movimentacoes/componentes/ItemMovimentacao";
@@ -276,11 +277,11 @@ export default function VisualizacaoGeral({ navigation }) {
 
 				{isLoadingData ? (
 					<View style={tailwind("opacity-25")}>
-						<Text>Loading...</Text>
+						<IlustracaoLoading/>
 					</View>
 				) : (
 					<View style={tailwind("py-4")}>
-						{renderMovimentacoes(movimentacoes)}
+						{movimentacoes.conteudo.length === 0 ? (<ListaVazia mensagem="Você ainda não adicionou nenhuma movimentação. Quando o fizer, elas aparecerão aqui."/>) : renderMovimentacoes(movimentacoes)}
 					</View>
 				)}
 			</View>

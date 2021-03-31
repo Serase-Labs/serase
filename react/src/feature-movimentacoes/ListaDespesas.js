@@ -13,6 +13,7 @@ import {
 import tailwind from "tailwind-rn";
 
 import IlustracaoLoading from "../comum/assets/IlustracaoLoading";
+import ListaVazia from "../comum/components/ListaVazia";
 import ItemMovimentacao from "./componentes/ItemMovimentacao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import IconePesquisa from "../comum/assets/IconePesquisa";
@@ -166,19 +167,21 @@ export default function ListaDespesas({ navigation }) {
 					</View>
 				</View>
 
-				{ isLoading ? (<IlustracaoLoading/>) :(
-					
-					<View style={tailwind("mb-24")}>
-						<View style={tailwind("mb-24")}>
-							<View style={tailwind("mb-24")}>
-								<View style={tailwind("flex-col mb-24")}>
-									{renderDespesa(despesas)}
-								</View>
-							</View>
-						</View>
-					</View>
-				)
-				}
+				{isLoading ? (
+								<IlustracaoLoading/>
+							) : (
+										<View>
+											{ despesas.conteudo.length === 0 ? 
+												<View style={tailwind("py-4")}>
+														<ListaVazia mensagem="Você ainda não relatou nenhuma despesa. Assim que o fizer, ela aparecerá aqui."/> 
+												</View>
+												: 
+												<View style={tailwind("mb-12")}>
+													{renderDespesa(despesas)}
+												</View>
+											}
+										</View>
+				)}
 				
 			</View>
 		</View>
