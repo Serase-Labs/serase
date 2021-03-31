@@ -26,18 +26,31 @@ const dateToDateFormat = date=> date.toISOString().slice(0,10).split('-').revers
 
 
 
-export default function ItemDividaPagamento({divida, setModal}) {
+export default function ItemDividaPagamento({divida, closeModal}) {
 	const {token} = useAuth();
     
-    function fechar(){
-        setModal(false);
+    function fechar(update=false){
+        closeModal(update);
     }
 
-    async function pagarDivida(){
-        let body = {descricao, data_lancamento, valor_pago, categoria};
-		let url = GLOBAL.BASE_URL+"/movimentacao/"+props.indice+"/";
+    async function pagarDivida({data, valor}){
+        let cod_divida = divida.id;
+        let body = {cod_divida, data_lancamento:data, valor_pago: -valor};
+        body.data_lancamento = body.data_lancamento.toString().split('/').reverse().join('-');
+		let url = GLOBAL.BASE_URL+"/pagamento/";
+        try {
+            let res = await fetch(url, {
+                method: "POST",
+                headers: { Authorization: token },
+                body: JSON.stringify(body),
+            });
 
-        /*todo*/
+            if(res.ok) fechar(true);
+            else console.error(res);
+
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     // Hooks de data
@@ -70,7 +83,7 @@ export default function ItemDividaPagamento({divida, setModal}) {
                     <KeyboardAvoidingView style={tailwind("flex items-center")}>
                         <Formik
                             initialValues={({valor: ""}, {data: ""})}
-                                onSubmit={console.log}
+                                onSubmit={pagarDivida}
                         >
                             {({handleChange, handleBlur, handleSubmit, values, setFieldValue}) => (
                                 <View style={tailwind("w-full flex-col")}>
@@ -81,7 +94,7 @@ export default function ItemDividaPagamento({divida, setModal}) {
                                             placeholder={"100.00"}
                                             textContentType={"number"}
                                             espacamento={true}
-                                    ></Input>
+                                    />
                                     <TouchableOpacity style={[estilos.containerInput]} onPress={showDatePicker}>
                                         <Text style={estilos.labelInput}>Data para registro</Text>
                                         <TextInput style={estilos.input} editable={false} value={values.data} placeholder={dateToDateFormat(new Date())} placeholderTextColor={"#A0AEC0"}/>

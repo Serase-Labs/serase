@@ -6,6 +6,7 @@ import {
 	Text,
 	View,
 	FlatList,
+	Modal,
 } from "react-native";
 import tailwind from "tailwind-rn";
 
@@ -16,13 +17,18 @@ import Botao from "../comum/components/Botao";
 import ItemDivida from "./componentes/ItemDivida";
 import GLOBAL from "../Global";
 import { useAuth } from "../feature-login/auth.js";
+import AdicionaDivida from "./componentes/AdicionaDivida";
 
 
 export default function ListaDividas({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [dividas, setDividas] = useState([]);
-	const[data, setData] = useState(9000);
+	const [modalRegistroVisible, setModalRegistroVisible] = useState(false);
+	const [refresh, setRefresh] = useState(true);
+
 	const { token } = useAuth();
+
+	const atualiza = ()=> setRefresh(true);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -38,14 +44,15 @@ export default function ListaDividas({ navigation }) {
 				setDividas(json.conteudo);
 				console.log(json);
 				setLoading(false);
+				setRefresh(false);
 
 				return json;
 			} catch (error) {
                 console.error(error);
             }
 		}
-		fetchData();
-	}, []);
+		if(refresh) fetchData();
+	}, [refresh]);
 
 	function renderDivida(divida) {
 		return (
@@ -55,7 +62,7 @@ export default function ListaDividas({ navigation }) {
 					extraData={divida}
 					renderItem={renderizarDivida}
 					keyExtractor={(item) => item.id}
-				></FlatList>
+				/>
 			</View>
 		);
 	}
@@ -74,7 +81,7 @@ export default function ListaDividas({ navigation }) {
 			<View style={estilos.telaInterior}>
 				<IndicadorRetorno telaAtual={"Dívida"} />
 
-                <Botao ordem="secundario" tamanho="grande" label="+ Registrar Dívida" espacamento={true}/>
+				<Botao ordem="secundario" tamanho="grande" label="+ Registrar Dívida" espacamento={true} onPress={() =>{setModalRegistroVisible(true)}}/>
 
 				<View style={tailwind("mb-12")}>
 					<View style={tailwind("mb-24")}>
@@ -88,8 +95,20 @@ export default function ListaDividas({ navigation }) {
 							)}
 						</View>
 					</View>
-				</View>
 			</View>
+
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={modalRegistroVisible}
+				onRequestClose={() => setModalRegistroVisible(false)}
+			>
+				<AdicionaDivida closeModal={divida=>{
+					setModalRegistroVisible(false);
+					if(divida) atualiza();
+				}
+				}/>
+			</Modal>
 		</View>
 	);
 }
@@ -97,8 +116,8 @@ export default function ListaDividas({ navigation }) {
 const headerHeight = StatusBar.currentHeight;
 
 const estilos = {
-	tela: tailwind("flex-1 bg-white"),
-	telaInterior: tailwind("flex-1 items-center"),
+	tela: tailwind("flex-1 bg-white h-full"),
+	telaInterior: tailwind("flex-1 items-center h-full"),
 	itemBalanca: tailwind("flex-1"),
 	itemBalancaValor: tailwind("text-white text-lg font-bold"),
 	itemBalancaDescricao: tailwind("text-white text-xs"),
