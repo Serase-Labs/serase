@@ -25,24 +25,41 @@ import InputSelect from "../../comum/components/InputSelect.js"
 import GLOBAL from "../../Global.js"
 import { useAuth } from "../../feature-login/auth.js";
 
+async function adicionar(token, values, closeModal){
+	let body = {
+		credor: values.credor,
+		valor_divida: Number(values.valor),
+		periodo: values.periodo,
+		dia_cobranca: Number(values.cobranca || 5),
+		categoria: values.categoria,
+		data_fim: values.data.split('/').reverse().join('-'),
+	};
 
+	let juros = {
+		juros: values.juros,
+		tipo_juros: values.tipo_juros,
+		juros_ativos: !(values.tipo_juros=="não ativo"||values.tipo_juros=="")
+	}
 
-async function adicionar(token, values){
-	// TO DO !
+	if(juros.juros_ativos) body = Object.assign(body, juros);
+
 	let url = GLOBAL.BASE_URL+"/divida/";
 		
 	let res = await fetch(url, {
 		method: "post",
 		headers: {'Authorization': token},
+		body: JSON.stringify(body)
 	});
 		
-	let json = await res.json(),
-		conteudo = json.conteudo;
+	let json = await res.json();
+	console.log(json);
+	if(res.ok) closeModal(true);
 }
 
 
-function formulario({handleChange, handleBlur, handleSubmit, values, setFieldValue}){
+function formulario({handleChange, handleBlur, handleSubmit, values, setFieldValue}, closeModal){
 	const [periodo, setPeriodo] = useState("");
+	const [juros, setJuros] = useState(false);
 	let options = [], campo_cobranca="";
 
 	if(periodo=="anual"){
@@ -90,7 +107,7 @@ function formulario({handleChange, handleBlur, handleSubmit, values, setFieldVal
 			</View>
 
 			<Input
-				onChangeText={handleChange("credo")}
+				onChangeText={handleChange("credor")}
 				onBlur={handleBlur("credor")}
 				keyboard={"text"}
 				placeholder={"Credor"}
@@ -119,23 +136,30 @@ function formulario({handleChange, handleBlur, handleSubmit, values, setFieldVal
 				/>
 			}
 
-			<Input
-				onChangeText={handleChange("juros")}
-				onBlur={handleBlur("juros")}
-				keyboardType={"numeric"}
-				placeholder={"00.00%"}
-				textContentType={"number"}
-				espacamento={true}
+			<InputSelect
 				label="Juros"
+				placeholder="Selecionar tipo..."
+				options={[["Não inclui", "não ativo"],["Simples", "simples"], ["Composto", "composto"]]}
+				onValueChange={juros=>{
+					setFieldValue("tipo_juros",juros);
+					setJuros(juros!="não ativo"&&juros!="");
+				}}
+				espacamento={true}
 			/>
 
-			<InputSelect
-				label="Tipo de Juros"
-				placeholder="Selecionar tipo..."
-				options={[["Simples", "simples"], ["Composto", "composto"]]}
-				onValueChange={cobranca=>setFieldValue("tipo_jutos",cobranca)}
-				espacamento={true}
-			/>
+			{ juros &&
+				<Input
+					onChangeText={handleChange("juros")}
+					onBlur={handleBlur("juros")}
+					keyboardType={"numeric"}
+					placeholder={"0.00%"}
+					textContentType={"number"}
+					espacamento={true}
+					label="Valor do juros"
+				/>
+			}
+
+			
 
 			<View style={tailwind("flex flex-row justify-end w-full")}>
 									
@@ -143,7 +167,7 @@ function formulario({handleChange, handleBlur, handleSubmit, values, setFieldVal
 					ordem="terciario"
 					tamanho="pequeno"
 					label="Cancelar"
-					onPress={console.log}
+					onPress={()=>closeModal(false)}
 				/>
 				
 				<Botao
@@ -158,7 +182,7 @@ function formulario({handleChange, handleBlur, handleSubmit, values, setFieldVal
 	)
 }
 
-export default function AdicionaDivida() {
+export default function AdicionaDivida({closeModal}) {
 	const {token} = useAuth();
 	
 
@@ -171,10 +195,10 @@ export default function AdicionaDivida() {
 			<View style={[tailwind("absolute w-full flex items-center justify-center"), estilosCustom.tamanho]}>
 				<View style={tailwind("bg-white p-12 rounded-md")}>
 					<Formik
-						initialValues={({valor: ""}, {data: ""}, {juros: ""})}
-						onSubmit={adicionar}
+						initialValues={({valor: ""}, {data: ""}, {juros: ""}, {tipo_juros: ""}, {cobranca: ""}, {periodo: ""}, {categoria: ""}, {credor: ""})}
+						onSubmit={values=> adicionar(token, values, closeModal)}
                     >
-						{formulario}	
+						{params=>formulario(params, closeModal)}	
 					</Formik>
 				</View>
 			</View>

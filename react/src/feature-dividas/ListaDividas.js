@@ -24,8 +24,11 @@ export default function ListaDividas({ navigation }) {
 	const [isLoading, setLoading] = useState(true);
 	const [dividas, setDividas] = useState([]);
 	const [modalRegistroVisible, setModalRegistroVisible] = useState(false);
+	const [refresh, setRefresh] = useState(true);
 
 	const { token } = useAuth();
+
+	const atualiza = ()=> setRefresh(true);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -41,14 +44,15 @@ export default function ListaDividas({ navigation }) {
 				setDividas(json.conteudo);
 				console.log(json);
 				setLoading(false);
+				setRefresh(false);
 
 				return json;
 			} catch (error) {
                 console.error(error);
             }
 		}
-		fetchData();
-	}, []);
+		if(refresh) fetchData();
+	}, [refresh]);
 
 	function renderDivida(divida) {
 		return (
@@ -79,16 +83,12 @@ export default function ListaDividas({ navigation }) {
 
                 <Botao ordem="secundario" tamanho="grande" label="+ Registrar Dívida" espacamento={true} onPress={() =>{setModalRegistroVisible(true)}}/>
 
-				<View style={tailwind("mb-12")}>
-					<View style={tailwind("mb-24")}>
-						<View style={tailwind("flex-col mb-24")}>
-							{isLoading ? (
-								<Text>Loading...</Text>
-							) : (
-								renderDivida(dividas)
-							)}
-						</View>
-					</View>
+				<View style={tailwind("flex-col mb-32")}>
+					{isLoading ? (
+						<Text>Loading...</Text>
+					) : (
+						renderDivida(dividas)
+					)}
 				</View>
 			</View>
 
@@ -98,7 +98,11 @@ export default function ListaDividas({ navigation }) {
 				visible={modalRegistroVisible}
 				onRequestClose={() => setModalRegistroVisible(false)}
 			>
-				<AdicionaDivida/>
+				<AdicionaDivida closeModal={divida=>{
+					setModalRegistroVisible(false);
+					if(divida) atualiza();
+				}
+				}/>
 			</Modal>
 		</View>
 	);
@@ -107,8 +111,8 @@ export default function ListaDividas({ navigation }) {
 const headerHeight = StatusBar.currentHeight;
 
 const estilos = {
-	tela: tailwind("flex-1 bg-white"),
-	telaInterior: tailwind("flex-1 items-center"),
+	tela: tailwind("flex-1 bg-white h-full"),
+	telaInterior: tailwind("flex-1 items-center h-full"),
 	itemBalanca: tailwind("flex-1"),
 	itemBalancaValor: tailwind("text-white text-lg font-bold"),
 	itemBalancaDescricao: tailwind("text-white text-xs"),
