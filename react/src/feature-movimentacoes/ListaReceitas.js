@@ -119,7 +119,7 @@ export default function VisualizacaoGeral({ navigation }) {
 												</View>
 												: 
 												<View style={tailwind("mb-12")}>
-													{renderReceitas(receitas)}
+													{renderReceita(receitas)}
 												</View>
 											}
 										</View>

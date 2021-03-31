@@ -110,6 +110,7 @@ export default function ListaDividas({ navigation }) {
 				}/>
 			</Modal>
 		</View>
+		</View>
 	);
 }
 
