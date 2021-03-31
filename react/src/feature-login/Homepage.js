@@ -14,6 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 // Imports internos
 import IconeMenu from "../comum/assets/IconeMenu";
+import IconeLogout from "../comum/assets/IconeLogout";
 import IconeDespesa from "../comum/assets/IconeDespesa";
 import IconeReceita from "../comum/assets/IconeReceita";
 import IconeRelatorio from "../comum/assets/IconeRelatorio";
@@ -25,7 +26,7 @@ import GLOBAL from "../Global";
 import { useAuth } from "./auth";
 
 export default function VisualizacaoGeral({ navigation }) {
-	const { user, token } = useAuth();
+	const { user, token, signOut } = useAuth();
 
 	const [saldo, setSaldo] = useState();
 	const [movimentacoes, setMovimentacoes] = useState();
@@ -119,11 +120,11 @@ export default function VisualizacaoGeral({ navigation }) {
 					</Text>
 
 					<TouchableOpacity
-						style={tailwind("w-10 h-10 p-1 bg-gray-200 rounded")}
-						onPress={() => navigation.navigate("ListaDividas")}
+						style={tailwind("w-10 h-10 p-1 bg-gray-200 rounded flex items-center justify-center")}
+						onPress={() => {navigation.navigate("Login"); signOut()}}
 					>
-						<View style={tailwind("h-8 w-8")}>
-							<IconeMenu />
+						<View style={tailwind("h-6 w-6")}>
+							<IconeLogout />
 						</View>
 					</TouchableOpacity>
 				</View>
