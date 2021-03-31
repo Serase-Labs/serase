@@ -36,6 +36,7 @@ export default function ItemMovimentacaoDetalhado(props) {
 	const {token} = useAuth();
 	const [tipo, setTipo] = useState("receita");
 	const [modalAlteracaoVisible, setModalAlteracaoVisible] = useState(false);
+	const servidor_host = "192.168.0.8:8000";
 	const [loading, setLoading] = useState(true);
 	const [descricao, setDescricao] = useState("");
 	const [data, setData] = useState("");

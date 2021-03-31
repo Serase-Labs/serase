@@ -35,6 +35,17 @@ export default function ItemHistorico(props) {
 
 	const[padrao,setPadrao] = useState();
 
+	async function excluir(token){
+		let url = GLOBAL.BASE_URL+"/padrao/"+props.cod_padrao+"/";
+			
+		let res = await fetch(url, {
+			method: "delete",
+			headers: {'Authorization': token},
+		});
+			
+		let json = await res.json()
+	}
+
 	// Hooks para o Date Picker
 	const [date, setDate] = useState(new Date());
 	const [mode, setMode] = useState("date");
@@ -95,6 +106,27 @@ export default function ItemHistorico(props) {
 		</View>
 		);
 	}
+	function excluirPadrao(token) {
+		const titulo = `Excluir Despesa Fixa`;
+		const descricao = `Tem certeza que deseja excluir a despesa "${props.nome}"?`;
+	
+		Alert.alert(
+			titulo,
+			descricao,
+			[
+				{
+					text: "CANCELAR",
+					onPress: () => console.log("Cancel Pressed"),
+					style: "cancel",
+				},
+				{
+					text: "SIM",
+					onPress: () => excluir(token)
+				},
+			],
+			{ cancelable: true }
+		);
+	}
 
 	function renderPadrao(padrao) {
 		return (
@@ -114,7 +146,7 @@ export default function ItemHistorico(props) {
 						ordem="erro"
 						tamanho="pequeno"
 						label="Excluir"
-									//onPress={() => excluirMovimentacao(token, tipo, descricao, props.indice)}
+						onPress={() => excluirPadrao(token,  props.descricao)}
 					/>
 				</View>
 			</View>
@@ -138,6 +170,8 @@ export default function ItemHistorico(props) {
 		);
 	};
 
+	
+	
 
 
 	return (
