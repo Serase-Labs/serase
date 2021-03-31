@@ -16,12 +16,15 @@ import { Formik } from "formik";
 
 import Botao from "../../comum/components/Botao";
 import { Input } from "../../comum/components/Input";
-
+import DateInput from "../../comum/components/InputDate.js"
+import InputCategoria from "../../comum/components/InputCategoria.js"
+import InputPeriodo from "../../comum/components/InputPeriodo.js"
+import InputSelect from "../../comum/components/InputSelect.js"
 
 import GLOBAL from "../../Global.js"
 import { useAuth } from "../../feature-login/auth.js";
 
-import DateInput from "./DateInput.js"
+
 
 async function adicionar(token, indice){
 	let url = GLOBAL.BASE_URL+"/divida/"+indice+"/";
@@ -37,8 +40,39 @@ async function adicionar(token, indice){
 
 
 function formulario({handleChange, handleBlur, handleSubmit, values, setFieldValue}){
+	const [periodo, setPeriodo] = useState("");
+	let options = [];
+
+	if(periodo=="anual"){
+		options = [
+			["Janeiro", 1],
+			["Fevereiro", 2],
+			["Março", 3],
+			["Abril", 4],
+			["Maio", 5],
+			["Junho", 6],
+			["Julho", 7],
+			["Agosto", 8],
+			["Setembro", 9],
+			["Outubro", 10],
+			["Novembro", 11],
+			["Dezembro", 12],
+		];
+	} else if(periodo=="semanal"){
+		options = [
+			["Domingo", 1],
+			["Segunda", 2],
+			["Terça", 3],
+			["Quarta", 4],
+			["Quinta", 5],
+			["Sexta", 6],
+			["Sabado", 7],
+		];
+	}
+
 	return (
 		<ScrollView>
+			
 			<View>
 				<Text style={tailwind("text-lg font-bold text-center mb-6")}>Qual o valor da dívida?</Text>
 				<TextInput
@@ -59,8 +93,11 @@ function formulario({handleChange, handleBlur, handleSubmit, values, setFieldVal
 				espacamento={true}
 				label="Credor"
 			/>
-			
+
+					
 			<DateInput label="Data de vencimento" onPick={(data)=>setFieldValue("data", data)}/>
+
+			<InputCategoria onValueChange={value=>setFieldValue("categoria",value)} espacamento={true}/>
 
 			<Input
 				onChangeText={handleChange("juros")}
@@ -71,33 +108,22 @@ function formulario({handleChange, handleBlur, handleSubmit, values, setFieldVal
 				espacamento={true}
 				label="Juros"
 			/>
-			
-			<Input
-				onChangeText={handleChange("categoria")}
-				onBlur={handleBlur("categoria")}
-				keyboard={"text"}
-				placeholder={"Categoria"}
-				espacamento={true}
-				label="Categoria"
-			/>
 
-			<Input
-				onChangeText={handleChange("periodo")}
-				onBlur={handleBlur("periodo")}
-				keyboardType={"numeric"}
-				placeholder={"periodo"}
-				espacamento={true}
-				label="Periodo"
-			/>
+			<InputPeriodo onValueChange={periodo=>{
+				setFieldValue("periodo",periodo);
+				setPeriodo(periodo);
+			}} espacamento={true}/>
 
-			<Input
-				onChangeText={handleChange("cobranca")}
-				onBlur={handleBlur("cobranca")}
-				keyboard={"text"}
-				placeholder={"Cobrança"}
-				espacamento={true}
-				label="Cobranca"
-			/>
+			{ (periodo!="" && periodo!="mensal") &&
+				<InputSelect
+					label="Cobrança"
+					placeholder="Selecionar cobrança..."
+					options={options}
+					onValueChange={cobranca=>setFieldValue("cobranca",cobranca)}
+					espacamento={true}
+					enabled={periodo!="" && periodo!="mensal"}
+				/>
+			}
 			
 		</ScrollView>
 	)
