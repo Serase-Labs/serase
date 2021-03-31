@@ -1,25 +1,18 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import {
-	StatusBar,
-	StyleSheet,
 	Text,
 	View,
 	Modal,
-	TouchableOpacity,
-	TextInput,
-	ScrollView,
 	Alert,
 } from "react-native";
 import tailwind from "tailwind-rn";
 
-import Botao from "../../comum/components/Botao";
-import ItemMovimentacaoAlterar from "./ItemMovimentacaoAlterar";
 import GLOBAL from "../../Global";
 import { useAuth } from "../../feature-login/auth.js";
 
 async function excluir(token, indice){
-	let url = GLOBAL.BASE_URL+"/movimentacao/"+indice+"/";
+	let url = GLOBAL.BASE_URL+"/padrao/"+indice+"/";
 		
 	let res = await fetch(url, {
 		method: "delete",
@@ -32,36 +25,28 @@ async function excluir(token, indice){
 	console.log(conteudo);
 }
 
-export default function ItemMovimentacaoDetalhado(props) {
+export default function ItemPadraoDetalhado(props) {
 	const {token} = useAuth();
-	const [tipo, setTipo] = useState("receita");
-	const [modalAlteracaoVisible, setModalAlteracaoVisible] = useState(false);
+	const [tipo, setTipo] = useState("padrao");
 	const [loading, setLoading] = useState(true);
 	const [descricao, setDescricao] = useState("");
-	const [data, setData] = useState("");
 	const [valor, setValor] = useState(0.0);
 	const [categoria, setCategoria] = useState("");
+	const [periodo, setPeriodo] = useState("");
 
-	useEffect(() => {
-		async function fetchData() {
-			let url = GLOBAL.BASE_URL+"/movimentacao/"+props.indice+"/";
-			try {
-				let res = await fetch(url, {headers: {'Authorization': token}});
-				let json = await res.json();
-				let conteudo = json.conteudo;
-				
-				setDescricao(conteudo.descricao);
-				let data = conteudo.data_lancamento.split('-'); 
-				setData(data[2]+'/'+data[1]+'/'+data[0]);
-				setValor(conteudo.valor_pago);
-				setCategoria(conteudo.categoria);
+	
+	var data = props.dataC+'';
+	var dataC = data;
+	data = props.dataF+'';
+	data = data.split('-');
+	var dataF = data[2]+'/'+data[1]+'/'+data[0];
+	data = props.dataI+'';
+	data = data.split('-');
+	var dataI = data[2]+'/'+data[1]+'/'+data[0];
 
-				setLoading(false);
-				return await res.json();
-			} catch (error) {}
+	function capitalize (str) {
+		return str.charAt(0).toUpperCase() + str.slice(1);
 		}
-		fetchData();
-	}, []);
 
 	return (
 		<>
@@ -89,7 +74,7 @@ export default function ItemMovimentacaoDetalhado(props) {
 									"text-base font-bold w-48 text-right"
 								)}
 							>
-								R$ {valor}
+								R$ {props.valor}
 							</Text>
 						</View>
 
@@ -99,14 +84,65 @@ export default function ItemMovimentacaoDetalhado(props) {
 							)}
 						>
 							<Text style={tailwind("text-base text-gray-800")}>
-								Data
+								Dia Cobrança:
 							</Text>
 							<Text
 								style={tailwind(
 									"text-base font-bold w-48 text-right"
 								)}
 							>
-								{data}
+								{dataC}
+							</Text>
+						</View>
+
+						<View
+							style={tailwind(
+								"flex flex-row justify-between mb-4"
+							)}
+						>
+							<Text style={tailwind("text-base text-gray-800")}>
+								Data Inicio:
+							</Text>
+							<Text
+								style={tailwind(
+									"text-base font-bold w-48 text-right"
+								)}
+							>
+								{!dataI.match('n')? (dataI):('Indefinido') }
+							</Text>
+						</View>
+						
+						<View
+							style={tailwind(
+								"flex flex-row justify-between mb-4"
+							)}
+						>
+							<Text style={tailwind("text-base text-gray-800")}>
+								Data Fim:
+							</Text>
+							<Text
+								style={tailwind(
+									"text-base font-bold w-48 text-right"
+								)}
+							>
+							{!dataF.match('n') || !dataF.match('undefined')? (dataF):('Indefinido') }
+							</Text>
+						</View>
+						
+						<View
+							style={tailwind(
+								"flex flex-row justify-between mb-4"
+							)}
+						>
+							<Text style={tailwind("text-base text-gray-800")}>
+								Periodo:
+							</Text>
+							<Text
+								style={tailwind(
+									"text-base font-bold w-48 text-right"
+								)}
+							>
+								{capitalize(props.periodo)}
 							</Text>
 						</View>
 
@@ -123,7 +159,7 @@ export default function ItemMovimentacaoDetalhado(props) {
 									"text-base font-bold w-48 text-right"
 								)}
 							>
-								{categoria}
+								{props.categoria}
 							</Text>
 						</View>
 
@@ -138,35 +174,12 @@ export default function ItemMovimentacaoDetalhado(props) {
 									"text-lg font-bold text-right w-56 self-end"
 								)}
 							>
-								{descricao}
+								{props.descricao}
 							</Text>
 						</View>
 					</View>
 
-					<View style={tailwind("flex flex-row justify-between")}>
-						<Botao
-							ordem="secundario"
-							tamanho="pequeno"
-							label="Alterar"
-							onPress={() => setModalAlteracaoVisible(true)}
-						/>
-						<Modal
-							animationType="slide"
-							transparent={true}
-							visible={modalAlteracaoVisible}
-							onRequestClose={() =>
-								setModalAlteracaoVisible(false)
-							}
-						>
-							<ItemMovimentacaoAlterar descricao={descricao} data={data} valor={valor} categoria={categoria} indice={props.indice}/>
-						</Modal>
-						<Botao
-							ordem="erro"
-							tamanho="pequeno"
-							label="Excluir"
-							onPress={() => excluirMovimentacao(token, tipo, descricao, props.indice)}
-						/>
-					</View>
+					
 				</View>
 			</View>
 		</>

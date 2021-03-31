@@ -11,7 +11,7 @@ export default function BlocoInformacao(props) {
 	return (
 		<View
 			style={tailwind(
-				"bg-gray-100 px-4 py-5 flex flex-col justify-between rounded-md w-24"
+				"bg-gray-100 px-3 py-5 flex flex-col justify-between rounded-md"
 			)}
 		>
 			<Text style={tailwind("text-blue-900 w-10/12")}>
