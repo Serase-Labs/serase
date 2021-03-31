@@ -8,6 +8,7 @@ import { Text, View, TouchableOpacity, FlatList } from "react-native";
 import tailwind from "tailwind-rn";
 
 //Componentes Internos
+import IlustracaoLoading from "../comum/assets/IlustracaoLoading";
 import IconeDespesa from "../comum/assets/IconeDespesa";
 import IconeReceita from "../comum/assets/IconeReceita";
 import BotaoInformacao from "../comum/components/BotaoInformacao";
@@ -75,8 +76,8 @@ export default function RelatorioSemanal() {
 	if(isLoadingRel){
 		// Caso o relatório não tenha carregado
 		return (
-			<View style={tailwind("opacity-25")}>
-				<Text>Loading...</Text>
+			<View style={tailwind("bg-white h-64")}>
+				<IlustracaoLoading/>
 			</View>
 		);
 	} else

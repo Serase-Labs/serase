@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
-
+import IlustracaoLoading from "../comum/assets/IlustracaoLoading";
 import ItemMovimentacao from "./componentes/ItemMovimentacao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import IconePesquisa from "../comum/assets/IconePesquisa";
@@ -101,14 +101,14 @@ export default function ListaDespesas({ navigation }) {
 			<View style={estilos.telaInterior}>
 				<IndicadorRetorno telaAtual={"Despesas"} />
 
-				<View style={tailwind("px-5 flex flex-row justify-between")}>
+				<View style={tailwind("px-5 flex flex-row justify-between items-center")}>
 					<Text style={tailwind("text-lg font-bold")}>
 						Despesas Fixas
 					</Text>
 					<TouchableOpacity onPress={() =>{navigation.navigate('ListaPadroes')}}>
-					<Text style={tailwind("text-lg font-bold text-blue-700")}>
-						Ver todas
-					</Text>
+						<Text style={tailwind("font-bold text-blue-700")}>
+							Ver todas
+						</Text>
 					</TouchableOpacity>
 				</View>
 
@@ -166,19 +166,20 @@ export default function ListaDespesas({ navigation }) {
 					</View>
 				</View>
 
-				<View style={tailwind("mb-24")}>
-				<View style={tailwind("mb-24")}>
+				{ isLoading ? (<IlustracaoLoading/>) :(
+					
 					<View style={tailwind("mb-24")}>
-						<View style={tailwind("flex-col mb-24")}>
-							{isLoading ? (
-								<Text>Loading...</Text>
-							) : (
-								renderDespesa(despesas)
-							)}
+						<View style={tailwind("mb-24")}>
+							<View style={tailwind("mb-24")}>
+								<View style={tailwind("flex-col mb-24")}>
+									{renderDespesa(despesas)}
+								</View>
+							</View>
 						</View>
 					</View>
-				</View>
-				</View>
+				)
+				}
+				
 			</View>
 		</View>
 	);

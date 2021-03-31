@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
-
+import IlustracaoLoading from "../comum/assets/IlustracaoLoading";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import Botao from "../comum/components/Botao";
 
@@ -80,7 +80,9 @@ export default function ListaDividas({ navigation }) {
 					<View style={tailwind("mb-24")}>
 						<View style={tailwind("flex-col mb-24")}>
 							{isLoading ? (
-								<Text>Loading...</Text>
+								<View style={tailwind("bg-white h-64")}>
+									<IlustracaoLoading/>
+								</View>
 							) : (
 								renderDivida(dividas)
 							)}

@@ -15,6 +15,7 @@ import tailwind from "tailwind-rn";
 import GLOBAL from "../../Global";
 import { useAuth } from "../../feature-login/auth";
 
+import IlustracaoLoading from "../../comum/assets/IlustracaoLoading";
 import ItemPreviewPadrao from "./ItemPreviewPadrao";
 
 export default function PreviewPadrao({ navigation }) {
@@ -89,7 +90,8 @@ export default function PreviewPadrao({ navigation }) {
   return (
     <View>
       {loading ? (
-        <Text>Loading...</Text>
+        <View style={tailwind("bg-gray-100 rounded-md px-4 py-5 h-24 w-24 mr-2 flex justify-between")}>
+        </View>
       ) : (renderPreviewPadroes(padroes))}
     </View>
   )

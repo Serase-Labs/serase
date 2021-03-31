@@ -15,6 +15,7 @@ import tailwind from "tailwind-rn";
 // Componentes Internos
 import IconeDespesa from "../comum/assets/IconeDespesa";
 import IconeReceita from "../comum/assets/IconeReceita";
+import IlustracaoLoading from '../comum/assets/IlustracaoLoading';
 import BotaoInformacao from "../comum/components/BotaoInformacao";
 import BlocoInformacao from "../comum/components/BlocoInformacao";
 import TabDescricao from "../comum/components/TabDescricao";
@@ -95,8 +96,8 @@ export default function RelatorioAnual() {
 	if(isLoadingRel){
 		// Caso o relatório não tenha carregado
 		return (
-			<View style={tailwind("opacity-25")}>
-				<Text>Loading...</Text>
+			<View style={tailwind("bg-white h-64")}>
+				<IlustracaoLoading/>
 			</View>
 		);
 	} else

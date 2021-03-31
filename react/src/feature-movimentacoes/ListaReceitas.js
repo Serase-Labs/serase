@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 
+import IlustracaoLoading from '../comum/assets/IlustracaoLoading';
 import ItemMovimentacao from "./componentes/ItemMovimentacao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import IconePesquisa from "../comum/assets/IconePesquisa";
@@ -109,17 +110,17 @@ export default function VisualizacaoGeral({ navigation }) {
 					</View>
 				</View>
 
-				<View style={tailwind("mb-2")}>
-				<View style={tailwind("mb-12")}>
-				<View style={tailwind("flex-col mb-24")}>
-					{isLoading ? (
-						<Text>Loading...</Text>
-					) : (
-						renderReceita(receitas)
-					)}
+				{isLoading ? (
+								<IlustracaoLoading/>
+							) : (
+								<View style={tailwind("mb-2")}>
+									<View style={tailwind("mb-12")}>
+										<View style={tailwind("flex-col mb-24")}>
+										{renderReceita(receitas)}
+									</View>
+								</View>
 				</View>
-				</View>
-				</View>
+							)}
 			</View>
 		</View>
 	);
