@@ -13,14 +13,38 @@ import BarraProgresso from "../../comum/components/BarraProgresso";
 import ItemDividaPagamento from "./ItemDividaPagamento";
 import ItemDividaDetalhada from "./ItemDividaDetalhada";
 
+import GLOBAL from "../../Global";
+import { useAuth } from "../../feature-login/auth.js";
+
 
 export default function ItemDivida(props) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [modalDetalhadaVisible,setModalDetalhadaVisible]= useState(false);
 	const [modalPagamentoVisible, setModalPagamentoVisible] = useState(false);
 	const [isPressed, setPressed] = useState(false);
+	const {token} = useAuth();
+	const [divida, setDivida] = useState(props);
 
-    let porcentagem = (Number(props.valor_pago)/Number(props.valor_divida)*100).toFixed(2);
+	// Rodar apenas em caso de atualização do componente
+	async function updateDivida(){
+        let cod_divida = divida.id;
+		let url = GLOBAL.BASE_URL+"/divida/"+cod_divida+"/";
+        try {
+            let res = await fetch(url, {
+                headers: { Authorization: token },
+            });
+
+            let json = await res.json();
+
+            setDivida(json.conteudo);
+
+            return json;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    let porcentagem = (Number(divida.valor_pago)/Number(divida.valor_divida)*100).toFixed(2);
 
 	return (
 		<TouchableOpacity
@@ -36,7 +60,7 @@ export default function ItemDivida(props) {
                             "text-base text-left font-bold mb-1"
                         )}
                     >
-                        {props.credor}
+                        {divida.credor}
                     </Text>
                     <Text style={estilos.dividaDetails}>
                         Progresso: {porcentagem}%
@@ -44,10 +68,10 @@ export default function ItemDivida(props) {
                 </View>
                 <View style={tailwind("flex-col")}>
                     <Text style={tailwind("text-base font-bold mb-1 text-right ")}>
-                        R$ {props.valor_divida}
+                        R$ {divida.valor_divida}
                     </Text>
                     <Text style={estilos.dividaDetails}>
-                        Valor Restante: R$ {Number(props.valor_divida) - Number(props.valor_pago)}
+                        Valor Restante: R$ {Number(divida.valor_divida) - Number(divida.valor_pago)}
                     </Text>
                 </View>
             </View>
@@ -64,7 +88,7 @@ export default function ItemDivida(props) {
 				visible={modalDetalhadaVisible}
 				onRequestClose={() => setModalDetalhadaVisible(false)}
 			>
-				<ItemDividaDetalhada {...props} />
+				<ItemDividaDetalhada {...divida} />
 			</Modal>
 
             <Modal
@@ -73,7 +97,10 @@ export default function ItemDivida(props) {
 				visible={modalPagamentoVisible}
 				onRequestClose={() => setModalPagamentoVisible(false)}
 			>
-				<ItemDividaPagamento divida={props} setModal={setModalPagamentoVisible}/>
+				<ItemDividaPagamento divida={divida} closeModal={(update)=>{
+					setModalPagamentoVisible(false);
+					if(update) updateDivida();
+				}}/>
 			</Modal>
 		</TouchableOpacity>
 	);

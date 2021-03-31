@@ -55,7 +55,7 @@ export default function ListaDividas({ navigation }) {
 					extraData={divida}
 					renderItem={renderizarDivida}
 					keyExtractor={(item) => item.id}
-				></FlatList>
+				/>
 			</View>
 		);
 	}
