@@ -14,6 +14,7 @@ import tailwind from "tailwind-rn";
 
 import IlustracaoLoading from "../comum/assets/IlustracaoLoading";
 import ListaVazia from "../comum/components/ListaVazia";
+import {ModalInformativa, TextoPrincipal, TextoInformativo} from "../comum/components/ModalInformativa";
 import ItemMovimentacao from "./componentes/ItemMovimentacao";
 import IndicadorRetorno from "../comum/components/IndicadorRetorno";
 import IconePesquisa from "../comum/assets/IconePesquisa";
@@ -99,6 +100,10 @@ export default function ListaDespesas({ navigation }) {
 	return (
 		<View style={[estilos.tela, estiloExcecao.container]}>
 			<View style={estilos.telaInterior}>
+			<ModalInformativa>
+						<Text style={TextoPrincipal()}>o que são despesas fixas?</Text>
+						<Text style={TextoInformativo()}>Despesa fixa é todo gasto mensal que não sofre alteração à medida que você o consome, ou seja, mensalmente é cobrado uma taxa de valor fixo não variável. Exemplos de despesas fixas: Aluguel de um imóvel e assinatura da TV a cabo.</Text>
+					</ModalInformativa>
 				<IndicadorRetorno telaAtual={"Despesas"} />
 
 				<View style={tailwind("px-5 flex flex-row justify-between items-center")}>

@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TextInput } from "react-native";
 
 // Imports internos
 import Botao from "../comum/components/Botao.js";
-
+import {ModalInformativa, TextoPrincipal, TextoInformativo} from "../comum/components/ModalInformativa";
 
 export default function Confirmacao({navigation}) {
 	return (
@@ -13,6 +13,10 @@ export default function Confirmacao({navigation}) {
 				"flex-1 flex-col items-center bg-white justify-center"
 			)}
 		>
+			<ModalInformativa>
+				<Text style={TextoPrincipal()}>Porque é importante configurar o seu saldo atual?</Text>
+				<Text style={TextoInformativo()}>É por meio do seu saldo atual que o Serase fornecerá métricas para a análise e acompanhamento do seu saldo, as métricas vão te auxiliar no melhor caminho para alcançar o seu objetivo financeiro!</Text>
+			</ModalInformativa>
             <Text
 					style={[
 						tailwind("text-xl font-bold text-center mb-2"),
