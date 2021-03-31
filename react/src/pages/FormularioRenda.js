@@ -162,7 +162,7 @@ const validationsFormRenda = yup.object().shape({
 								<Modal
         							visible={isModalVisible}
 									animationType='slide'
-									text = {"Blablaba"}
+									text = {"Despesa fixa é todo gasto mensal que não sofre alteração à medida que você o consome, ou seja, mensalmente é cobrado uma taxa de valor fixo não variável. Exemplos de despesas fixas: Aluguel de um imóvel, assinatura da TV a cabo, Taxa do Condomínio."}
         						></Modal>
 								</div>
 
