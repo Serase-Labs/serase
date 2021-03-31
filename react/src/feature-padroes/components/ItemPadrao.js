@@ -15,33 +15,16 @@ import Botao from "../../comum/components/Botao";
 
 import IconeReceita from "../../comum/assets/IconeReceita";
 import ItemHistorico from "./ItemHistorico";
+import ItemPagamentoPadrao from "./ItemPagamentoPadrao";
 import { useLinkProps } from "@react-navigation/native";
 
 export default function ItemPadrao(props) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [isPressed, setPressed] = useState(false);
+	const [modalPagamentoVisible, setModalPagamentoVisible] = useState(false);
 
-	const paga = () => {
-		async function fetchData() {
-			 
-			let url = GLOBAL.BASE_URL + "/pagamento/"+filtro;
-			if(filtro==''){
-				url = GLOBAL.BASE_URL + "/cobrancas/";
-			}
-			
-			
-			try {
-				let res = await fetch(url, {
-					headers: { Authorization: token },
-				});
-				let json = await res.json();
-				setPadrao(json);
-				setLoading(false);
-				return await res.json();
-			} catch (error) {}
-		}
-		fetchData();
-	}
+
+	
 	
 	function capitalize (str) {
 		return str.charAt(0).toUpperCase() + str.slice(1);
@@ -82,7 +65,7 @@ export default function ItemPadrao(props) {
 		
 		<View style={tailwind("flex flex-row justify-between justify-center")}>
 				{props.situacao=='pendente'?
-				<TouchableOpacity style={tailwind("w-24 h-10")} ><Text style={tailwind("text-green-300 text-center text-lg font-bold")}>Pagar</Text></TouchableOpacity>
+				<TouchableOpacity style={tailwind("w-24 h-10")} ><Text style={tailwind("text-green-300 text-center text-lg font-bold")} onPress={()=>setModalPagamentoVisible(true)}>Pagar</Text></TouchableOpacity>
 				:<TouchableOpacity style={tailwind("w-40 h-10")}><Text style={tailwind("text-blue-700 text-center text-base font-bold")} onPress={()=>setModalVisible(true)}>Ver Movimetações</Text></TouchableOpacity>}
 		</View>
 		<Modal
@@ -95,7 +78,17 @@ export default function ItemPadrao(props) {
 			>
 					<ItemHistorico cod_padrao={props.cod_padrao}
 					nome={props.descricao}
-					valor={props.valor}/>
+					valor={props.valor}
+					indice={props.indice}
+					/>
+			</Modal>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={modalPagamentoVisible}
+				onRequestClose={() => setModalPagamentoVisible(false)}
+			>
+				<ItemPagamentoPadrao indice={props.indice} valor={props.valor} descricao={props.descricao} setModal={setModalPagamentoVisible}/>
 			</Modal>
 
 		</View>

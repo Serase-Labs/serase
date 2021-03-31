@@ -96,7 +96,6 @@ export default function ListaDespesas({ navigation }) {
 		);
 	};
 
-
 	return (
 		<View style={[estilos.tela, estiloExcecao.container]}>
 			<View style={estilos.telaInterior}>
@@ -113,7 +112,7 @@ export default function ListaDespesas({ navigation }) {
 					</TouchableOpacity>
 				</View>
 
-				<PreviewPadrao navigation={navigation}/>
+				<PreviewPadrao/>
 
 				<View style={tailwind("px-5")}>
 					<Text style={tailwind("text-lg font-bold")}>
@@ -143,7 +142,7 @@ export default function ListaDespesas({ navigation }) {
 					<TouchableOpacity
 						style={estilos.botaoTerciarioGrande}
 						//onPress={setData('Sempre')}
-						onPress={()=>{setData(900000);carrega();}}
+						onPress={()=>{setData(9000);carrega();}}
 						title="Submit"
 					>
 						<Text style={estilos.textoBotaoTerciario}>Sempre</Text>
