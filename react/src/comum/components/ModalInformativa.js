@@ -11,7 +11,7 @@ function TextoPrincipal() {
 }
 
 function TextoInformativo() {
-  return tailwind("text-lg text-red-900");
+  return tailwind("text-lg text-gray-700 ");
 }
 
 function ModalInformativa(props) {
