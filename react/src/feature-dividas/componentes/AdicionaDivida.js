@@ -21,16 +21,18 @@ import InputCategoria from "../../comum/components/InputCategoria.js"
 import InputPeriodo from "../../comum/components/InputPeriodo.js"
 import InputSelect from "../../comum/components/InputSelect.js"
 
+
 import GLOBAL from "../../Global.js"
 import { useAuth } from "../../feature-login/auth.js";
 
 
 
-async function adicionar(token, indice){
-	let url = GLOBAL.BASE_URL+"/divida/"+indice+"/";
+async function adicionar(token, values){
+	// TO DO !
+	let url = GLOBAL.BASE_URL+"/divida/";
 		
 	let res = await fetch(url, {
-		method: "delete",
+		method: "post",
 		headers: {'Authorization': token},
 	});
 		
@@ -41,7 +43,7 @@ async function adicionar(token, indice){
 
 function formulario({handleChange, handleBlur, handleSubmit, values, setFieldValue}){
 	const [periodo, setPeriodo] = useState("");
-	let options = [];
+	let options = [], campo_cobranca="";
 
 	if(periodo=="anual"){
 		options = [
@@ -58,6 +60,7 @@ function formulario({handleChange, handleBlur, handleSubmit, values, setFieldVal
 			["Novembro", 11],
 			["Dezembro", 12],
 		];
+		campo_cobranca = "Mês da cobrança";
 	} else if(periodo=="semanal"){
 		options = [
 			["Domingo", 1],
@@ -68,10 +71,11 @@ function formulario({handleChange, handleBlur, handleSubmit, values, setFieldVal
 			["Sexta", 6],
 			["Sabado", 7],
 		];
+		campo_cobranca = "Dia da cobrança";
 	}
 
 	return (
-		<ScrollView>
+		<ScrollView showsVerticalScrollIndicator={false}>
 			
 			<View>
 				<Text style={tailwind("text-lg font-bold text-center mb-6")}>Qual o valor da dívida?</Text>
@@ -99,16 +103,6 @@ function formulario({handleChange, handleBlur, handleSubmit, values, setFieldVal
 
 			<InputCategoria onValueChange={value=>setFieldValue("categoria",value)} espacamento={true}/>
 
-			<Input
-				onChangeText={handleChange("juros")}
-				onBlur={handleBlur("juros")}
-				keyboard={"numeric"}
-				placeholder={"0"}
-				textContentType={"number"}
-				espacamento={true}
-				label="Juros"
-			/>
-
 			<InputPeriodo onValueChange={periodo=>{
 				setFieldValue("periodo",periodo);
 				setPeriodo(periodo);
@@ -116,7 +110,7 @@ function formulario({handleChange, handleBlur, handleSubmit, values, setFieldVal
 
 			{ (periodo!="" && periodo!="mensal") &&
 				<InputSelect
-					label="Cobrança"
+					label={campo_cobranca}
 					placeholder="Selecionar cobrança..."
 					options={options}
 					onValueChange={cobranca=>setFieldValue("cobranca",cobranca)}
@@ -124,6 +118,41 @@ function formulario({handleChange, handleBlur, handleSubmit, values, setFieldVal
 					enabled={periodo!="" && periodo!="mensal"}
 				/>
 			}
+
+			<Input
+				onChangeText={handleChange("juros")}
+				onBlur={handleBlur("juros")}
+				keyboardType={"numeric"}
+				placeholder={"00.00%"}
+				textContentType={"number"}
+				espacamento={true}
+				label="Juros"
+			/>
+
+			<InputSelect
+				label="Tipo de Juros"
+				placeholder="Selecionar tipo..."
+				options={[["Simples", "simples"], ["Composto", "composto"]]}
+				onValueChange={cobranca=>setFieldValue("tipo_jutos",cobranca)}
+				espacamento={true}
+			/>
+
+			<View style={tailwind("flex flex-row justify-end w-full")}>
+									
+				<Botao
+					ordem="terciario"
+					tamanho="pequeno"
+					label="Cancelar"
+					onPress={console.log}
+				/>
+				
+				<Botao
+					ordem="primario"
+					tamanho="pequeno"
+					label="Adicionar"
+					onPress={handleSubmit}
+				/>
+			</View>
 			
 		</ScrollView>
 	)
@@ -134,12 +163,12 @@ export default function AdicionaDivida() {
 	
 
 	return (
-		<>
+		<View style={tailwind("flex justify-end")}>
 			<View
 				style={[tailwind("bg-black h-full w-full"), { opacity: 0.5 }]}
 			/>
 
-			<View style={tailwind("absolute w-full h-full flex items-center justify-center")}>
+			<View style={[tailwind("absolute w-full flex items-center justify-center"), estilosCustom.tamanho]}>
 				<View style={tailwind("bg-white p-12 rounded-md")}>
 					<Formik
 						initialValues={({valor: ""}, {data: ""}, {juros: ""})}
@@ -150,13 +179,17 @@ export default function AdicionaDivida() {
 				</View>
 			</View>
 			
-		</>
+		</View>
 	);
 }
 
 const estilos = {
-	inputPrincipal: tailwind("border border-green-400 rounded font-bold text-4xl py-6 px-20 mb-8 text-gray-700 text base max-w-xs"),
+	inputPrincipal: tailwind("border border-green-400 rounded font-bold text-4xl py-6 px-10 text-center mb-8 text-gray-700 text base max-w-xs"),
     labelInput: tailwind("text-gray-700 text-base font-bold"),
     input: tailwind("bg-gray-100 rounded-lg py-2 px-3 text-gray-700 text-base"),
     errorInput: tailwind("bg-red-100 border border-red-400 text-red-700 px-4 py-2 mt-2 rounded relative"),
 };
+
+const estilosCustom = StyleSheet.create({
+	tamanho: {height: "85%"}
+});
