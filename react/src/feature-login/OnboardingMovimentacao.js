@@ -11,7 +11,7 @@ async function adicionarSaldo(valor,token){
 	
 	let body = {
 		valor_pago: valor,
-		data_lancamento: "2021-03-31" ,
+		data_lancamento: "2021-04-01" ,
 		categoria: "Salário",
 		descricao: "PrimeiraMovimentacao",
 	};
