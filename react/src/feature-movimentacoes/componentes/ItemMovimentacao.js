@@ -28,7 +28,7 @@ export default function ItemMovimentacao(props) {
 			style={tailwind(
 				"flex flex-row mb-4 ml-5 mr-5 px-4 py-2 items-center justify-center rounded-md"
 			)}
-			onPress={() => setModalVisible(true)}
+			onPress={() => props.clickable? setModalVisible(true) : null}
 		>
 			<View style={tailwind("w-6 h-6 flex")}>
 				{props.valorPago > 0 ? (
@@ -66,3 +66,4 @@ export default function ItemMovimentacao(props) {
 		</TouchableOpacity>
 	);
 }
+ItemMovimentacao.defaultProps = { clickable: true };

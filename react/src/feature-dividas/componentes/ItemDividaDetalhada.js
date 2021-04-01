@@ -37,8 +37,7 @@ export default function ItemDividaDetalhada(divida) {
 	
 	useEffect(() => {
 		async function fetchData() {
-			
-			let url = GLOBAL.BASE_URL+ "/movimentacoes/?cod_padrao="+divida.cod_padrao;
+			let url = GLOBAL.BASE_URL+ "/cobrancas/?cod_divida="+divida.id;
 			
 			try {
 				let res = await fetch(url, {
@@ -46,6 +45,7 @@ export default function ItemDividaDetalhada(divida) {
 				});
 
 				let json = await res.json();
+				let conteudo = json.conteudo;
 
 				setMovimentacoes(json.conteudo);
 				
@@ -64,9 +64,9 @@ export default function ItemDividaDetalhada(divida) {
 				style={[tailwind("bg-black h-full w-full"), { opacity: 0.5 }]}
 			></View>
 
-			<View style={tailwind("absolute w-full h-full flex items-center justify-center")}>
+			<View style={[tailwind("absolute bottom-0 w-full flex items-center justify-center mb-4"), estilosCustom.tamanho]}>
 				<View style={tailwind("bg-white p-12 rounded-md")}>
-					<View style={tailwind("mb-12")}>
+					<View style={tailwind("mb-4")}>
 						<View style={tailwind("flex flex-row justify-between mb-4")}>
 							<Text style={tailwind("text-base text-gray-800")}>
 								{divida.credor}
@@ -83,33 +83,39 @@ export default function ItemDividaDetalhada(divida) {
 								R${divida.valor_pago}
 							</Text>
 						</View>
-
-						<View style={tailwind("flex flex-row justify-between mb-4")}>
-							<Text style={tailwind("text-base text-gray-800")}>
-								Juros
-							</Text>
-							<Text style={tailwind("text-base font-bold w-48 text-right")}>
-								{divida.juros}
-							</Text>
-						</View>
-						<View style={tailwind("flex flex-row justify-between mb-4")}>
+						
+						<View style={tailwind("flex flex-row justify-between mb-2")}>
 							<Text style={tailwind("text-base text-gray-800 mb-2")}>
 								Valor Restante
 							</Text>
-							<Text style={tailwind("text-lg font-bold text-right w-56 self-end")}>
+							<Text style={tailwind("text-lg font-bold text-right w-48 self-center")}>
 								R${divida.valor_divida - divida.valor_pago}
 							</Text>
 						</View>
+
+						{
+							divida.juros!="0.00" && (
+								<View style={tailwind("flex flex-row justify-between mb-4")}>
+									<Text style={tailwind("text-base text-gray-800")}>
+										Juros
+									</Text>
+									<Text style={tailwind("text-base font-bold w-48 text-right")}>
+										{divida.juros}
+									</Text>
+								</View>
+							)
+						}
 
 						<View style={tailwind("flex flex-row justify-between mb-4")}>
 							<Text style={tailwind("text-base text-gray-800 mb-2")}>
 								Data Final
 							</Text>
 							<Text style={tailwind("text-lg font-bold text-right w-56 self-end")}>
-								{divida.data_fim}
+								{divida.data_fim.split('-').reverse().join('/')}
 							</Text>
 						</View>
-					
+
+						<ScrollView showsVerticalScrollIndicator={false}>
 						{movimentacoes.map(item=>(
 							<View> 
 								
@@ -117,14 +123,17 @@ export default function ItemDividaDetalhada(divida) {
 									indice={item.id}
 									descricao={item.descricao}
 									valorPago={item.valor_pago}
-									dataLancamento={item.data_lancamento}
+									dataLancamento={item.data_lancamento||item.data_geracao}
+									clickable={false}
 								/>
 								
 							</View>
 						))}
+							
+						</ScrollView>
 					</View>
 					
-					<View style={tailwind("flex flex-row justify-between mb-4")}>
+					<View style={tailwind("flex flex-row justify-between")}>
 						
 							<Botao
 								ordem="secundario"
@@ -170,3 +179,7 @@ function excluirDivida(token, tipo, nome, indice) {
 		{ cancelable: true }
 	);
 }
+
+const estilosCustom = StyleSheet.create({
+	tamanho: {height: "85%"}
+});
