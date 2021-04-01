@@ -119,7 +119,7 @@ export default function ListaDespesas({ navigation }) {
 					</TouchableOpacity>
 				</View>
 
-				<PreviewPadrao/>
+				<PreviewPadrao navigation={navigation}/>
 
 				<View style={tailwind("px-5")}>
 					<Text style={tailwind("text-lg font-bold")}>

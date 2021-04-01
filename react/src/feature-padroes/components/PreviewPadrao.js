@@ -18,7 +18,7 @@ import { useAuth } from "../../feature-login/auth";
 import IconeAdicionar from "../../comum/assets/IconeAdicionar";
 import ItemPreviewPadrao from "./ItemPreviewPadrao";
 
-export default function PreviewPadrao({ navigation }) {
+export default function PreviewPadrao(props) {
   const [ padroes, setPadroes ] = useState([]);
   const [ loading, setLoading] = useState(true);
   const { token } = useAuth();
@@ -80,7 +80,7 @@ export default function PreviewPadrao({ navigation }) {
     return (
       <TouchableOpacity
 					style={[tailwind("w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md mr-4")]}
-					onPress={() => navigation.navigate("AdicionaMovimentacao",{screen: 'Padrao'})}>  
+					onPress={() => props.navigation.navigate("AdicionaMovimentacao")}>  
 					<View style={tailwind("w-12 h-12 mb-1 rounded-full bg-gray-100 flex justify-center items-center")}>
 						<View style={tailwind("w-8 h-8")}>
 							<IconeAdicionar/>
