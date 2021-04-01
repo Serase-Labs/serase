@@ -53,9 +53,14 @@ export default function ItemPadrao(props) {
 				</Text>
 			</View>
 			<View>
-				<Text style={tailwind("text-base font-bold")}>
-					R${props.valor}
-				</Text>
+			{props.valor ?
+            <Text style={tailwind("text-base font-bold")}>
+						R${props.valor}
+					</Text>
+            : 
+            <Text> </Text>
+          }
+				
 				<Text style={tailwind("text-gray-500 mt-2")}>
 					{props.categoria}
 				</Text>

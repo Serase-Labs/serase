@@ -57,7 +57,7 @@ export default function ListaPadroes({navigation}) {
 
 	useEffect(() => {
 		async function fetchData() {
-			let url = GLOBAL.BASE_URL + "/cobrancas/";
+			let url = GLOBAL.BASE_URL + "/cobrancas/?tipo=despesa";
 			try {
 				let res = await fetch(url, {
 					headers: { Authorization: token },

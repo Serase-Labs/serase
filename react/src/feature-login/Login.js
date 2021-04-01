@@ -20,11 +20,7 @@ import { Formik } from "formik";
 
 export default function Login({ navigation }) {
 	const { signIn, user, token } = useAuth();
-
-	if(user&&token){
-		navigation.navigate("Homepage")
-	}
-
+	
 	function handleSubmit(values) {
 		signIn(values.email, values.senha)
 			.then(() => navigation.navigate("Homepage"))
