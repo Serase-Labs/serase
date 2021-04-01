@@ -283,7 +283,7 @@ export default function VisualizacaoGeral({ navigation }) {
 					</View>
 				) : (
 					<View style={tailwind("py-4")}>
-						{movimentacoes.conteudo.length === 0 ? (<ListaVazia mensagem="Você ainda não adicionou nenhuma movimentação. Quando o fizer, elas aparecerão aqui."/>) : renderMovimentacoes(movimentacoes)}
+						{movimentacoes.conteudo.length === 0 ? (<ListaVazia mensagem="Realize sua primeira movimentação para atualizar seu saldo no aplicativo. Quando o fizer, ela aparecerá aqui."/>) : renderMovimentacoes(movimentacoes)}
 					</View>
 				)}
 			</View>
