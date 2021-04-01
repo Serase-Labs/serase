@@ -13,7 +13,7 @@ import tailwind from "tailwind-rn";
 
 import IconeVoltar from "../assets/IconeVoltar";
 
-export default function IndicadorRetorno({ telaAtual }) {
+export default function IndicadorRetorno({ telaAtual, navigation }) {
 	return (
 		<View
 			style={tailwind(
@@ -22,6 +22,7 @@ export default function IndicadorRetorno({ telaAtual }) {
 		>
 			<TouchableOpacity
 				style={tailwind("w-8 h-8 p-1 bg-gray-200 rounded mr-3")}
+				onPress={()=>navigation.goBack()}
 			>
 				<View style={tailwind("h-6 w-6")}>
 					<IconeVoltar />

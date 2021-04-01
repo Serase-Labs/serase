@@ -122,7 +122,7 @@ export default function Relatorios({ navigation }) {
 		<ScrollView
 			style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}
 		>
-			<IndicadorRetorno telaAtual="Relatórios" />
+			<IndicadorRetorno telaAtual="Relatórios" navigation={navigation} />
 
 			{populada == false ? (
 				<View style={tailwind("flex justify-center flex-1")}>

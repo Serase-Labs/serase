@@ -103,7 +103,7 @@ export default function ListaPadroes({navigation}) {
 	return (
 		<View style={[estilos.tela, estiloExcecao.container]}>
 			<View style={estilos.telaInterior}>
-				<IndicadorRetorno telaAtual={"Lista Padrao"} />
+				<IndicadorRetorno telaAtual={"Lista Padrao"} navigation={navigation} />
 				
 				<View style={tailwind("h-32")}>
 							<IlustracaoDespesaFixa />

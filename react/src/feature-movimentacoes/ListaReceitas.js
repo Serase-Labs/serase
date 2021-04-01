@@ -88,7 +88,7 @@ export default function VisualizacaoGeral({ navigation }) {
 	return (
 		<View style={[estilos.tela, estiloExcecao.container]}>
 			<View style={estilos.telaInterior}>
-				<IndicadorRetorno telaAtual={"Receitas"} />
+				<IndicadorRetorno telaAtual={"Receitas"} navigation={navigation} />
 
 				<View
 					style={[tailwind("flex-row bg-white justify-center")]}

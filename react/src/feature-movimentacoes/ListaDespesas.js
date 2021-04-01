@@ -106,7 +106,7 @@ export default function ListaDespesas({ navigation }) {
 					<Text style={TextoInformativo()}>É todo gasto mensal que não sofre alteração à medida que você o consome. Exemplos de despesas fixas: Aluguel de um imóvel e assinatura da TV à cabo.</Text>
 				</ModalInformativa>
 				</View>
-				<IndicadorRetorno telaAtual={"Despesas"} />
+				<IndicadorRetorno telaAtual={"Despesas"} navigation={navigation} />
 
 				<View style={tailwind("px-5 flex flex-row justify-between items-center")}>
 					<Text style={tailwind("text-lg font-bold")}>

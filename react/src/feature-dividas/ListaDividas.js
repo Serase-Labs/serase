@@ -79,7 +79,7 @@ export default function ListaDividas({ navigation }) {
 	return (
 		<View style={[estilos.tela, estiloExcecao.container]}>
 			<View style={estilos.telaInterior}>
-				<IndicadorRetorno telaAtual={"Dívida"} />
+				<IndicadorRetorno telaAtual={"Dívida"} navigation={navigation}/>
 
 				<Botao ordem="secundario" tamanho="grande" label="+ Registrar Dívida" espacamento={true} onPress={() =>{setModalRegistroVisible(true)}}/>
 

@@ -68,7 +68,7 @@ export default function Central({navigation}) {
 				showsVerticalScrollIndicator={false}
 				style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}
 			>
-				<IndicadorRetorno telaAtual="Notificações"/>
+				<IndicadorRetorno telaAtual="Notificações" navigation={navigation}/>
 
 				<View style={tailwind("mb-12")}>
 					<View style={tailwind("mb-24")}>
