@@ -11,10 +11,12 @@ import tailwind from "tailwind-rn";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import InputDate from "../comum/components/InputDate";
 
 // Imports internos
 import GLOBAL from "../Global";
 import { useAuth } from "../feature-login/auth.js";
+import DateInput from "../comum/components/InputDate";
 const Tab = createMaterialTopTabNavigator();
 
 export default function AdicionaMovimentacao() {
@@ -121,26 +123,20 @@ function AdicionaDespesa(token) {
 			<Text style={[estilos.labelInputPrincipal]}>
 				Quanto você gastou?
 			</Text>
+			<View style={tailwind("items-center")}>
 			<TextInput
 				style={[estilos.inputPrincipalVermelho]}
 				placeholder={"R$ 0,00"}
 				keyboardType={"numeric"}
 				onChangeText={(text) => setValorD(text * -1)}
 			></TextInput>
+			</View>
 
-			<Text style={[estilos.labelInput]}>Data de Gasto</Text>
-			<TextInput
-				style={estilos.input}
-				placeholder={"20/10/2020"}
-				placeholderTextColor={"#A0AEC0"}
-				//keyboardType={"numeric"}
-				onChangeText={(text) => setDataD("" + text)}
-			></TextInput>
-
+			<View style={tailwind("mb-2")}>
 			<Text style={[estilos.labelInput]}>Categoria do Gasto</Text>
 			<TextInput
 				style={[estilos.input]}
-				placeholder={"Alimentação, Trasnporte, Saúde"}
+				placeholder={"Alimentação, Transporte, Saúde"}
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setCategoriaD(text)}
 			></TextInput>
@@ -152,6 +148,9 @@ function AdicionaDespesa(token) {
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setDescricaoD(text)}
 			></TextInput>
+			</View>
+			
+			<InputDate label='Data de Gasto' onPick={(data=>setDataD(data))}/>
 			{temErro ? (
 				renderErro(resultado)
 			) : (
@@ -227,6 +226,7 @@ function AdicionaReceita(token) {
 			<Text style={[estilos.labelInputPrincipal]}>
 				Quanto você ganhou?
 			</Text>
+			<View style={tailwind("items-center")}>
 			<TextInput
 				nativeID="colorido"
 				style={[estilos.inputPrincipal]}
@@ -234,17 +234,10 @@ function AdicionaReceita(token) {
 				keyboardType={"numeric"}
 				onChangeText={(text) => setValorR(text)}
 			></TextInput>
+			</View>
+			
 
-			<Text style={[estilos.labelInput]}>Data da Receita</Text>
-			<TextInput
-				nativeID={"#data"}
-				style={estilos.input}
-				placeholder={"20/10/2020"}
-				placeholderTextColor={"#A0AEC0"}
-				//keyboardType={"numeric"}
-				onChangeText={(text) => setDataR(text)}
-			></TextInput>
-
+			<View style={tailwind("mb-2")}>
 			<Text style={[estilos.labelInput]}>Categoria de Receita</Text>
 			<TextInput
 				style={[estilos.input]}
@@ -260,6 +253,9 @@ function AdicionaReceita(token) {
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setDescricaoR(text)}
 			></TextInput>
+			</View>
+
+			<InputDate label='Data da Receita' onPick={(data=>setDataR(data))}/>
 			{temErro ? (
 				renderErro(resultado)
 			) : (
@@ -359,6 +355,7 @@ function AdicionaPadrao(token) {
 			<Text style={[estilos.labelInputPrincipal]}>
 				Valor padrão?
 			</Text>
+			<View style={tailwind("items-center")}>
 			<TextInput
 				nativeID="colorido"
 				style={[estilos.inputPrincipal]}
@@ -366,7 +363,7 @@ function AdicionaPadrao(token) {
 				keyboardType={"numeric"}
 				onChangeText={(text) => setValorP(text)}
 			></TextInput>
-
+			</View>
 			<Text style={[estilos.labelInput]}>Categoria de Padrão</Text>
 			<TextInput
 				style={[estilos.input]}
@@ -386,11 +383,13 @@ function AdicionaPadrao(token) {
 			<Text style={[estilos.labelInput]}>Tipo</Text>
 			<TextInput
 				style={[estilos.input]}
-				placeholder={"Descrição"}
+				value={'Despesa'}
+				placeholder={"Despesa"}
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setTipo(text)}
 			></TextInput>
 
+			<View style={tailwind("mb-1")}>
 			<Text style={[estilos.labelInput]}>Dia de Cobranca</Text>
 			<TextInput
 				style={[estilos.input]}
@@ -398,22 +397,11 @@ function AdicionaPadrao(token) {
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setDiaCobranca(text)}
 			></TextInput>
+			</View>
+			<InputDate label='Dia de Início' onPick={(data=>setDiaInicio(data))}/>
 
-			<Text style={[estilos.labelInput]}>Dia de Início</Text>
-			<TextInput
-				style={[estilos.input]}
-				placeholder={"08/03/2021"}
-				placeholderTextColor={"#A0AEC0"}
-				onChangeText={(text) => setDiaInicio(text)}
-			></TextInput>
 
-			<Text style={[estilos.labelInput]}>Dia Fim</Text>
-			<TextInput
-				style={[estilos.input]}
-				placeholder={"08/03/2021"}
-				placeholderTextColor={"#A0AEC0"}
-				onChangeText={(text) => setDiaFim(text)}
-			></TextInput>
+			<InputDate label='Dia de Fim' onPick={(data=>setDiaFim(data))}/>
 
 			{temErro ? (
 				renderErro(resultado)
@@ -469,35 +457,36 @@ const estiloExcecao = StyleSheet.create({
 
 const estilos = {
 	tela: tailwind("flex-1 bg-white"),
-	telaInterior: tailwind("flex-1 bg-white items-center px-12"),
+	telaInterior: tailwind("flex-1 bg-white px-12"),
 	botaoCancelar: tailwind("relative py-2 rounded ml-8 mb-20 mt-12"),
+	labelInputPrincipal: tailwind("font-bold mt-4 mb-4 text-lg text-center"),
 	inputPrincipal: tailwind(
-		"border border-green-400 rounded font-bold text-4xl py-6 px-20 mb-8 text-gray-700 text base max-w-xs"
+		"border border-green-400 rounded font-bold text-4xl py-6 px-20 text-gray-700 text-xl max-w-xs"
 	),
 	inputPrincipalVermelho: tailwind(
-		"border border-red-700 rounded font-bold text-4xl py-6 px-20 mb-8 text-gray-700 text base max-w-xs"
+		"border border-red-700 rounded font-bold text-4xl py-6 px-20 mb-2 text-gray-700 text-xl max-w-xs"
 	),
 
-	labelInput: tailwind("text-gray-700 text-base font-bold mb-3"),
+	labelInput: tailwind("text-gray-700 text-base font-bold mt-2 mb-3"),
 	input: tailwind(
-		"bg-gray-100 rounded-lg w-full py-2 px-3 text-gray-700 text-base"
+		"bg-gray-100 rounded-lg w-full py-2 px-3 text-gray-700 text-base mt-1"
 	),
 	containerInput: tailwind("w-full mb-2 py-12"),
 
 	botaoAdicionar: tailwind(
-		"bg-green-400 py-2 rounded w-32 mb-8 mr-1 mt-12 ml-16 py-2 px-4"
+		"bg-green-400 py-2 rounded w-32 mb-8 mr-1 ml-16 py-2 px-4"
 	),
 	textoErro: tailwind(
-		"text-red-700 text-base font-bold text-center"
+		"text-red-700 text-sm font-bold text-center mb-1"
 	),
 	textoSucesso: tailwind(
 		"text-green-700 text-base font-bold text-center"
 	),
 	textoBotaoAdicionar: tailwind("text-white font-medium text-lg text-center"),
-	botaoCancelar: tailwind("py-2 rounded ml-8 mb-20 mt-12 mr-0 "),
+	botaoCancelar: tailwind("py-2 rounded ml-8 mb-20 mr-0 "),
 	textoBotaoCancelar: tailwind(
 		"text-blue-700 font-medium text-lg text-center"
 	),
 	containerInput: tailwind("w-64 mb-2"),
-	labelInput: tailwind("text-gray-700 text-base font-bold mb-3 mr-40"),
+	labelInput: tailwind("text-gray-700 text-base font-bold mt-4"),
 };

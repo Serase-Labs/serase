@@ -137,19 +137,7 @@ export default function ListaPadroes({navigation}) {
 					</TouchableOpacity>
 				</View>
 				<View style={tailwind("flex-row justify-between mx-5 mb-4")}>
-					<TextInput
-						style={tailwind("flex-row  flex-grow")}
-						placeholder={"Pesquise por uma entrada de receita"}
-						placeholderTextColor={"#A0AEC0"}
-						onChangeText={text => setFiltro(text)}
-					/>
-					<TouchableOpacity 
-						style={tailwind("h-10 w-10 rounded-lg justify-center items-center")}
-						title="Submit"
-						onPress={carrega}
-					>
-						<IconePesquisa />
-					</TouchableOpacity>
+					
 				</View>
 
 				{isLoading ? (
