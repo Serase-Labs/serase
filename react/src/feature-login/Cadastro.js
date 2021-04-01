@@ -68,7 +68,7 @@ export default function Cadastro({ navigation }) {
 
 	function handleSubmit(values) {
 		signUp(values.nome, values.email, values.senha, values.senhaConfirmacao)
-			.then(() => navigation.navigate("Homepage"))
+			.then(() => navigation.navigate("OnboardingMovimentacao"))
 			.catch( console.log("Deu Ruim"));
 	}
 
