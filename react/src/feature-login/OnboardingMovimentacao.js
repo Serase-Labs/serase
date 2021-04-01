@@ -7,13 +7,15 @@ import Botao from "../comum/components/Botao.js";
 import { useAuth } from "./auth.js";
 import AdicionaDivida from "../feature-dividas/componentes/AdicionaDivida.js";
 import GLOBAL from "../Global"
+import {ModalInformativa, TextoPrincipal, TextoInformativo} from "../comum/components/ModalInformativa";
+
 async function adicionarSaldo(valor,token){
 	
 	let body = {
 		valor_pago: valor,
 		data_lancamento: "2021-04-01" ,
 		categoria: "Salário",
-		descricao: "PrimeiraMovimentacao",
+		descricao: "Primeira Movimentacao",
 	};
 	console.log( body.descricao );
 	let url = GLOBAL.BASE_URL+"/movimentacao/";
@@ -130,7 +132,12 @@ export default function Confirmacao({navigation}) {
 			style={tailwind(
 				"flex-1 flex-col items-center bg-white justify-center"
 			)}
-		>
+		><View style={tailwind("flex justify-between")}>
+			<ModalInformativa>
+				<Text style={TextoPrincipal()}>Porque é importante configurar o seu saldo atual?</Text>
+				<Text style={TextoInformativo()}>É por meio do seu saldo atual que o Serase fornecerá métricas para a análise e acompanhamento do seu saldo, as métricas vão te auxiliar no melhor caminho para alcançar o seu objetivo financeiro!</Text>
+			</ModalInformativa>
+			</View>
             <Text
 					style={[
 						tailwind("text-xl font-bold text-center mb-2"),

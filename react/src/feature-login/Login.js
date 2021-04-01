@@ -40,7 +40,10 @@ export default function Login({ navigation }) {
 				<View style={tailwind("flex justify-end items-end")}>
 					<ModalInformativa>
 						<Text style={TextoPrincipal()}>O que é o Serase?</Text>
-						<Text style={TextoInformativo()}>O aplicativo mais malado do Brasil, quicá de Minas Gerais</Text>
+						<Text style={TextoInformativo()}>Seja bem vindo ao melhor aplicativo de controle financeiro pessoal do Brasil! Desenvolvido com foco em educação financeira e quitação de dívidas! 💲💸 </Text>
+						<Text style={TextoPrincipal()}>Quem são os desenvolvedores?</Text>
+						<Text style={TextoInformativo()}>
+							Anna Clara Dornelas, Isabella Campos, Juan Vitor Saar, Júlia Carlos Gonzaga, Marcus Vinicius Arcanjo e Nicoly Dandara. Orientador: Daniel Hasan.</Text>
 					</ModalInformativa>
 				</View>
 			<ScrollView

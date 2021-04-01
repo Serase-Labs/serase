@@ -21,6 +21,7 @@ import TabDescricao from "../comum/components/TabDescricao";
 import GraficoDespesaCategoria from "./components/GraficoDespesaCategoria";
 import GraficoDespesaPadrao from "./components/GraficoDespesaPadrao";
 import GraficoDespesaFrequencia from "./components/GraficoDespesaFrequencia";
+import {ModalInformativa, TextoPrincipal, TextoInformativo} from "../comum/components/ModalInformativa";
 import GLOBAL from "../Global";
 import { useAuth } from "../feature-login/auth.js";
 import {useState, useEffect} from "react";
@@ -127,6 +128,17 @@ export default function RelatorioMensal() {
 				<View
 					style={tailwind("border-b border-t border-gray-100 py-4 px-6")}
 				>
+				<View style={tailwind("flex justify-between")}>
+				<ModalInformativa>
+					<Text style={TextoPrincipal()}>O que é o gráfico de despesas por categoria?</Text>
+					<Text style={TextoInformativo()}>Mostra o quanto você gastou em cada categoria neste mês, visualizando de forma simples em quais áreas você gasta mais mensalmente indicando onde você deve economizar. É recomendado um equilíbrio de tamanho entre as categorias, um gráfico com uma categoria muito grande indica que deve haver uma melhor distribuição do dinheiro ou a economia do mesmo.</Text>
+					<Text style={TextoPrincipal()}>O que é o gráfico de despesa padrão?</Text>
+					<Text style={TextoInformativo()}>Indica se você possui mais despesas mensais em gastos fixos ou em variáveis. Despesas fixa são as despesas mensais que não sofrem alteração de valor à medida que você o consome como Aluguel e Assinatura de Internet, já nos gastos variáveis o valor varia de acordo com o consumo do serviço, exemplo: Compras online e Alimentação. Despesas variáveis muito grandes indicam que você pode controlar como e com o que você gasta grande parte do seu dinheiro mensal, o inverso dessa situação indica que você deve rever quais são os gastos necessários durante o mês.</Text>
+					<Text style={TextoPrincipal()}>O que é o gráfico de frequência?</Text>
+					<Text style={TextoInformativo()}>Indica quais foram os dias do mês em que você fez mais movimentações. Representa um calendário, cada quadrado representa um dia do mês e a cada movimentação a cor verde se torna mais forte, portanto nos dias verdes claros foram realizadas poucas (ou nenhuma) movimentação, já nos dias verde escuro a frequência de movimentação foi maior.</Text>
+				</ModalInformativa>
+				</View>
+
 					<Text style={tailwind("mb-5 text-lg font-bold text-gray-800")}>
 						Gráficos
 					</Text>
