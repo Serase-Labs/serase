@@ -22,6 +22,26 @@ function ordem(ordemBotao) {
 	}
 }
 
+function ordemTexto(ordemBotao) {
+	const windowWidth = Dimensions.get('window').width;
+
+	// Determina a cor dos botões a partir da sua importância
+	// Possíveis valores: primário, secundário, terciário e erro
+	switch (ordemBotao) {
+
+		case "primario":
+			return tailwind("text-white");
+		case "secundario":
+			return tailwind("text-white");
+		case "terciario":
+			return tailwind("text-blue-800");
+		case "erro":
+			return tailwind("text-red-500");
+		case "extra":
+			return tailwind("text-green-600");
+	}
+}
+
 function tamanho(tamanhoBotao) {
 	const windowWidth = Dimensions.get('window').width;
 
@@ -57,13 +77,8 @@ export default function Botao(props) {
 		>
 			<Text
 				style={[
-					tailwind("font-medium text-lg text-center"),
-					props.ordem === "terciario"
-						? tailwind("text-blue-700")
-						: tailwind("text-white"),
-					props.ordem === "extra"
-						? tailwind("text-green-600")
-						: tailwind("text-white")
+					tailwind("font-medium text-lg text-center text-white"),
+					ordemTexto(props.ordem),
 				]}
 			>
 				{props.label}
