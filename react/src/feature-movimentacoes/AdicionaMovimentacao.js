@@ -377,7 +377,6 @@ function AdicionaPadrao(token) {
 			<Text style={[estilos.labelInput]}>Tipo</Text>
 			<TextInput
 				style={[estilos.input]}
-				value={'Despesa'}
 				placeholder={"Despesa"}
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setTipo(text)}
