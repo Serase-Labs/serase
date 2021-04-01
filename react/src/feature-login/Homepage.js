@@ -31,6 +31,8 @@ import { useAuth } from "./auth";
 export default function VisualizacaoGeral({ navigation }) {
 	const { user, token, signOut } = useAuth();
 
+	if(!user||!token) return navigation.navigate("Login");
+
 	const [saldo, setSaldo] = useState();
 	const [movimentacoes, setMovimentacoes] = useState();
 	const [isLoadingSaldo, setLoadingSaldo] = useState(true);
