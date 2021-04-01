@@ -136,7 +136,7 @@ function AdicionaDespesa(token) {
 			<Text style={[estilos.labelInput]}>Categoria do Gasto</Text>
 			<TextInput
 				style={[estilos.input]}
-				placeholder={"Alimentação, Trasnporte, Saúde"}
+				placeholder={"Alimentação, Transporte, Saúde"}
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setCategoriaD(text)}
 			></TextInput>
@@ -383,7 +383,8 @@ function AdicionaPadrao(token) {
 			<Text style={[estilos.labelInput]}>Tipo</Text>
 			<TextInput
 				style={[estilos.input]}
-				placeholder={"Descrição"}
+				value={'Despesa'}
+				placeholder={"Despesa"}
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setTipo(text)}
 			></TextInput>
