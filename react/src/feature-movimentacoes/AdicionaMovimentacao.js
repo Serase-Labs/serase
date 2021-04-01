@@ -12,6 +12,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import InputDate from "../comum/components/InputDate";
+import InputCategoria from "../comum/components/InputCategoria";
 
 // Imports internos
 import GLOBAL from "../Global";
@@ -133,14 +134,6 @@ function AdicionaDespesa(token) {
 			</View>
 
 			<View style={tailwind("mb-2")}>
-			<Text style={[estilos.labelInput]}>Categoria do Gasto</Text>
-			<TextInput
-				style={[estilos.input]}
-				placeholder={"Alimentação, Transporte, Saúde"}
-				placeholderTextColor={"#A0AEC0"}
-				onChangeText={(text) => setCategoriaD(text)}
-			></TextInput>
-
 			<Text style={[estilos.labelInput]}>Descricao de Despesa</Text>
 			<TextInput
 				style={[estilos.input]}
@@ -148,6 +141,9 @@ function AdicionaDespesa(token) {
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setDescricaoD(text)}
 			></TextInput>
+			<InputCategoria onValueChange={(text) => setCategoriaD(text)}/>
+
+			
 			</View>
 			
 			<InputDate label='Data de Gasto' onPick={(data=>setDataD(data))}/>
@@ -238,14 +234,7 @@ function AdicionaReceita(token) {
 			
 
 			<View style={tailwind("mb-2")}>
-			<Text style={[estilos.labelInput]}>Categoria de Receita</Text>
-			<TextInput
-				style={[estilos.input]}
-				placeholder={"Salário, Empréstimo, Loteria, Aposta"}
-				placeholderTextColor={"#A0AEC0"}
-				onChangeText={(text) => setCategoriaR(text)}
-			></TextInput>
-
+			<View style={tailwind("mb-2")}>
 			<Text style={[estilos.labelInput]}>Descricao de Receita</Text>
 			<TextInput
 				style={[estilos.input]}
@@ -253,6 +242,10 @@ function AdicionaReceita(token) {
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setDescricaoR(text)}
 			></TextInput>
+			</View>
+			<InputCategoria onValueChange={(text) => setCategoriaR(text)}/>
+
+			
 			</View>
 
 			<InputDate label='Data da Receita' onPick={(data=>setDataR(data))}/>
@@ -364,20 +357,21 @@ function AdicionaPadrao(token) {
 				onChangeText={(text) => setValorP(text)}
 			></TextInput>
 			</View>
-			<Text style={[estilos.labelInput]}>Categoria de Padrão</Text>
-			<TextInput
-				style={[estilos.input]}
-				placeholder={"Salário, Empréstimo, Loteria, Aposta"}
-				placeholderTextColor={"#A0AEC0"}
-				onChangeText={(text) => setCategoriaP(text)}
-			></TextInput>
-
+			<View style={tailwind('mb-2')}>
 			<Text style={[estilos.labelInput]}>Descricao do Padrão: </Text>
 			<TextInput
 				style={[estilos.input]}
 				placeholder={"Descrição"}
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setDescricaoP(text)}
+			></TextInput>
+
+			<Text style={[estilos.labelInput]}>Dia de Cobranca</Text>
+			<TextInput
+				style={[estilos.input]}
+				placeholder={"3"}
+				placeholderTextColor={"#A0AEC0"}
+				onChangeText={(text) => setDiaCobranca(text)}
 			></TextInput>
 
 			<Text style={[estilos.labelInput]}>Tipo</Text>
@@ -388,18 +382,18 @@ function AdicionaPadrao(token) {
 				placeholderTextColor={"#A0AEC0"}
 				onChangeText={(text) => setTipo(text)}
 			></TextInput>
+			</View>
+
+			
+
+			
+
+			
 
 			<View style={tailwind("mb-1")}>
-			<Text style={[estilos.labelInput]}>Dia de Cobranca</Text>
-			<TextInput
-				style={[estilos.input]}
-				placeholder={"3"}
-				placeholderTextColor={"#A0AEC0"}
-				onChangeText={(text) => setDiaCobranca(text)}
-			></TextInput>
+			<InputCategoria onValueChange={(text) => setCategoriaP(text)}/>
 			</View>
 			<InputDate label='Dia de Início' onPick={(data=>setDiaInicio(data))}/>
-
 
 			<InputDate label='Dia de Fim' onPick={(data=>setDiaFim(data))}/>
 
