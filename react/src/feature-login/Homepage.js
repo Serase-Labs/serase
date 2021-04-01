@@ -8,6 +8,7 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	FlatList,
+	RefreshControl,
 } from "react-native";
 import tailwind from "tailwind-rn";
 import { LinearGradient } from "expo-linear-gradient";
@@ -28,10 +29,18 @@ import ItemMovimentacao from "../feature-movimentacoes/componentes/ItemMovimenta
 import GLOBAL from "../Global";
 import { useAuth } from "./auth";
 
+let load_inicial = true;
+
 export default function VisualizacaoGeral({ navigation }) {
 	const { user, token, signOut } = useAuth();
 
 	if(!user||!token) return navigation.navigate("Login");
+
+	const [refreshing, setRefreshing] = useState(false);
+
+	const onRefresh = React.useCallback(() => {
+		setRefreshing(true);
+	}, []);
 
 	const [saldo, setSaldo] = useState();
 	const [movimentacoes, setMovimentacoes] = useState();
@@ -61,7 +70,6 @@ export default function VisualizacaoGeral({ navigation }) {
 				console.log(error);
 			}
 		}
-		fetchData();
 
 		async function fetchSaldo() {
 			let url = GLOBAL.BASE_URL + "/saldo/";
@@ -78,8 +86,14 @@ export default function VisualizacaoGeral({ navigation }) {
 				console.log(error);
 			}
 		}
-		fetchSaldo();
-	}, []);
+		
+		if(load_inicial || refreshing){
+			Promise.all([fetchData(), fetchSaldo()]).then(()=> refreshing? setRefreshing(false): undefined)
+			load_inicial=false;
+		}
+			
+
+	}, [refreshing]);
 
 	function renderMovimentacoes(movimentacoes) {
 		return (
@@ -110,6 +124,12 @@ export default function VisualizacaoGeral({ navigation }) {
 			bounces={true}
 			showsVerticalScrollIndicator={false}
 			style={[tailwind("flex-1 bg-white"), estiloExcecao.container]}
+			refreshControl={
+				<RefreshControl
+				  refreshing={refreshing}
+				  onRefresh={onRefresh}
+				/>
+			  }
 		>
 			<View style={tailwind("px-5 py-4")}>
 				<View
