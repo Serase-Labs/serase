@@ -9,31 +9,35 @@ import AdicionaDivida from "../feature-dividas/componentes/AdicionaDivida.js";
 import GLOBAL from "../Global"
 import {ModalInformativa, TextoPrincipal, TextoInformativo} from "../comum/components/ModalInformativa";
 
-async function adicionarSaldo(valor,token){
-	
-	let body = {
-		valor_pago: valor,
-		data_lancamento: "2021-04-01" ,
-		categoria: "Salário",
-		descricao: "Primeira Movimentacao",
-	};
-	console.log( body.descricao );
-	let url = GLOBAL.BASE_URL+"/movimentacao/";
-		
-	let res =  fetch(url, {
-		method: "post",
-		headers: {'Authorization': token},
-		body: JSON.stringify(body)
-	});
-		
-	let json = res.json();
-	console.log(json);
-	
-}
 export default function Confirmacao({navigation}) {
 	const [valor, setValor] = React.useState([]);
 	const {token} = useAuth();
-	adicionarSaldo(valor,token)
+
+	const adiciona = () =>{
+		async function adicionarSaldo(){
+			
+			let body = {
+				valor_pago: valor,
+				data_lancamento: "2021-04-01" ,
+				categoria: "Salário",
+				descricao: "Primeira Movimentacao",
+			};
+			console.log( body.descricao );
+			let url = GLOBAL.BASE_URL+"/movimentacao/";
+				
+			let res =  fetch(url, {
+				method: "post",
+				headers: {'Authorization': token},
+				body: JSON.stringify(body)
+			});
+				
+			let json = res.json();
+			console.log(json);
+			
+			}
+		adicionarSaldo();
+		navigation.navigate("Homepage");
+		}
 	return (
 		<View
 			style={tailwind(
@@ -70,10 +74,8 @@ export default function Confirmacao({navigation}) {
 					tamanho="medio"
 					
 					label="Confirmar Saldo"
-					onPress= {() => adicionarSaldo(valor,token)}
-					onPress={() =>
-						navigation.navigate("Homepage")
-						}
+					onPress= {adiciona}
+					
 				></Botao>
                 <Botao
 					ordem="terciario"
