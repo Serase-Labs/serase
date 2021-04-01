@@ -13,7 +13,7 @@ import FormularioVazio from "../assets/IlustracaoFormularioVazio";
 
 export default function ListaVazia({ mensagem }) {
 	return (
-		<View style={tailwind("p-8")}>
+		<View style={tailwind("p-8 opacity-25")}>
 			<View
 				style={tailwind("h-40 flex items-center justify-center mb-4")}
 			>

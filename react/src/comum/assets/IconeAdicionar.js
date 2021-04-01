@@ -19,7 +19,7 @@ export default class IconeAdicionar extends React.Component {
 				]}
 			>
 				<Svg
-					strokeWidth="1.5"
+					strokeWidth="2"
 					height={"100%"}
 					width="100%"
 					viewBox="0 0 24 24"

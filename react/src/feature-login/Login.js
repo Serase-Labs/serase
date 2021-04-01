@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import tailwind from "tailwind-rn";
 // Imports internos
+import {ModalInformativa, TextoPrincipal, TextoInformativo} from "../comum/components/ModalInformativa";
 import Botao from "../comum/components/Botao";
 import { Input, Error } from "../comum/components/Input";
 import { useAuth } from "./auth.js";
@@ -18,7 +19,11 @@ import { useAuth } from "./auth.js";
 import { Formik } from "formik";
 
 export default function Login({ navigation }) {
-	const { signIn } = useAuth();
+	const { signIn, user, token } = useAuth();
+
+	if(user&&token){
+		navigation.navigate("Homepage")
+	}
 
 	function handleSubmit(values) {
 		signIn(values.email, values.senha)
@@ -32,6 +37,12 @@ export default function Login({ navigation }) {
 
 	return (
 		<KeyboardAvoidingView style={[estiloExcecao.container, estilos.tela]}>
+				<View style={tailwind("flex justify-end items-end")}>
+					<ModalInformativa>
+						<Text style={TextoPrincipal()}>O que é o Serase?</Text>
+						<Text style={TextoInformativo()}>O aplicativo mais malado do Brasil, quicá de Minas Gerais</Text>
+					</ModalInformativa>
+				</View>
 			<ScrollView
 				contentContainerStyle={{
 					flex: 1,
@@ -40,6 +51,7 @@ export default function Login({ navigation }) {
 				}}
 				style={estilos.telaInterior}
 			>
+				
 				<View style={estilos.containerFormulario}>
 					<Image
 						style={[

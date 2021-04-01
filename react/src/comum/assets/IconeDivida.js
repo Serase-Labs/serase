@@ -4,10 +4,6 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 
 export default class IconeReceita extends React.Component {
-	constructor(props) {
-		super(props);
-		this.color = props.uso == "sistema" ? "#2A4365" : "#2AF598";
-	}
 
 	render() {
 		return (
@@ -16,18 +12,18 @@ export default class IconeReceita extends React.Component {
 				{ alignItems: "center", justifyContent: "center" },
 			]}>
 				<Svg
-					strokeWidth="2"
+					strokeWidth="1.8"
 					height="100%"
 					width="100%"
 					viewBox="0 0 24 24"
-					color={this.color}
+					color="#2A4365"
 				>
 					<Path
 						stroke="currentColor"
 						strokeLinejoin="round"
 						strokeLinecap="round"
-						fill={this.color}
-						d="M5 10l7-7m0 0l7 7m-7-7v18" 
+						fill="none"
+						d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
 					/>
 				</Svg>
 			</View>

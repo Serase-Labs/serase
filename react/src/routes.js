@@ -6,7 +6,9 @@ import Temp from "./pages/Temp";
 import Login from "./feature-login/Login";
 import Cadastro from "./feature-login/Cadastro";
 import Homepage from "./feature-login/Homepage";
+import Central from "./feature-notificacoes/Central";
 import Onboarding from "./feature-login/Onboarding.js";
+import OnboardingMovimentacao from "./feature-login/OnboardingMovimentacao.js";
 
 import ListaDespesas from "./feature-movimentacoes/ListaDespesas.js";
 import ListaReceitas from "./feature-movimentacoes/ListaReceitas.js";
@@ -14,6 +16,8 @@ import ListaPadroes from "./feature-padroes/ListaPadroes.js";
 import AdicionaMovimentacao from "./feature-movimentacoes/AdicionaMovimentacao.js";
 
 import Relatorios from "./feature-relatorios/Relatorios.js";
+
+import ListaDividas from "./feature-dividas/ListaDividas.js";
 
 const Routes = createAppContainer(
 	createStackNavigator(
@@ -28,6 +32,9 @@ const Routes = createAppContainer(
 			ListaReceitas,
 			Relatorios,
 			AdicionaMovimentacao,
+			ListaDividas,
+			OnboardingMovimentacao,
+			Central,
 		},
 		{
 			headerMode: "none",
