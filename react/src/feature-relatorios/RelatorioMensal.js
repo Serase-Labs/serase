@@ -77,7 +77,7 @@ export default function RelatorioMensal() {
 		return (
 			<BotaoInformacao
 				titulo={item.titulo}
-				valor={item.valor}
+				conteudo={item.valor}
 				id = {item.id}
 				onPress={() => console.log(item.titulo)}
 			/>
