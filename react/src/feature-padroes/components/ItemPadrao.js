@@ -66,7 +66,7 @@ export default function ItemPadrao(props) {
 		<View style={tailwind("flex flex-row justify-between justify-center")}>
 				{props.situacao=='pendente'?
 				<TouchableOpacity style={tailwind("w-24 h-10")} ><Text style={tailwind("text-green-300 text-center text-lg font-bold")} onPress={()=>setModalPagamentoVisible(true)}>Pagar</Text></TouchableOpacity>
-				:<TouchableOpacity style={tailwind("w-40 h-10")}><Text style={tailwind("text-blue-700 text-center text-base font-bold")} onPress={()=>setModalVisible(true)}>Ver Movimetações</Text></TouchableOpacity>}
+				:<TouchableOpacity style={tailwind("w-40 h-10")}><Text style={tailwind("text-blue-700 text-center text-base font-bold")} onPress={()=>setModalVisible(true)}>Ver Movimentações</Text></TouchableOpacity>}
 		</View>
 		<Modal
 			animationType="slide"

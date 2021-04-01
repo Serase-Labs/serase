@@ -114,7 +114,7 @@ export default function ItemPagamentoPagamento(props,{setModal}) {
                                 }}
                         >
                             {({handleChange, handleBlur, handleSubmit, values, setFieldValue}) => (
-                                <View style={tailwind("w-full flex-col")}>
+                                <View style={tailwind("w-full flex-col mr-6")}>
                                     <Input
                                             onChangeText={handleChange("valor")}
                                             onBlur={handleBlur("valor")}
@@ -158,10 +158,10 @@ const estilos = {
     input: tailwind("bg-gray-100 rounded-lg py-2 px-3 text-gray-700 text-base"),
     errorInput: tailwind("bg-red-100 border border-red-400 text-red-700 px-4 py-2 mt-2 rounded relative"),
     textoErro: tailwind(
-		"text-red-700 text-base font-bold text-center"
+		"text-red-700 text-base font-bold text-center mb-2"
 	),
 	textoSucesso: tailwind(
-		"text-green-700 text-base font-bold text-center"
+		"text-green-700 text-base font-bold text-center mb-2"
 	),
 }
 
