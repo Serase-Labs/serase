@@ -116,12 +116,13 @@ export default function RelatorioMensal() {
 					</View>
 
 					<FlatList
-					style={tailwind("ml-4")}
-					data={converteAnalise(categoria.analises)}
-					renderItem={renderizarAnalises}
-					horizontal={true}
-					keyExtractor={(item) => item.titulo}
-				/>
+						showsHorizontalScrollIndicator={false}
+						style={tailwind("ml-4")}
+						data={converteAnalise(categoria.analises)}
+						renderItem={renderizarAnalises}
+						horizontal={true}
+						keyExtractor={(item) => item.titulo}
+					/>
 				</View>
 
 				{/* Gráfico de despesa semanal */}

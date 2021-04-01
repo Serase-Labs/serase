@@ -111,6 +111,7 @@ export default function RelatorioSemanal() {
 				</View>
 
 				<FlatList
+					showsHorizontalScrollIndicator={false}
 					style={tailwind("ml-4")}
 					data={converteAnalise(relatorio.analises)}
 					renderItem={renderizarAnalises}

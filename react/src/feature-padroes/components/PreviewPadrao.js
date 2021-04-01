@@ -47,6 +47,7 @@ export default function PreviewPadrao(props) {
       <View>
         <FlatList
           horizontal
+          showsHorizontalScrollIndicator={false}
           style={tailwind("py-4 ml-5")}
           data={padroes.conteudo}
           extraData={padroes.conteudo}

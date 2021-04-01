@@ -6,7 +6,7 @@ export default function PreviewDespesaFixa() {
 		<>
 			<View style={tailwind("px-5")}>
 				<Text style={tailwind("text-lg font-bold")}>
-					Desespesa Fixa
+					Despesa Fixa
 				</Text>
 			</View>
 			<View style={[tailwind("flex-row bg-white justify-center ml-6")]}>

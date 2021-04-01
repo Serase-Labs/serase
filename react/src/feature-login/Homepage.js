@@ -166,7 +166,7 @@ export default function VisualizacaoGeral({ navigation }) {
 				</View>
       	</LinearGradient>
 
-			<ScrollView horizontal style={[tailwind("ml-5 my-5")]}>
+			<ScrollView showsHorizontalScrollIndicator={false} horizontal style={[tailwind("ml-5 my-5")]}>
 
 				<TouchableOpacity
 					style={[tailwind("w-24 h-24 bg-gray-200 flex justify-center items-center rounded-md mr-4")]}
