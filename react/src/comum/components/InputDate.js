@@ -40,7 +40,7 @@ export default function DateInput({onPick, label}) {
 }
 
 const estilos = {
-	containerInput: tailwind("w-64 mb-6"),
+	containerInput: tailwind("w-full mb-6"),
     labelInput: tailwind("text-gray-800 text-sm font-bold mb-3"),
     input: tailwind("bg-gray-100 rounded-lg py-2 px-3 text-gray-700 text-base"),
 };

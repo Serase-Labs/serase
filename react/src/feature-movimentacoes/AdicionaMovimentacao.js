@@ -3,6 +3,7 @@ import {
 	StatusBar,
 	Text,
 	View,
+	ScrollView,
 	StyleSheet,
 	KeyboardAvoidingView,
 	TextInput,
@@ -11,8 +12,14 @@ import tailwind from "tailwind-rn";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+
 import InputDate from "../comum/components/InputDate";
 import InputCategoria from "../comum/components/InputCategoria";
+import InputPeriodo from "../comum/components/InputPeriodo.js"
+import InputSelect from "../comum/components/InputSelect.js"
+import InputMes from "../comum/components/InputMes.js"
+import InputDiaSemana from "../comum/components/InputDiaSemana.js"
+
 
 // Imports internos
 import GLOBAL from "../Global";
@@ -286,7 +293,6 @@ function AdicionaPadrao(token) {
 	const [diaInicio, setDiaInicio] = React.useState('');
 	const [diaFim, setDiaFim] = React.useState('');
 
-
 	/*
 		tipo= json_data["tipo"]
         descricao = json_data["descricao"]
@@ -299,14 +305,15 @@ function AdicionaPadrao(token) {
 
 	*/
 
+	const [periodo, setPeriodo] = React.useState("");
 
 	const [temErro, setErro] = useState(false);
 	const [resultado, setResultado] = useState(null);
 
 	const aperta = () =>
-		enviaMovimentacao(token, valorP, categoriaP, descricaoP, tipo, diaCobranca, diaInicio, diaFim);
+		enviaMovimentacao(token, valorP, categoriaP, descricaoP, tipo, periodo, diaCobranca, diaInicio, diaFim);
 	
-			function enviaMovimentacao(token, valorP, categoriaP, descricaoP, tipo, diaCobranca, diaInicio, diaFim) {
+			function enviaMovimentacao(token, valorP, categoriaP, descricaoP, tipo, periodo, diaCobranca, diaInicio, diaFim) {
 				//token, valorP, categoriaP, descricaoP, tipo, diaCobranca, diaInicio, diaFim
 
 
@@ -322,13 +329,13 @@ function AdicionaPadrao(token) {
 						headers: { Authorization: token },
 						body: JSON.stringify({
 							valor: valorP,
-							dia_cobranca: diaCobranca,
+							dia_cobranca: diaCobranca || 5,
 							data_inicio: dataI[2] + "-" + dataI[1] + "-" + dataI[0],
 							data_fim: dataF[2] + "-" + dataF[1] + "-" + dataF[0],
 							categoria: categoriaP,
 							descricao: descricaoP,
 							tipo: tipo.toLowerCase(),
-							periodo: 15,
+							periodo: periodo,
 						}),
 					});
 					let json = await res.json();
@@ -344,54 +351,49 @@ function AdicionaPadrao(token) {
 				fetchData();
 			}
 	return (
-		<View style={[estilos.telaInterior]}>
+		<ScrollView style={[estilos.telaInterior]}>
 			<Text style={[estilos.labelInputPrincipal]}>
-				Valor padrão?
+				Valor da despesa fixa
 			</Text>
 			<View style={tailwind("items-center")}>
-			<TextInput
-				nativeID="colorido"
-				style={[estilos.inputPrincipal]}
-				placeholder={"R$ 0,00"}
-				keyboardType={"numeric"}
-				onChangeText={(text) => setValorP(text)}
-			></TextInput>
+				<TextInput
+					nativeID="colorido"
+					style={[estilos.inputPrincipal]}
+					placeholder={"R$ 0,00"}
+					keyboardType={"numeric"}
+					onChangeText={(text) => setValorP(text)}
+				></TextInput>
 			</View>
-			<View style={tailwind('mb-2')}>
-			<Text style={[estilos.labelInput]}>Descricao do Padrão: </Text>
-			<TextInput
-				style={[estilos.input]}
-				placeholder={"Descrição"}
-				placeholderTextColor={"#A0AEC0"}
-				onChangeText={(text) => setDescricaoP(text)}
-			></TextInput>
+			<View>
+				<Text style={[estilos.labelInput]}>Descricao do Padrão: </Text>
+				<TextInput
+					style={[estilos.input, tailwind("mb-6")]}
+					placeholder={"Descrição"}
+					placeholderTextColor={"#A0AEC0"}
+					onChangeText={(text) => setDescricaoP(text)}
+				></TextInput>
 
-			<Text style={[estilos.labelInput]}>Dia de Cobranca</Text>
-			<TextInput
-				style={[estilos.input]}
-				placeholder={"3"}
-				placeholderTextColor={"#A0AEC0"}
-				onChangeText={(text) => setDiaCobranca(text)}
-			></TextInput>
+				<InputPeriodo onValueChange={periodo=>{
+					setPeriodo(periodo);
+					if(periodo=="mensal"||periodo=="") setDiaCobranca("");
+				}} espacamento={true}/>
 
-			<Text style={[estilos.labelInput]}>Tipo</Text>
-			<TextInput
-				style={[estilos.input]}
-				placeholder={"Despesa"}
-				placeholderTextColor={"#A0AEC0"}
-				onChangeText={(text) => setTipo(text)}
-			></TextInput>
+				{ (periodo!="" && periodo!="mensal") &&
+					(periodo=="anual" && <InputMes onValueChange={value=>setDiaCobranca(value)} espacamento={true}/>) ||
+					(periodo=="semanal" && <InputDiaSemana onValueChange={value=>setDiaCobranca(value)} espacamento={true}/>)
+				}
+
+				<InputSelect
+					label="Tipo do padrão"
+					placeholder="Selecionar tipo..."
+					options={[["Receita", "receita"], ["Despesa", "despesa"]]}
+					onValueChange={tipo=>setTipo(tipo)}
+					espacamento={true}
+				/>
 			</View>
 
-			
+			<InputCategoria onValueChange={(text) => setCategoriaP(text)} espacamento={true}/>
 
-			
-
-			
-
-			<View style={tailwind("mb-1")}>
-			<InputCategoria onValueChange={(text) => setCategoriaP(text)}/>
-			</View>
 			<InputDate label='Dia de Início' onPick={(data=>setDiaInicio(data))}/>
 
 			<InputDate label='Dia de Fim' onPick={(data=>setDiaFim(data))}/>
@@ -419,7 +421,7 @@ function AdicionaPadrao(token) {
 					<Text style={estilos.textoBotaoAdicionar}>Adicionar</Text>
 				</TouchableOpacity>
 			</View>
-		</View>
+		</ScrollView>
 	);
 }
 

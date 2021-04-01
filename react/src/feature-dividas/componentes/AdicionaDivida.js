@@ -20,6 +20,8 @@ import DateInput from "../../comum/components/InputDate.js"
 import InputCategoria from "../../comum/components/InputCategoria.js"
 import InputPeriodo from "../../comum/components/InputPeriodo.js"
 import InputSelect from "../../comum/components/InputSelect.js"
+import InputMes from "../../comum/components/InputMes.js"
+import InputDiaSemana from "../../comum/components/InputDiaSemana.js"
 
 
 import GLOBAL from "../../Global.js"
@@ -60,36 +62,7 @@ async function adicionar(token, values, closeModal){
 function formulario({handleChange, handleBlur, handleSubmit, values, setFieldValue}, closeModal){
 	const [periodo, setPeriodo] = useState("");
 	const [juros, setJuros] = useState(false);
-	let options = [], campo_cobranca="";
 
-	if(periodo=="anual"){
-		options = [
-			["Janeiro", 1],
-			["Fevereiro", 2],
-			["Março", 3],
-			["Abril", 4],
-			["Maio", 5],
-			["Junho", 6],
-			["Julho", 7],
-			["Agosto", 8],
-			["Setembro", 9],
-			["Outubro", 10],
-			["Novembro", 11],
-			["Dezembro", 12],
-		];
-		campo_cobranca = "Mês da cobrança";
-	} else if(periodo=="semanal"){
-		options = [
-			["Domingo", 1],
-			["Segunda", 2],
-			["Terça", 3],
-			["Quarta", 4],
-			["Quinta", 5],
-			["Sexta", 6],
-			["Sabado", 7],
-		];
-		campo_cobranca = "Dia da cobrança";
-	}
 
 	return (
 		<ScrollView showsVerticalScrollIndicator={false}>
@@ -126,14 +99,8 @@ function formulario({handleChange, handleBlur, handleSubmit, values, setFieldVal
 			}} espacamento={true}/>
 
 			{ (periodo!="" && periodo!="mensal") &&
-				<InputSelect
-					label={campo_cobranca}
-					placeholder="Selecionar cobrança..."
-					options={options}
-					onValueChange={cobranca=>setFieldValue("cobranca",cobranca)}
-					espacamento={true}
-					enabled={periodo!="" && periodo!="mensal"}
-				/>
+				(periodo=="anual" && <InputMes onValueChange={value=>setFieldValue("cobranca",value)} espacamento={true}/>) ||
+				(periodo=="semanal" && <InputDiaSemana onValueChange={value=>setFieldValue("cobranca",value)} espacamento={true}/>)
 			}
 
 			<InputSelect
