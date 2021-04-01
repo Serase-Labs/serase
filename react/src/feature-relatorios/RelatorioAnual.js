@@ -114,10 +114,12 @@ export default function RelatorioAnual() {
 
 			{/* Gráfico de despesa semanal */}
 			<View style={tailwind("border-b border-t border-gray-100 py-4")}>
-				<ModalInformativa>
-					<Text style={TextoPrincipal()}>O que o gráfico de saldo indica?</Text>
-					<Text style={TextoInformativo()}>Indica a variação dos seus saldos ao longo do ano, é possível acompanhar em quais meses o saldo sofreu variação, além de poder acompanhar os valores, analisando o seu desempenho financeiro ao longo do ano. É recomendado analisar quais situações e circunstâncias foram responsáveis pelos maiores e menores saldos e saltos.</Text>
-				</ModalInformativa>
+				<View style={tailwind("flex justify-between")}>
+					<ModalInformativa>
+						<Text style={TextoPrincipal()}>O que o gráfico de saldo indica?</Text>
+						<Text style={TextoInformativo()}>Indica a variação dos seus saldos ao longo do ano, é possível acompanhar em quais meses o saldo sofreu variação, além de poder acompanhar os valores, analisando o seu desempenho financeiro ao longo do ano. É recomendado analisar quais situações e circunstâncias foram responsáveis pelos maiores e menores saldos e saltos.</Text>
+					</ModalInformativa>
+				</View>
 				<View style={tailwind("mx-6 mb-4")}>
 					<Text
 						style={tailwind("text-lg font-bold text-gray-800 mb-2")}
@@ -134,10 +136,12 @@ export default function RelatorioAnual() {
 
 			{/* Seção de despesas fixas clicáveis */}
 			<View style={tailwind("border-b border-t border-gray-100 py-4")}>
-				<ModalInformativa>
-					<Text style={TextoPrincipal()}>O que o gráfico de despesas fixas indica?</Text>
-					<Text style={TextoInformativo()}>Indica a variação dessas despesas ao longo do ano devido à reajustes dos fornecedores na prestação dos serviços. É possível acompanhar quais despesas fixas se manteram constantes e quais sofreram variações que impactaram no seu orçamento.</Text>
-				</ModalInformativa>
+				<View style={tailwind("flex justify-between")}>
+					<ModalInformativa>
+						<Text style={TextoPrincipal()}>O que o gráfico de despesas fixas indica?</Text>
+						<Text style={TextoInformativo()}>Indica a variação dessas despesas ao longo do ano devido à reajustes dos fornecedores na prestação dos serviços. É possível acompanhar quais despesas fixas se manteram constantes e quais sofreram variações que impactaram no seu orçamento.</Text>
+					</ModalInformativa>
+				</View>
 				<View style={tailwind("mx-6 mb-4")}>
 					<Text
 						style={tailwind("text-lg font-bold text-gray-800 mb-2")}
@@ -162,12 +166,14 @@ export default function RelatorioAnual() {
 
 			{/* Seção de gráficos gerais */}
 			<View style={tailwind("border-t border-gray-100 py-4 px-6 mb-10")}>
-				<ModalInformativa>
-					<Text style={TextoPrincipal()}>O que o gráfico de despesas por categoria indica?</Text>
-					<Text style={TextoInformativo()}>Mostra o quanto você gastou em cada categoria neste mês, visualizando de forma simples em quais áreas você gasta mais mensalmente indicando onde você deve economizar. É recomendado que haja um equilíbrio de tamanho entre as suas categorias, um gráfico com uma categoria muito grande indica que deve haver uma melhor distribuição do dinheiro ou a economia do mesmo.</Text>
-					<Text style={TextoPrincipal()}>O que o gráfico de despesa padrão indica?</Text>
-					<Text style={TextoInformativo()}>Indica se você possui mais despesas mensais em gastos fixos ou em variáveis. Despesas fixa são as despesas mensais que não sofrem alteração de valor à medida que você o consome como Aluguel e Assinatura de Internet, já nos gastos variáveis o valor varia de acordo com o consumo do serviço, exemplo: Compras online e Alimentação. Despesas variáveis muito maiores do que as fixas indicam que você pode controlar como e com o que você gasta grande parte do seu dinheiro mensal, o inverso dessa situação indica que você deve rever quais são os gastos necessários durante o mês</Text>
-				</ModalInformativa>
+				<View style={tailwind("flex justify-between")}>
+					<ModalInformativa>
+						<Text style={TextoPrincipal()}>O que o gráfico de despesas por categoria indica?</Text>
+						<Text style={TextoInformativo()}>Mostra o quanto você gastou em cada categoria neste mês, visualizando de forma simples em quais áreas você gasta mais mensalmente indicando onde você deve economizar. É recomendado que haja um equilíbrio de tamanho entre as suas categorias, um gráfico com uma categoria muito grande indica que deve haver uma melhor distribuição do dinheiro ou a economia do mesmo.</Text>
+						<Text style={TextoPrincipal()}>O que o gráfico de despesa padrão indica?</Text>
+						<Text style={TextoInformativo()}>Indica se você possui mais despesas mensais em gastos fixos ou em variáveis. Despesas fixa são as despesas mensais que não sofrem alteração de valor à medida que você o consome como Aluguel e Assinatura de Internet, já nos gastos variáveis o valor varia de acordo com o consumo do serviço, exemplo: Compras online e Alimentação. Despesas variáveis muito maiores do que as fixas indicam que você pode controlar como e com o que você gasta grande parte do seu dinheiro mensal, o inverso dessa situação indica que você deve rever quais são os gastos necessários durante o mês</Text>
+					</ModalInformativa>
+				</View>
 				<Text style={tailwind("mb-5 text-lg font-bold text-gray-800")}>
 					Gráficos
 				</Text>

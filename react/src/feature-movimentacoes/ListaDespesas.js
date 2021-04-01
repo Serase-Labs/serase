@@ -100,10 +100,12 @@ export default function ListaDespesas({ navigation }) {
 	return (
 		<View style={[estilos.tela, estiloExcecao.container]}>
 			<View style={estilos.telaInterior}>
+			<View style={tailwind("flex justify-between")}>
 				<ModalInformativa>
 					<Text style={TextoPrincipal()}>o que são despesas fixas?</Text>
 					<Text style={TextoInformativo()}>É todo gasto mensal que não sofre alteração à medida que você o consome. Exemplos de despesas fixas: Aluguel de um imóvel e assinatura da TV à cabo.</Text>
 				</ModalInformativa>
+				</View>
 				<IndicadorRetorno telaAtual={"Despesas"} />
 
 				<View style={tailwind("px-5 flex flex-row justify-between items-center")}>

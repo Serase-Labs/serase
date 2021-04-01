@@ -128,6 +128,7 @@ export default function RelatorioMensal() {
 				<View
 					style={tailwind("border-b border-t border-gray-100 py-4 px-6")}
 				>
+				<View style={tailwind("flex justify-between")}>
 				<ModalInformativa>
 					<Text style={TextoPrincipal()}>O que é o gráfico de despesas por categoria?</Text>
 					<Text style={TextoInformativo()}>Mostra o quanto você gastou em cada categoria neste mês, visualizando de forma simples em quais áreas você gasta mais mensalmente indicando onde você deve economizar. É recomendado um equilíbrio de tamanho entre as categorias, um gráfico com uma categoria muito grande indica que deve haver uma melhor distribuição do dinheiro ou a economia do mesmo.</Text>
@@ -136,6 +137,7 @@ export default function RelatorioMensal() {
 					<Text style={TextoPrincipal()}>O que é o gráfico de frequência?</Text>
 					<Text style={TextoInformativo()}>Indica quais foram os dias do mês em que você fez mais movimentações. Representa um calendário, cada quadrado representa um dia do mês e a cada movimentação a cor verde se torna mais forte, portanto nos dias verdes claros foram realizadas poucas (ou nenhuma) movimentação, já nos dias verde escuro a frequência de movimentação foi maior.</Text>
 				</ModalInformativa>
+				</View>
 
 					<Text style={tailwind("mb-5 text-lg font-bold text-gray-800")}>
 						Gráficos

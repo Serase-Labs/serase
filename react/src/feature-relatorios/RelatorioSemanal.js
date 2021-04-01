@@ -95,10 +95,12 @@ export default function RelatorioSemanal() {
 			{/* Blocos de informações clicáveis */}
 
 			<View style={tailwind("border-b border-t border-gray-100 py-4")}>
+			<View style={tailwind("flex justify-between")}>
 				<ModalInformativa>
 						<Text style={TextoPrincipal()}>O que as análises indicam?</Text>
 						<Text style={TextoInformativo()}>Indicam como foram os seus gastos na última semana, exibidos do Maior Gasto da semana para o Menor gasto. Fique atento ao seu maior gasto na semana, ele é realmente necessário?</Text>
 				</ModalInformativa>
+				</View>
 				<View style={tailwind("mx-6 mb-4")}>
 					<Text style={tailwind("text-lg font-bold text-gray-800")}>
 						Análises
@@ -119,10 +121,12 @@ export default function RelatorioSemanal() {
 
 			{/* Gráfico de despesa semanal */}
 			<View style={tailwind("border-b border-t border-gray-100 py-4")}>
+				<View style={tailwind("flex justify-between")}>
 					<ModalInformativa>
 						<Text style={TextoPrincipal()}>O que o gráfico de movimentações indica?</Text>
 						<Text style={TextoInformativo()}>É o relatório das suas movimentações recentes. Suas movimentações são todas as receitas e despesas inseridas no aplicativo. É possível visualizar a quantidade de receitas e despesas realizadas por dia durante a semana e o valor alcançado por elas.</Text>
 					</ModalInformativa>
+				</View>
 				<View style={tailwind("mx-6 mb-4")}>
 					<Text style={tailwind("text-lg font-bold text-gray-800")}>
 						Movimentações
